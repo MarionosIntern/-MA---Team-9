@@ -1,10 +1,10 @@
 # Software Requirements Specification
-## For <project name>
+## For Centrix
 
 Version 0.1  
-Prepared by <author>  
-<organization>  
-<date created> 
+Prepared by Aliyah Williams & Mariono Deleva
+Centrix 
+September 1
 
 Table of Contents
 =================
@@ -31,24 +31,26 @@ Table of Contents
     * 3.2.3 [Reliability](#323-reliability)
     * 3.2.4 [Availability](#324-availability)
     * 3.2.5 [Compliance](#325-compliance)
-    * 3.2.6 [Cost](#326-cost)
+    * 3.2.6 [Cost][def]
     * 3.2.7 [Deadline](#327-deadline)
 
 ## Revision History
 | Name | Date    | Reason For Changes  | Version   |
 | ---- | ------- | ------------------- | --------- |
-|      |         |                     |           |
-|Mariono| 9/17   | Updated Srs         |    1.1    |
-|      |         |                     |           |
+|Aliyah   9/16   |  Initial SRS        |    1.0    |
+|Mariono 9/17   | Updated Srs         |    1.1    |
+
+
 
 ## 1. Introduction
 
+
 ### 1.1 Document Purpose
-The purpose of this Sofware Requirements Document (SRD) is to provide a techincal description of the client-view and developer-view requirements for the Centrix Marketplace application.
+The purpose of this Sofware Requirements Document (SRS) is to provide a techincal description of the client-view and developer-view requirements for the Centrix Marketplace application.
 Client-view requirements provide a throrough description of the system from the client's perspective. The client side provides a unique perspective of what is required from the system. 
 Developer-view requirments provide a thorough description of the system from the software developer's perspective. Functionality, data, and performance are all included in these requirements.
 
-# 1.2 Product Scope
+### 1.2 Product Scope
 The purpose of the Centrix Marketplace system is to allow for consumers to connect with smaller buisnesses or sell products of thier own; to give sellers and buyers an outlet for their shopping. It serves as an easy to use, simple, and effecient application for anyone to try. It's web based, so any fancy tech is not required which allows for simple use of service to house sucbriptions and communication between sellers and buyers. 
 
 ### 1.3 Definitions, Acronyms and Abbreviations  
@@ -58,6 +60,7 @@ HTML - Hypertext Markup Langauge. A markup language that is used to design and c
 
 CSS - A cascading style sheet, used for the styling and appearence of the web application. It's used in tandem with html.
 
+
 JavcaScript -  An object oriented pragramming language used for interactive elements within web applications. Will be used alongside css and html. 
  
 API - Application Programming Interface. It will be used to interface the backend and frontend of our application.
@@ -65,69 +68,81 @@ API - Application Programming Interface. It will be used to interface the backen
 VS Code - An intergrated development environment (IDE) for java and html. This is where our system will be created.
                                                                     
 ### 1.4 References
+
 https://pure-css.github.io/
 
 ### 1.5 Document Overview
-Section 1 is a general overview of our web application . It's an introdution, intended for readers interetsed in the system. In section 2, it contains information about the product and it's features. Providing insight for our customers and buisnesses. In section 3, the documant displays our system constraints and requirements throughout the development process.
+Section 1 is a general overview of the Document. Section 2 is focused on the products that would be sold. Section 3 focuses on the development proccess and how the application is intended to work.
 
-# 2. Product Overview
-Centrix Market is a web based platform to give consumers freedom with their choices and money in a simple way. Buyers can browse our product list, interact with their favorite sellers through subscriptions, leave reviews on products, and track their own shipment. Providers upload products, manage their relationship with the buyers, view buyer statistics, and track shipments. The system allows for freedom and transperency across all roles,
- for an opn marketplace.
-# 2.1 Product Functions
--Centrix Market allows the providers to upload and manage their product listing. Along with interacting with their buyer to conncet them and track their shipment to ensure a smooth delivery. 
--Centric Market allows the customers to browse and purchase anything on our product listing. They can subscribe to buyers to interact and keep up with their listings. Along with tracking their shipments, so they are carefree and know where thier item is at. 
+
+## 2. Product Overview
+Centrix is a marketplace that allows multiple different products to be sold from clothes to shoes to technology. Customers can browse different providers and their products, in which they can also leave reviews and interact with the same providers.The system supports multiple users at once so there is a free flowing community between the providers, customers, and the adminstrators.
+
+### 2.1 Product Functions
+ Centrix allows different providers/companies to upload their products and even give out promotions to their subscribers. Subscribing allows customers access to different sales and they hve better acces to provider as well.
 
 ### 2.2 Product Constraints
-The program will currently run only on a computer with Java jdk 21 installed. Since this is for a class project, there is a deadline of about 10 weeks, which will inhibit the application's full potential. 
+The program will only run on a computer with Java jdk 21 installed. The full scope of the project is hopefully realized however the team has a deadline of  10 weeks that could lead to feature cuts. The program would have a challenge scaling, as the current plan is to use a free version of a Postgresql database to store the information.
   
 ### 2.3 User Characteristics
-This application doesn't require or expect any expertise from the buyers or sellers, in reagrd to computer and software engineering. As long as the user can navigate a web browser, they are more than qualified to use our application. 
+Users dont have to have any major web knowlegde. The only thing they have to do it log on and browse their wanted items.
 
 ### 2.4 Assumptions and Dependencies
-We wil be using Java for our backend and html for our frontend. Our program will be dependent on PureCss and Bootstrap, along with RestAPI to communicate with external API's. Our program will be developed in VS Code. 
-
+We will be using Java, with our program being dependent on Spring & SpringBoot, and RestAPI to connect to external APIs and developed with VS Code. The application will also use an external  APIs that will help customers with comparing products in their cart as well as keeping track of what is the trending items.
 ## 3. Requirements
 
 ### 3.1 Functional Requirements 
-* FR8: The system will allow the buyer to upload products
-    * Their product listing will go through a verification process.
 
-* FR9: The system will allow the buyer to actively reply to buyer reviews
-
-* FR10: The system will allow the buyer to access customer statistics
-
-* FR11: The system will allow the buyer to track the buye's shipment to ensure a successful delivery
+* FR0: the system will allow people to create an account and choose to be a provider or a customer 
+      * Every account will have a different identifier assigned to every account.
+* FR1: The system will allow the customer to subscribe/favorite different products and providers.
+      * A customer may unsubscribe at any time if they are not longer interested in the products or provider.
+* FR2: The system shall allow customers to browse through the list of available products.
+     * The list ofproduct shall have a search and filter option.
+* FR4: Users will be able to modify their own profiles at any time.
+* FR5: The system shall allow customers to rate and review the providers and products based on delivery and quality.
+* FR6: The system will allow customers to track all their own shipmemnts.
+* FR7: The system will allow the customer to add and delete item to their shopping cart.
+      * While in the afrt customers can compare items by pricing and item details.
+* FR8: The system shall allow providers to upload and remove products at any time.
+* FR9 : The system shall allow providers to communicate with customers at any time.
+* FR10: The system shall allow the providers to track deliveries and provide updates to the customers.
+* FR11: The system shall allow the provider to view reviews left by the customers. 
 
 #### 3.1.1 User interfaces
-Define the software components for which a user interface is needed. Describe the logical characteristics of each interface between the software product and the users. This may include sample screen images, any GUI standards or product family style guides that are to be followed, screen layout constraints, standard buttons and functions (e.g., help) that will appear on every screen, keyboard shortcuts, error message display standards, and so on. Details of the user interface design should be documented in a separate user interface specification.
-
-Could be further divided into Usability and Convenience requirements.
+Web pages using HTML, CSS, and JavaScript.
 
 #### 3.1.2 Hardware interfaces
-Describe the logical and physical characteristics of each interface between the software product and the hardware components of the system. This may include the supported device types, the nature of the data and control interactions between the software and the hardware, and communication protocols to be used.
+Devices that have web browser capabilities.
 
 #### 3.1.3 Software interfaces
-Describe the connections between this product and other specific software components (name and version), including databases, operating systems, tools, libraries, and integrated commercial components. Identify the data items or messages coming into the system and going out and describe the purpose of each. Describe the services needed and the nature of communications. Refer to documents that describe detailed application programming interface protocols. Identify data that will be shared across software components. If the data sharing mechanism must be implemented in a specific way (for example, use of a global data area in a multitasking operating system), specify this as an implementation constraint.
+* Java jdk 21
+* PostgreSQL 17
+* SpringBoot 3.4.5
 
 ### 3.2 Non Functional Requirements 
 
 #### 3.2.1 Performance
-If there are performance requirements for the product under various circumstances, state them here and explain their rationale, to help the developers understand the intent and make suitable design choices. Specify the timing relationships for real time systems. Make such requirements as specific as possible. You may need to state performance requirements for individual functional requirements or features.
+* NFR0: The Centrix system will consume less than 100 MB of memory
+* NFR1: The novice user will be able to add and manage provider subscriptions in less than 5 minutes.
+* NFR2: The expert user will be able to add and manage provider subscriptions in less than 1 minute.
 
 #### 3.2.2 Security
-Specify any requirements regarding security or privacy issues surrounding use of the product or protection of the data used or created by the product. Define any user identity authentication requirements. Refer to any external policies or regulations containing security issues that affect the product. Define any security or privacy certifications that must be satisfied.
+* NFR3:The system will require a username and password to access a specific account.
 
 #### 3.2.3 Reliability
-Specify the factors required to establish the required reliability of the software system at time of delivery.
+* NFR4: The system will go through vairous stages of testing to help insure that the it runs as smoothly as possible. 
+     *  This also means regular updates and status checks in the scheduled downtime.
 
 #### 3.2.4 Availability
-Specify the factors required to guarantee a defined availability level for the entire system such as checkpoint, recovery, and restart.
-
+* NFR5: The sytem will be available 24/7 to all. It will have regular updates/checkups around 2 am to insure minimal conflict with users.
 #### 3.2.5 Compliance
-Specify the requirements derived from existing standards or regulations
+* NFR6: The Centrix software will ensure that all private data and information from both providers and customers will be safe and secure.
+* NFR7: Centrix follows all needed regulations and makes sure that the software used is licensed and authorized.
 
 #### 3.2.6 Cost
-Specify monetary cost of the software product.
+* NFR8: We expect to spend zero dollars on this project.
 
 #### 3.2.7 Deadline
-Specify schedule for delivery of the software product.
+* NFR9: The final product must be delivered by December 2025.
+
