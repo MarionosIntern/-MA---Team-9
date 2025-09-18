@@ -68,40 +68,35 @@ VS Code - An intergrated development environment (IDE) for java and html. This i
 https://pure-css.github.io/
 
 ### 1.5 Document Overview
-Section 1 is a general overview of 
+Section 1 is a general overview of our web application . It's an introdution, intended for readers interetsed in the system. In section 2, it contains information about the product and it's features. Providing insight for our customers and buisnesses. In section 3, the documant displays our system constraints and requirements throughout the development process.
 
-## 2. Product Overview
-This section should describe the general factors that affect the product and its requirements. This section does not state specific requirements. Instead, it provides a background for those requirements, which are defined in detail in Section 3, and makes them easier to understand.
-
-### 2.1 Product Functions
-Summarize the major functions the product must perform or must let the user perform. Details will be provided in Section 3, so only a high level summary (such as a bullet list) is needed here. Organize the functions to make them understandable to any reader of the SRS. A picture of the major groups of related requirements and how they relate, such as a top level data flow diagram or object class diagram, is often effective.
+# 2. Product Overview
+Centrix Market is a web based platform to give consumers freedom with their choices and money in a simple way. Buyers can browse our product list, interact with their favorite sellers through subscriptions, leave reviews on products, and track their own shipment. Providers upload products, manage their relationship with the buyers, view buyer statistics, and track shipments. The system allows for freedom and transperency across all roles,
+ for an opn marketplace.
+# 2.1 Product Functions
+-Centrix Market allows the providers to upload and manage their product listing. Along with interacting with their buyer to conncet them and track their shipment to ensure a smooth delivery. 
+-Centric Market allows the customers to browse and purchase anything on our product listing. They can subscribe to buyers to interact and keep up with their listings. Along with tracking their shipments, so they are carefree and know where thier item is at. 
 
 ### 2.2 Product Constraints
-This subsection should provide a general description of any other items that will limit the developer’s options. These may include:  
-
-* Interfaces to users, other applications or hardware.  
-* Quality of service constraints.  
-* Standards compliance.  
-* Constraints around design or implementation.
+The program will currently run only on a computer with Java jdk 21 installed. Since this is for a class project, there is a deadline of about 10 weeks, which will inhibit the application's full potential. 
   
 ### 2.3 User Characteristics
-Identify the various user classes that you anticipate will use this product. User classes may be differentiated based on frequency of use, subset of product functions used, technical expertise, security or privilege levels, educational level, or experience. Describe the pertinent characteristics of each user class. Certain requirements may pertain only to certain user classes. Distinguish the most important user classes for this product from those who are less important to satisfy.
+This application doesn't require or expect any expertise from the buyers or sellers, in reagrd to computer and software engineering. As long as the user can navigate a web browser, they are more than qualified to use our application. 
 
 ### 2.4 Assumptions and Dependencies
-List any assumed factors (as opposed to known facts) that could affect the requirements stated in the SRS. These could include third-party or commercial components that you plan to use, issues around the development or operating environment, or constraints. The project could be affected if these assumptions are incorrect, are not shared, or change. Also identify any dependencies the project has on external factors, such as software components that you intend to reuse from another project, unless they are already documented elsewhere (for example, in the vision and scope document or the project plan).
+We wil be using Java for our backend and html for our frontend. Our program will be dependent on PureCss and Bootstrap, along with RestAPI to communicate with external API's. Our program will be developed in VS Code. 
 
 ## 3. Requirements
 
 ### 3.1 Functional Requirements 
-This section specifies the software product's requirements. Specify all of the software requirements to a level of detail sufficient to enable designers to design a software system to satisfy those requirements, and to enable testers to test that the software system satisfies those requirements.
+* FR8: The system will allow the buyer to upload products
+    * Their product listing will go through a verification process.
 
-The specific requirements should:
-* Be uniquely identifiable.
-* State the subject of the requirement (e.g., system, software, etc.) and what shall be done.
-* Optionally state the conditions and constraints, if any.
-* Describe every input (stimulus) into the software system, every output (response) from the software system, and all functions performed by the software system in response to an input or in support of an output.
-* Be verifiable (e.g., the requirement realization can be proven to the customer's satisfaction)
-* Conform to agreed upon syntax, keywords, and terms.
+* FR9: The system will allow the buyer to actively reply to buyer reviews
+
+* FR10: The system will allow the buyer to access customer statistics
+
+* FR11: The system will allow the buyer to track the buye's shipment to ensure a successful delivery
 
 #### 3.1.1 User interfaces
 Define the software components for which a user interface is needed. Describe the logical characteristics of each interface between the software product and the users. This may include sample screen images, any GUI standards or product family style guides that are to be followed, screen layout constraints, standard buttons and functions (e.g., help) that will appear on every screen, keyboard shortcuts, error message display standards, and so on. Details of the user interface design should be documented in a separate user interface specification.
