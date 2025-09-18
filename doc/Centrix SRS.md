@@ -37,20 +37,42 @@ Table of Contents
 ## Revision History
 | Name | Date    | Reason For Changes  | Version   |
 | ---- | ------- | ------------------- | --------- |
-|Aliyah   9/16 |   |   Initial SRS        1.0 |           |
-|      |         |                     |           |
-|      |         |                     |           |
+|Aliyah   9/16   |  Initial SRS        |    1.0    |
+|Mariono 9/17   | Updated Srs         |    1.1    |
+
+
 
 ## 1. Introduction
 
 
+### 1.1 Document Purpose
+The purpose of this Sofware Requirements Document (SRS) is to provide a techincal description of the client-view and developer-view requirements for the Centrix Marketplace application.
+Client-view requirements provide a throrough description of the system from the client's perspective. The client side provides a unique perspective of what is required from the system. 
+Developer-view requirments provide a thorough description of the system from the software developer's perspective. Functionality, data, and performance are all included in these requirements.
 
-### 1.3 Definitions, Acronyms and Abbreviations                                                                                                                                                                          |
+### 1.2 Product Scope
+The purpose of the Centrix Marketplace system is to allow for consumers to connect with smaller buisnesses or sell products of thier own; to give sellers and buyers an outlet for their shopping. It serves as an easy to use, simple, and effecient application for anyone to try. It's web based, so any fancy tech is not required which allows for simple use of service to house sucbriptions and communication between sellers and buyers. 
 
+### 1.3 Definitions, Acronyms and Abbreviations  
+Java - An object oriented proggramming language for the backend of our Centrix Marketplace system.
+
+HTML - Hypertext Markup Langauge. A markup language that is used to design and create the web application and it's content.
+
+CSS - A cascading style sheet, used for the styling and appearence of the web application. It's used in tandem with html.
+
+
+JavcaScript -  An object oriented pragramming language used for interactive elements within web applications. Will be used alongside css and html. 
+ 
+API - Application Programming Interface. It will be used to interface the backend and frontend of our application.
+
+VS Code - An intergrated development environment (IDE) for java and html. This is where our system will be created.
+                                                                    
 ### 1.4 References
 
+https://pure-css.github.io/
 
-
+### 1.5 Document Overview
+Section 1 is a general overview of 
 
 
 ## 2. Product Overview
