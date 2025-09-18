@@ -38,25 +38,37 @@ Table of Contents
 | Name | Date    | Reason For Changes  | Version   |
 | ---- | ------- | ------------------- | --------- |
 |      |         |                     |           |
-|      |         |                     |           |
+|Mariono| 9/17   | Updated Srs         |    1.1    |
 |      |         |                     |           |
 
 ## 1. Introduction
 
 ### 1.1 Document Purpose
-Describe the purpose of the SRS and its intended audience.
+The purpose of this Sofware Requirements Document (SRD) is to provide a techincal description of the client-view and developer-view requirements for the Centrix Marketplace application.
+Client-view requirements provide a throrough description of the system from the client's perspective. The client side provides a unique perspective of what is required from the system. 
+Developer-view requirments provide a thorough description of the system from the software developer's perspective. Functionality, data, and performance are all included in these requirements.
 
-### 1.2 Product Scope
-Identify the product whose software requirements are specified in this document, including the revision or release number. Explain what the product that is covered by this SRS will do, particularly if this SRS describes only part of the system or a single subsystem. 
-Provide a short description of the software being specified and its purpose, including relevant benefits, objectives, and goals. Relate the software to corporate goals or business strategies. If a separate vision and scope document is available, refer to it rather than duplicating its contents here.
+# 1.2 Product Scope
+The purpose of the Centrix Marketplace system is to allow for consumers to connect with smaller buisnesses or sell products of thier own; to give sellers and buyers an outlet for their shopping. It serves as an easy to use, simple, and effecient application for anyone to try. It's web based, so any fancy tech is not required which allows for simple use of service to house sucbriptions and communication between sellers and buyers. 
 
-### 1.3 Definitions, Acronyms and Abbreviations                                                                                                                                                                          |
+### 1.3 Definitions, Acronyms and Abbreviations  
+Java - An object oriented proggramming language for the backend of our Centrix Marketplace system.
 
+HTML - Hypertext Markup Langauge. A markup language that is used to design and create the web application and it's content.
+
+CSS - A cascading style sheet, used for the styling and appearence of the web application. It's used in tandem with html.
+
+JavcaScript -  An object oriented pragramming language used for interactive elements within web applications. Will be used alongside css and html. 
+ 
+API - Application Programming Interface. It will be used to interface the backend and frontend of our application.
+
+VS Code - An intergrated development environment (IDE) for java and html. This is where our system will be created.
+                                                                    
 ### 1.4 References
-List any other documents or Web addresses to which this SRS refers. These may include user interface style guides, contracts, standards, system requirements specifications, use case documents, or a vision and scope document. Provide enough information so that the reader could access a copy of each reference, including title, author, version number, date, and source or location.
+https://pure-css.github.io/
 
 ### 1.5 Document Overview
-Describe what the rest of the document contains and how it is organized.
+Section 1 is a general overview of 
 
 ## 2. Product Overview
 This section should describe the general factors that affect the product and its requirements. This section does not state specific requirements. Instead, it provides a background for those requirements, which are defined in detail in Section 3, and makes them easier to understand.
