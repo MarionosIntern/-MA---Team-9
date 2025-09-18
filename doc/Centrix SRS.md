@@ -1,10 +1,10 @@
 # Software Requirements Specification
-## For <project name>
+## For Centrix
 
 Version 0.1  
-Prepared by <author>  
-<organization>  
-<date created> 
+Prepared by Aliyah Williams & Mariano Deleva
+Centrix 
+September 1
 
 Table of Contents
 =================
@@ -31,24 +31,26 @@ Table of Contents
     * 3.2.3 [Reliability](#323-reliability)
     * 3.2.4 [Availability](#324-availability)
     * 3.2.5 [Compliance](#325-compliance)
-    * 3.2.6 [Cost](#326-cost)
+    * 3.2.6 [Cost][def]
     * 3.2.7 [Deadline](#327-deadline)
 
 ## Revision History
 | Name | Date    | Reason For Changes  | Version   |
 | ---- | ------- | ------------------- | --------- |
-|      |         |                     |           |
-|Mariono| 9/17   | Updated Srs         |    1.1    |
-|      |         |                     |           |
+|Aliyah   9/16   |  Initial SRS        |    1.0    |
+|Mariono 9/17   | Updated Srs         |    1.1    |
+
+
 
 ## 1. Introduction
 
+
 ### 1.1 Document Purpose
-The purpose of this Sofware Requirements Document (SRD) is to provide a techincal description of the client-view and developer-view requirements for the Centrix Marketplace application.
+The purpose of this Sofware Requirements Document (SRS) is to provide a techincal description of the client-view and developer-view requirements for the Centrix Marketplace application.
 Client-view requirements provide a throrough description of the system from the client's perspective. The client side provides a unique perspective of what is required from the system. 
 Developer-view requirments provide a thorough description of the system from the software developer's perspective. Functionality, data, and performance are all included in these requirements.
 
-# 1.2 Product Scope
+### 1.2 Product Scope
 The purpose of the Centrix Marketplace system is to allow for consumers to connect with smaller buisnesses or sell products of thier own; to give sellers and buyers an outlet for their shopping. It serves as an easy to use, simple, and effecient application for anyone to try. It's web based, so any fancy tech is not required which allows for simple use of service to house sucbriptions and communication between sellers and buyers. 
 
 ### 1.3 Definitions, Acronyms and Abbreviations  
@@ -58,6 +60,7 @@ HTML - Hypertext Markup Langauge. A markup language that is used to design and c
 
 CSS - A cascading style sheet, used for the styling and appearence of the web application. It's used in tandem with html.
 
+
 JavcaScript -  An object oriented pragramming language used for interactive elements within web applications. Will be used alongside css and html. 
  
 API - Application Programming Interface. It will be used to interface the backend and frontend of our application.
@@ -65,74 +68,77 @@ API - Application Programming Interface. It will be used to interface the backen
 VS Code - An intergrated development environment (IDE) for java and html. This is where our system will be created.
                                                                     
 ### 1.4 References
+
 https://pure-css.github.io/
 
 ### 1.5 Document Overview
 Section 1 is a general overview of 
 
+
 ## 2. Product Overview
-This section should describe the general factors that affect the product and its requirements. This section does not state specific requirements. Instead, it provides a background for those requirements, which are defined in detail in Section 3, and makes them easier to understand.
+
 
 ### 2.1 Product Functions
-Summarize the major functions the product must perform or must let the user perform. Details will be provided in Section 3, so only a high level summary (such as a bullet list) is needed here. Organize the functions to make them understandable to any reader of the SRS. A picture of the major groups of related requirements and how they relate, such as a top level data flow diagram or object class diagram, is often effective.
+ 
 
 ### 2.2 Product Constraints
-This subsection should provide a general description of any other items that will limit the developer’s options. These may include:  
 
-* Interfaces to users, other applications or hardware.  
-* Quality of service constraints.  
-* Standards compliance.  
-* Constraints around design or implementation.
   
 ### 2.3 User Characteristics
-Identify the various user classes that you anticipate will use this product. User classes may be differentiated based on frequency of use, subset of product functions used, technical expertise, security or privilege levels, educational level, or experience. Describe the pertinent characteristics of each user class. Certain requirements may pertain only to certain user classes. Distinguish the most important user classes for this product from those who are less important to satisfy.
+
 
 ### 2.4 Assumptions and Dependencies
-List any assumed factors (as opposed to known facts) that could affect the requirements stated in the SRS. These could include third-party or commercial components that you plan to use, issues around the development or operating environment, or constraints. The project could be affected if these assumptions are incorrect, are not shared, or change. Also identify any dependencies the project has on external factors, such as software components that you intend to reuse from another project, unless they are already documented elsewhere (for example, in the vision and scope document or the project plan).
 
 ## 3. Requirements
 
 ### 3.1 Functional Requirements 
-This section specifies the software product's requirements. Specify all of the software requirements to a level of detail sufficient to enable designers to design a software system to satisfy those requirements, and to enable testers to test that the software system satisfies those requirements.
 
-The specific requirements should:
-* Be uniquely identifiable.
-* State the subject of the requirement (e.g., system, software, etc.) and what shall be done.
-* Optionally state the conditions and constraints, if any.
-* Describe every input (stimulus) into the software system, every output (response) from the software system, and all functions performed by the software system in response to an input or in support of an output.
-* Be verifiable (e.g., the requirement realization can be proven to the customer's satisfaction)
-* Conform to agreed upon syntax, keywords, and terms.
+* FR0: the system will allow people to create an account and choose to be a provider or a customer 
+      * Every account will have a different identifier assigned to every account.
+* FR1: The system will allow the customer to subscribe/favorite different products and providers.
+      * A customer may unsubscribe at any time if they are not longer interested in the products or provider.
+* FR2: The system shall allow customers to browse through the list of available products.
+     * The list ofproduct shall have a search and filter option.
+* FR4: Users will be able to modify their own profiles at any time.
+* FR5: The system shall allow customers to rate and review the providers and products based on delivery and quality.
+* FR6: The system will allow customers to track all their own shipmemnts.
+* FR7: The system will allow the customer to add and delete item to their shopping cart.
+      * While in the afrt customers can compare items by pricing and item details.
 
 #### 3.1.1 User interfaces
-Define the software components for which a user interface is needed. Describe the logical characteristics of each interface between the software product and the users. This may include sample screen images, any GUI standards or product family style guides that are to be followed, screen layout constraints, standard buttons and functions (e.g., help) that will appear on every screen, keyboard shortcuts, error message display standards, and so on. Details of the user interface design should be documented in a separate user interface specification.
-
-Could be further divided into Usability and Convenience requirements.
+Web pages using HTML, CSS, and JavaScript.
 
 #### 3.1.2 Hardware interfaces
-Describe the logical and physical characteristics of each interface between the software product and the hardware components of the system. This may include the supported device types, the nature of the data and control interactions between the software and the hardware, and communication protocols to be used.
+Devices that have web browser capabilities.
 
 #### 3.1.3 Software interfaces
-Describe the connections between this product and other specific software components (name and version), including databases, operating systems, tools, libraries, and integrated commercial components. Identify the data items or messages coming into the system and going out and describe the purpose of each. Describe the services needed and the nature of communications. Refer to documents that describe detailed application programming interface protocols. Identify data that will be shared across software components. If the data sharing mechanism must be implemented in a specific way (for example, use of a global data area in a multitasking operating system), specify this as an implementation constraint.
+* Java jdk 21
+* PostgreSQL 17
+* SpringBoot 3.4.5
 
 ### 3.2 Non Functional Requirements 
 
 #### 3.2.1 Performance
-If there are performance requirements for the product under various circumstances, state them here and explain their rationale, to help the developers understand the intent and make suitable design choices. Specify the timing relationships for real time systems. Make such requirements as specific as possible. You may need to state performance requirements for individual functional requirements or features.
+* NFR0: The Centrix system will consume less than 100 MB of memory
+* NFR1: The novice user will be able to add and manage provider subscriptions in less than 5 minutes.
+* NFR2: The expert user will be able to add and manage provider subscriptions in less than 1 minute.
 
 #### 3.2.2 Security
-Specify any requirements regarding security or privacy issues surrounding use of the product or protection of the data used or created by the product. Define any user identity authentication requirements. Refer to any external policies or regulations containing security issues that affect the product. Define any security or privacy certifications that must be satisfied.
+* NFR3:The system will require a username and password to access a specific account.
 
 #### 3.2.3 Reliability
-Specify the factors required to establish the required reliability of the software system at time of delivery.
+* NFR4: The system will go through vairous stages of testing to help insure that the it runs as smoothly as possible. 
+     *  This also means regular updates and status checks in the scheduled downtime.
 
 #### 3.2.4 Availability
-Specify the factors required to guarantee a defined availability level for the entire system such as checkpoint, recovery, and restart.
-
+* NFR5: The sytem will be available 24/7 to all. It will have regular updates/checkups around 2 am to insure minimal conflict with users.
 #### 3.2.5 Compliance
-Specify the requirements derived from existing standards or regulations
+* NFR6: The Centrix software will ensure that all private data and information from both providers and customers will be safe and secure.
+* NFR7: Centrix follows all needed regulations and makes sure that the software used is licensed and authorized.
 
 #### 3.2.6 Cost
-Specify monetary cost of the software product.
+* NFR8: We expect to spend zero dollars on this project.
 
 #### 3.2.7 Deadline
-Specify schedule for delivery of the software product.
+* NFR9: The final product must be delivered by December 2025.
+
