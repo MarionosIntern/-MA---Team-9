@@ -72,23 +72,23 @@ VS Code - An intergrated development environment (IDE) for java and html. This i
 https://pure-css.github.io/
 
 ### 1.5 Document Overview
-Section 1 is a general overview of 
+Section 1 is a general overview of the Document. Section 2 is focused on the products that would be sold. Section 3 focuses on the development proccess and how the application is intended to work.
 
 
 ## 2. Product Overview
-
+Centrix is a marketplace that allows multiple different products to be sold from clothes to shoes to technology. Customers can browse different providers and their products, in which they can also leave reviews and interact with the same providers.The system supports multiple users at once so there is a free flowing community between the providers, customers, and the adminstrators.
 
 ### 2.1 Product Functions
- 
+ Centrix allows different providers/companies to upload their products and even give out promotions to their subscribers. Subscribing allows customers access to different sales and they hve better acces to provider as well.
 
 ### 2.2 Product Constraints
-
+The program will only run on a computer with Java jdk 21 installed. The full scope of the project is hopefully realized however the team has a deadline of  10 weeks that could lead to feature cuts. The program would have a challenge scaling, as the current plan is to use a free version of a Postgresql database to store the information.
   
 ### 2.3 User Characteristics
-
+Users dont have to have any major web knowlegde. The only thing they have to do it log on and browse their wanted items.
 
 ### 2.4 Assumptions and Dependencies
-
+We will be using Java, with our program being dependent on Spring & SpringBoot, and RestAPI to connect to external APIs and developed with VS Code. The application will also use an external  APIs that will help customers with comparing products in their cart as well as keeping track of what is the trending items.
 ## 3. Requirements
 
 ### 3.1 Functional Requirements 
@@ -104,6 +104,10 @@ Section 1 is a general overview of
 * FR6: The system will allow customers to track all their own shipmemnts.
 * FR7: The system will allow the customer to add and delete item to their shopping cart.
       * While in the afrt customers can compare items by pricing and item details.
+* FR8: The system shall allow providers to upload and remove products at any time.
+* FR9 : The system shall allow providers to communicate with customers at any time.
+* FR10: The system shall allow the providers to track deliveries and provide updates to the customers.
+* FR11: The system shall allow the provider to view reviews left by the customers. 
 
 #### 3.1.1 User interfaces
 Web pages using HTML, CSS, and JavaScript.
