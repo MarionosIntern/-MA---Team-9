@@ -1,0 +1,37 @@
+:root{
+  --brand:#010205;
+  --muted:#060708;
+}
+body{font-family:Segoe UI, Roboto, Arial, sans-serif;}
+.site-header{background:#14485b}
+.site-header .form-control{min-width:420px}
+.market-hero img{border-radius:8px}
+.hero{padding-top:3rem;padding-bottom:3rem}
+.hero-copy h1{font-weight:700;font-size:2.25rem}
+@media(min-width:992px){.hero-copy h1{font-size:3rem}}
+.card{border:0;box-shadow:0 3px 8px rgba(0,0,0,.03)}
+footer{font-size:.9rem}
+
+body { background-color: #5b6a6f; }
+
+
+a { color: var(--brand); }
+a:hover { color: darken(var(--brand), 10%); text-decoration: none }
+
+.btn-outline-primary{border-color:var(--brand)}
+.product-badge{position:absolute;top:8px;right:8px;background:var(--brand);color:#7e1d1d;padding:4px 8px;border-radius:6px;font-size:.75rem}
+
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.skip-link:focus{left:10px;top:10px;width:auto;height:auto;z-index:1000;background:#375670;padding:8px;border:1px solid #ccc}
+
+@media(max-width:767px){
+  .site-header .form-control{min-width:120px}
+  .site-header .form-select{display:none}
+}
+
+/* Favorites (header + product) */
+#favorites-link{color:inherit}
+#favorites-count{font-size:.65rem;padding:.25rem .4rem}
+.favorite-toggle{border-radius:6px}
+.favorite-toggle.active i{color:#e0245e}
+.favorite-toggle i{color:#6c757d}
