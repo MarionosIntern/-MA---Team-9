@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sell • Centrix Marketplace</title>
+  <style>
+    :root{--bg:#fff;--text:#0b0d10;--muted:#6b7280;--soft:#f5f7fa;--border:#e5e7eb;--card:#fff;--blue:#2563eb;--blue-2:#1d4ed8;--danger:#dc2626}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:var(--bg);color:var(--text)}
+    /* Header */
+    header{background:#fff;border-bottom:1px solid var(--border)}
+    .hwrap{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand img{height:100px;}
+    .title{font-size:1.35rem;font-weight:800;color:#2563eb}
+    .grow{flex:1}
+    .iconbtn{background:#fff;border:1px solid var(--border);padding:8px 10px;border-radius:10px;cursor:pointer;font-weight:600}
+    .badge{display:inline-flex;min-width:20px;height:20px;align-items:center;justify-content:center;background:var(--blue);color:#fff;border-radius:999px;padding:0 6px;font-size:.8rem;margin-left:6px}
+    .btn{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+    .btn:hover{background:var(--blue-2)}
+    .ghost{background:#fff;border:1px solid var(--border);color:var(--blue)}
+    .danger{background:var(--danger)}
+
+    main{max-width:1200px;margin:0 auto;padding:18px 20px}
+    h1{margin:8px 0 16px}
+    .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+    .card h2{margin:0 0 10px}
+
+    form .row{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:680px){form .row{grid-template-columns:1.2fr .8fr}}
+    label{font-weight:700;margin-top:6px}
+    input[type='text'],input[type='number'],select,textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;background:#fff}
+    textarea{min-height:110px;resize:vertical}
+    .hint{font-size:.85rem;color:var(--muted)}
+
+    .uploader{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-top:8px}
+    .uploader input[type='file']{border:1px dashed var(--border);padding:10px;border-radius:10px;background:#fff}
+    .preview{width:150px;height:150px;border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fafafa}
+    .preview img{max-width:100%;max-height:100%}
+
+    .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+    .item{border:1px solid var(--border);border-radius:12px;background:#fff;overflow:hidden}
+    .thumb{height:170px;display:flex;align-items:center;justify-content:center;background:#f8fafc;border-bottom:1px solid var(--border)}
+    .thumb img{max-width:100%;max-height:100%}
+    .body{padding:12px}
+    .row-actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+    .price{font-weight:800;color:var(--blue)}
+    .muted{color:var(--muted)}
+    .status{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(37,99,235,.1);color:#0b3aa3;font-size:.8rem;font-weight:700}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hwrap">
+      <div class="brand">
+        <img src="https://videos.openai.com/vg-assets/assets%2Ftask_01k45fkm6qf1n866wgcc5150rn%2F1756825911_img_1.webp?st=2025-09-22T13%3A36%3A07Z&se=2025-09-28T14%3A36%3A07Z&sks=b&skt=2025-09-22T13%3A36%3A07Z&ske=2025-09-28T14%3A36%3A07Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=cfbc986b-d2bc-4088-8b71-4f962129715b&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=HPzmo8S40QrAaVTHISr%2Brzb6xRpruHTeopVKPwLiZHM%3D&az=oaivgprodscus" alt="Centrix logo"/>
+        <div class="title">Centrix Marketplace</div>
+      </div>
+      <div class="grow"></div>
+      <button class="iconbtn" onclick="location.href='index.html'">Back to Shop</button>
+      <button id="myCart" class="iconbtn">MyCart <span id="cartCount" class="badge">0</span></button>
+    </div>
+  </header>
+
+  <main>
+    <h1>Add a Product</h1>
+    <div class="grid">
+      <section class="card">
+        <h2>Product details</h2>
+        <form id="sellForm">
+          <div class="row">
+            <div>
+              <label for="p_name">Name</label>
+              <input id="p_name" type="text" placeholder="e.g., Graphic Tee" required />
+            </div>
+            <div>
+              <label for="p_price">Price (USD)</label>
+              <input id="p_price" type="number" min="0" step="0.01" placeholder="e.g., 19.99" required />
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="p_category">Category</label>
+              <select id="p_category">
+                <option>Clothes</option><option>Shoes</option><option>Technology</option><option>Accessories</option><option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="p_condition">Condition</label>
+              <select id="p_condition"><option>New</option><option>Used - Like New</option><option>Used - Good</option><option>Used - Fair</option></select>
+            </div>
+          </div>
+          <label for="p_desc">Description</label>
+          <textarea id="p_desc" placeholder="Short description…"></textarea>
+
+          <div class="uploader">
+            <div>
+              <label for="p_image">Image (optional)</label>
+              <input id="p_image" type="file" accept="image/*" />
+              <div class="hint">Images are stored locally in your browser (demo).</div>
+            </div>
+            <div class="preview" id="imgPreview">No image</div>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+            <button class="btn" type="submit" id="saveBtn">Save product</button>
+            <button class="ghost" type="button" id="resetBtn">Reset</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Product listings</h2>
+        <div id="listings" class="list"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Per-user keys
+    const USER_KEY='cm_user';
+    function getUser(){try{return JSON.parse(localStorage.getItem(USER_KEY)||'null')}catch{return null}}
+    function emailKey(){const u=getUser();return u&&u.email?encodeURIComponent(String(u.email).toLowerCase()):'guest'}
+    function PRODUCTS_KEY(){return `cm_products_${emailKey()}`}
+    function CART_KEY(){return `cm_cart_${emailKey()}`}
+    function getCart(){try{return JSON.parse(localStorage.getItem(CART_KEY())||'[]')}catch{return []}}
+
+    function updateBadge(){document.getElementById('cartCount').textContent=getCart().length}
+    document.getElementById('myCart').onclick=()=>location.href='cart.html'
+
+    const form=document.getElementById('sellForm');
+    const pName=p_name; const pPrice=p_price; const pCat=p_category; const pCond=p_condition; const pDesc=p_desc; const pImg=p_image; const preview=imgPreview; const listings= document.getElementById('listings');
+    let editingId=null;
+
+    function getProducts(){try{return JSON.parse(localStorage.getItem(PRODUCTS_KEY())||'[]')}catch{return []}}
+    function setProducts(a){localStorage.setItem(PRODUCTS_KEY(),JSON.stringify(a))}
+
+    pImg.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0]; if(!f){preview.innerHTML='No image'; delete preview.dataset.src; return;} const r=new FileReader(); r.onload=(ev)=>{preview.innerHTML=`<img src='${ev.target.result}' alt='preview'>`; preview.dataset.src=ev.target.result}; r.readAsDataURL(f);});
+
+    form.addEventListener('submit',e=>{e.preventDefault(); const name=pName.value.trim(); const price=Number(pPrice.value); if(!name||!(price>=0)){alert('Enter a valid name and price.');return} const product={id:editingId||('p'+Date.now()),name,price:Number(price.toFixed(2)),category:pCat.value,condition:pCond.value,description:pDesc.value.trim(),img:preview.dataset.src||null,status:'active',updatedAt:new Date().toISOString()}; const all=getProducts(); const i=all.findIndex(x=>x.id===product.id); if(i>-1) all[i]=product; else all.unshift(product); setProducts(all); alert(editingId?'Product updated!':'Product saved!'); resetForm(); renderListings();});
+
+    resetBtn.onclick=()=>resetForm();
+    function resetForm(){editingId=null; form.reset(); preview.innerHTML='No image'; delete preview.dataset.src; saveBtn.textContent='Save product'}
+
+    function renderListings(){const items=getProducts(); if(!items.length){listings.innerHTML=`<div class='muted'>No listings yet.</div>`; return} listings.innerHTML=items.map(p=>`<article class='item' data-id='${p.id}'> <div class='thumb'>${p.img?`<img src='${p.img}' alt='${p.name}'>`:'<span class="muted">No image</span>'}</div> <div class='body'><div style='display:flex;justify-content:space-between;gap:10px;align-items:center'><strong>${p.name}</strong><span class='status'>${p.status==='active'?'Active':'Hidden'}</span></div><div class='price'>$${p.price.toFixed(2)}</div><div class='muted'>${p.category||'Uncategorized'} • ${p.condition||'—'}</div><div class='row-actions'><button class='ghost' onclick="editP('${p.id}')">Edit</button><button class='danger btn' onclick="delP('${p.id}')">Delete</button><button class='btn' onclick="toggleP('${p.id}')">${p.status==='active'?'Hide':'Activate'}</button></div></div></article>`).join('')}
+
+    window.editP=(id)=>{const p=getProducts().find(x=>x.id===id); if(!p)return; editingId=id; pName.value=p.name; pPrice.value=p.price; pCat.value=p.category||'Other'; pCond.value=p.condition||'New'; pDesc.value=p.description||''; if(p.img){preview.innerHTML=`<img src='${p.img}' alt='preview'>`; preview.dataset.src=p.img}else{preview.innerHTML='No image'; delete preview.dataset.src} saveBtn.textContent='Update product'; window.scrollTo({top:0,behavior:'smooth'})}
+    window.delP=(id)=>{if(!confirm('Delete this product?'))return; setProducts(getProducts().filter(x=>x.id!==id)); renderListings()}
+    window.toggleP=(id)=>{const all=getProducts(); const p=all.find(x=>x.id===id); if(!p)return; p.status=p.status==='active'?'hidden':'active'; p.updatedAt=new Date().toISOString(); setProducts(all); renderListings()}
+
+    updateBadge(); renderListings();
+  </script>
+</body>
+</html>
