@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Centrix - Customer Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header py-3 border-bottom">
+        <div class="container">
+            <nav role="navigation" aria-label="Top navigation"
+                class="d-flex align-items-center justify-content-between">
+                <a href="#" class="d-flex align-items-center text-decoration-none">
+                    <img src="https://videos.openai.com/vg-assets/assets%2Ftask_01k45fkm6qf1n866wgcc5150rn%2F1756825911_img_1.webp?st=2025-09-22T13%3A36%3A07Z&se=2025-09-28T14%3A36%3A07Z&sks=b&skt=2025-09-22T13%3A36%3A07Z&ske=2025-09-28T14%3A36%3A07Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=cfbc986b-d2bc-4088-8b71-4f962129715b&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=HPzmo8S40QrAaVTHISr%2Brzb6xRpruHTeopVKPwLiZHM%3D&az=oaivgprodscus"
+                        alt="Centrix Marketplace logo" width="70" height="70" class="me-2">
+                    <span class="h4 mb-0">Centrix Marketplace</span>
+                </a>
+                <div class="d-flex align-items-center gap-3">
+            <a href="#" id="open-cart" class="text-decoration-none" aria-label="View cart"> MyCart <span id="cart-count"
+                class="badge bg-primary text-white ms-1" aria-live="polite" aria-atomic="true">0</span></a>
+                    <!-- Favorites icon (header) -->
+                    <a href="favorites.html" id="favorites-link" class="text-decoration-none position-relative" aria-label="View favorites" title="Favorites">
+                        <i id="header-heart" class="bi bi-heart" style="font-size:1.25rem;color:#fff;"></i>
+                        <span id="favorites-count" class="badge bg-danger text-white position-absolute" style="top:-6px;right:-10px;display:none">0</span>
+                    </a>
+                    <a href="signin.html" class="btn btn-outline-primary btn-sm"
+                        aria-label="Sign in to your account">Sign in</a>
+                </div>
+            </nav>
+
+            <div class="mt-3">
+                <form id="search-form" class="d-flex" role="search" aria-label="Search products">
+                    <select name="category" class="form-select me-2" style="max-width:180px;"
+                        aria-label="Category select">
+                        <option value="all" selected>All</option>
+                        <option value="Clothes">Clothes</option>
+                        <option value="Shoes">Shoes</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Home">Home</option>
+                    </select>
+                    <input id="search-input" name="q" class="form-control me-2" type="search"
+                        placeholder="Search Centrix" aria-label="Search products">
+
+                    <div class="btn-group">
+                        <button id="search-submit" class="btn btn-primary" type="submit"
+                            aria-label="Search">Search</button>
+                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                            data-bs-toggle="dropdown" aria-expanded="false" aria-label="Search suggestions">
+                            <span class="visually-hidden">Toggle search suggestions</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#" data-term="Clothes">Clothes</a></li>
+                            <li><a class="dropdown-item" href="#" data-term="Shoes">Shoes</a></li>
+                            <li><a class="dropdown-item" href="#" data-term="Technology">Technology</a></li>
+                            <li><a class="dropdown-item" href="#" data-term="Vendors">Accessories</a></li>
+                            <li><a class="dropdown-item" href="#" data-term="Home">Home</a></li>
+
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" role="main">
+        <section class="market-hero py-4">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h2 class="mb-0">Featured deals</h2>
+                    <a href="#categories" class="btn btn-link">Browse categories</a>
+                </div>
+                <div class="mt-3">
+                    <img src="https://videos.openai.com/vg-assets/assets%2Ftask_01k5y1w9vcfrzrchbgr71bscjv%2F1758724096_img_0.webp?st=2025-09-24T12%3A59%3A38Z&se=2025-09-30T13%3A59%3A38Z&sks=b&skt=2025-09-24T12%3A59%3A38Z&ske=2025-09-30T13%3A59%3A38Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=b4ab33b8-2ad4-40af-8ed0-a2b350b6603c&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=T0Kzz5gWMBhlm6%2FeMSeOkkIht4V1wLCLN%2Ba34T0xyaA%3D&az=oaivgprodscus" alt="Featured banner" class="img-fluid rounded"
+                        style=" width:200%; height:auto; transform: scale(0.9) ">
+                </div>
+            </div>
+        </section>
+
+        <section id="categories" class="py-4 bg-white">
+            <div class="container">
+                <div class="d-flex gap-3 overflow-auto pb-2">
+                    <button class="btn btn-outline-secondary">All</button>
+                    <button class="btn btn-outline-secondary">Clothes</button>
+                    <button class="btn btn-outline-secondary">Shoes</button>
+                    <button class="btn btn-outline-secondary">Technology</button>
+                    <button class="btn btn-outline-secondary">Accessories</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="products" class="py-5 bg-light">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="mb-0">Popular products</h2>
+                    <small class="text-muted">Showing 6 of 120 results</small>
+                </div>
+
+                <div class="row g-4">
+
+                    <div class="col-6 col-md-3">
+                        <article class="card h-100 p-3" role="article" aria-labelledby="product-1-title">
+                            <img src="https://www.snipesusa.com/dw/image/v2/BFKF_PRD/on/demandware.static/-/Sites-snipes-master-catalog/default/dw96d9fa8a/images/hi-res/graphic-tees_scft23-01_01.jpg?sw=400&sh=502&strip=false"
+                                alt="Graphic Tee thumbnail" class="img-fluid mb-3"
+                                style="height:140px; object-fit:contain;">
+                            <h3 id="product-1-title" class="h6">Scarface Tee Tee</h3>
+                            <p class="text-muted mb-1"> Graphic Tees Shirt Unisex Cotton Oversized T-Shirt </p>
+                            <p class="text-muted mb-1"> Two day shipping</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong>$15</strong>
+                                <button type="button" class="btn btn-light btn-sm me-2 favorite-toggle" data-product-id="product-1" aria-pressed="false" aria-label="Add Graphic Tee to favorites"></button>
+                                <a href="#" data-product-id="product-1" class="btn btn-sm btn-outline-primary add-to-cart" aria-label="Add Graphic Tee to cart">Add</a>
+                                <a href="./products.html?id=product-1" class="btn btn-sm btn-link" aria-label="View Graphic Tee details">View</a>
+
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <article class="card h-100 p-3" role="article" aria-labelledby="product-2-title">
+                            <img src="https://img4.dhresource.com/webp/m/0x0/f3/albu/jc/j/14/c5526e84-cc7e-4aa0-aded-81a47f9f0495.jpg"
+                                alt="Cargo Pants image" class="img-fluid mb-3"
+                                style="height:140px; object-fit:contain;">
+                            <h3 id="product-2-title" class="h6"> Womens Cargo Pants</h3>
+                            <p class="text-muted mb-1">Women High Waisted Cargo Pants Wide Leg Casual</p>
+                            <p class="text-muted mb-1">One day shipping</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong>$39</strong>
+                                <a href="#" data-product-id="product-2" class="btn btn-sm btn-outline-primary add-to-cart"
+                                    aria-label="Add Cargo Pants to cart">Add </a>
+                                <a href="./products.html?id=product-2" class="btn btn-sm btn-link" aria-label="View Cargo Pants details">View</a>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <article class="card h-100 p-3" role="article" aria-labelledby="product-3-title">
+                            <img src="data:image/jpeg;base64,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" alt="Panda Dunks thumbnail" class="img-fluid mb-3"
+                                style="height:140px; object-fit:contain;">
+                            <h3 id="product-3-title" class="h6">Panda Dunks</h3>
+                            <p class="text-muted mb-1">Men's Dunk Low Retro Sneaker</p>
+                            <p class="text-muted mb-1">Five day shipping</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong>$120</strong>
+                                <a href="#" data-product-id="product-3" class="btn btn-sm btn-outline-primary add-to-cart" aria-label="Book Panda Dunks">Add</a>
+                                <a href="./products.html?id=product-3" class="btn btn-sm btn-link" aria-label="View Panda Dunks details">View</a>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <article class="card h-100 p-3" role="article" aria-labelledby="product-4-title">
+                            <img src="https://m.media-amazon.com/images/I/61kHENeCK8L.jpg" alt="Sony Camera thumbnail" class="img-fluid mb-3"
+                                style="height:140px; object-fit:contain;">
+                            <h3 id="product-4-title" class="h6">Sony Camera</h3>
+                            <p class="text-muted mb-1">Sony Alpha a6400 Mirrorless Camera</p>
+                            <p class="text-muted mb-1">Three day shipping</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong>$499</strong>
+                                <a href="#" data-product-id="product-4" class="btn btn-sm btn-outline-primary add-to-cart"
+                                    aria-label="Request Sony Camera Setup">Add</a>
+                                <a href="./products.html?id=product-4" class="btn btn-sm btn-link" aria-label="View Sony Camera details">View</a>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <article class="card h-100 p-3" role="article" aria-labelledby="product-5-title">
+                            <img src="data:image/jpeg;base64,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" alt="Beats Headphones thumbnail" class="img-fluid mb-3"
+                                style="height:140px; object-fit:contain;">
+                            <h3 id="product-5-title" class="h6">Beats Headphones</h3>
+                            <p class="text-muted mb-1">Beats Solo3 Wireless headphones</p>
+                            <p class="text-muted mb-1">One day shipping</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong>$199</strong>
+                                <a href="#" data-product-id="product-5" class="btn btn-sm btn-outline-primary add-to-cart"
+                                    aria-label="Request Beats Headphones">Add</a>
+                                <a href="./products.html?id=product-5" class="btn btn-sm btn-link" aria-label="View Beats Headphones details">View</a>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <article class="card h-100 p-3" role="article" aria-labelledby="product-6-title">
+                            <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRuTuLvGzoLlzGzU0cNwytKNKXnnpJ3WA0xz684JaZc3pToTPW9y_GaqMWIyK3XiVt-tUTdNlM2SAcIIuLzApzTNZjgQseQDQrYzV0hBJqlYEmgTgt-ENUIox2CKW50YWhMXx-asNkxogc&usqp=CAc" alt="iPhone thumbnail" class="img-fluid mb-3"
+                                style="height:140px; object-fit:contain;">
+                            <h3 id="product-6-title" class="h6">iPhone 17</h3>
+                            <p class="text-muted mb-1">Apple iPhone 17</p>
+                            <p class="text-muted mb-1">Four day shipping</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong>$1000</strong>
+                                <a href="#" data-product-id="product-6" class="btn btn-sm btn-outline-primary add-to-cart" aria-label="Request iPhone">Add</a>
+                                <a href="./products.html?id=product-6" class="btn btn-sm btn-link" aria-label="View iPhone details">View</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+        </section>
+
+        <section id="contact" class="py-5">
+            <div class="container">
+                <h2>Contact Us</h2>
+                <p class="mb-3">Questions or ready to get started? Reach out and we'll respond within 1 business day.
+                </p>
+                <a href="#" class="btn btn-primary">Contact Centrix</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-4 bg-dark text-white">
+        <div class="container d-flex justify-content-between">
+            <small>&copy; Centrix 2025</small>
+            <div>
+                <a href="#" class="text-white text-decoration-none me-3">Privacy</a>
+                <a href="#" class="text-white text-decoration-none">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Cart modal -->
+        <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="cart-items-area">Loading cart...</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue shopping</button>
+                        <a id="checkout-link" class="btn btn-primary" href="checkout.html">Checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+    // Cart helper: stores cart as array of {id, qty} in localStorage under 'centrix_cart'
+    function readCart() {
+        try {
+            return JSON.parse(localStorage.getItem('centrix_cart')) || [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function writeCart(cart) {
+        localStorage.setItem('centrix_cart', JSON.stringify(cart));
+    }
+
+    function cartCount() {
+        const cart = readCart();
+        return cart.reduce((sum, it) => sum + (it.qty || 0), 0);
+    }
+
+    function updateCartBadge() {
+        const el = document.getElementById('cart-count');
+        if (!el) return;
+        el.textContent = String(cartCount());
+    }
+
+    function addToCart(id, qty = 1) {
+        if (!id) return;
+        const cart = readCart();
+        const found = cart.find(c => c.id === id);
+        if (found) {
+            found.qty = (found.qty || 0) + qty;
+        } else {
+            cart.push({ id, qty });
+        }
+        writeCart(cart);
+        console.log('addToCart ->', id, qty, 'cart now:', cart);
+        updateCartBadge();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateCartBadge();
+        // Delegate clicks for add-to-cart links
+        document.body.addEventListener('click', (e) => {
+            const a = e.target.closest && e.target.closest('.add-to-cart');
+            if (!a) return;
+            e.preventDefault();
+            const id = a.getAttribute('data-product-id');
+            addToCart(id, 1);
+        });
+    });
+
+        // Wire search suggestion clicks: populate input and submit form
+        (function () {
+            const form = document.getElementById('search-form');
+            const input = document.getElementById('search-input');
+
+            document.querySelectorAll('.dropdown-item[data-term]').forEach(item => {
+                item.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const term = this.getAttribute('data-term');
+                    input.value = term;
+                    // Submit the form programmatically
+                    form.requestSubmit ? form.requestSubmit() : form.submit();
+                });
+            });
+        })();
+
+                (function(){
+                        const heart = document.getElementById("heartIcon");
+                        const favLink = document.getElementById("favLink");
+                        if(!favLink) return;
+                        if(!heart){
+                                // If there's no heart icon present, just toggle a class on the link for feedback
+                                favLink.addEventListener('click', function(e){ e.preventDefault(); favLink.classList.toggle('active'); });
+                                return;
+                        }
+                        favLink.addEventListener("click", function(e) {
+                                e.preventDefault();
+                                // Toggle between empty and filled heart
+                                if (heart.classList.contains("fa-regular")) {
+                                        heart.classList.remove("fa-regular");
+                                        heart.classList.add("fa-solid");
+                                } else {
+                                        heart.classList.remove("fa-solid");
+                                        heart.classList.add("fa-regular");
+                                }
+                        });
+                })();
+
+                // Cart modal rendering and item removal
+                (function(){
+                    const cartModalEl = document.getElementById('cartModal');
+                    const cartItemsArea = document.getElementById('cart-items-area');
+                    const openCart = document.getElementById('open-cart');
+                    const checkoutLink = document.getElementById('checkout-link');
+                    const bsCartModal = cartModalEl ? new bootstrap.Modal(cartModalEl) : null;
+
+                    function formatLineItem(item){
+                        // Try to read title/price from the DOM product list as a fallback
+                        let title = item.id;
+                        const titleEl = document.querySelector(`[data-product-id="${item.id}"]`) ;
+                        if(titleEl){
+                            // try to find nearest card title
+                            const card = titleEl.closest('.card');
+                            if(card){
+                                const h = card.querySelector('h3, h5, .h6');
+                                if(h) title = h.textContent.trim();
+                            }
+                        }
+                        return `<div class="d-flex align-items-center justify-content-between mb-2" data-cart-id="${item.id}">
+                            <div>
+                              <div class="fw-semibold">${escapeHtml(title)}</div>
+                              <div class="text-muted">Qty: ${item.qty}</div>
+                            </div>
+                            <div>
+                              <button class="btn btn-sm btn-outline-danger remove-from-cart" data-product-id="${item.id}">Remove</button>
+                            </div>
+                        </div>`;
+                    }
+
+                    window.renderCartModal = function(){
+                        const cart = readCart();
+                        if(!cartItemsArea) return;
+                        if(cart.length === 0){ cartItemsArea.innerHTML = '<div class="text-muted">Your cart is empty.</div>'; checkoutLink.classList.add('disabled'); checkoutLink.setAttribute('aria-disabled','true'); return; }
+                        cartItemsArea.innerHTML = cart.map(formatLineItem).join('\n');
+                        checkoutLink.classList.remove('disabled'); checkoutLink.removeAttribute('aria-disabled');
+                        // wire remove buttons
+                        cartItemsArea.querySelectorAll('.remove-from-cart').forEach(btn => {
+                            btn.addEventListener('click', function(e){
+                                const pid = this.getAttribute('data-product-id');
+                                removeFromCart(pid);
+                            });
+                        });
+                    };
+
+                    window.removeFromCart = function(productId){
+                        if(!productId) return;
+                        const cart = readCart();
+                        const idx = cart.findIndex(c => c.id === productId);
+                        if(idx === -1) return;
+                        cart.splice(idx,1);
+                        writeCart(cart);
+                        updateCartBadge();
+                        // re-render modal contents
+                        renderCartModal();
+                    };
+
+                    if(openCart){
+                        openCart.addEventListener('click', function(e){
+                            e.preventDefault();
+                            renderCartModal();
+                            if(bsCartModal) bsCartModal.show();
+                        });
+                    }
+                })();
+</script>
+</body>
+
+</html>
