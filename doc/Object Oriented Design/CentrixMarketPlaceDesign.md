@@ -71,3 +71,4 @@ A customer can leave comments and ratings on products they purchased.
 ![UML Class Diagaram](class-diagram-1.png)
 
 ## 4. Database Schema
+![Database Schema](image.png)
