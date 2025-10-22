@@ -21,7 +21,7 @@ Table of Contents
 | Name  | Date    | Reason For Changes  | Version   |
 | ----  | ------- | ------------------- | --------- |
 |Mariono|10/19    | Initial Design      |    1      |
-|       |         |                     |           |
+|Aliyah |10/20    | Initial Design      |     1     |
 |       |         |                     |           |
 
 ## 1. Product Overview
@@ -71,4 +71,4 @@ A customer can leave comments and ratings on products they purchased.
 ![UML Class Diagaram](class-diagram-1.png)
 
 ## 4. Database Schema
-![Database Schema](image.png)
+![alt text](image.png)
