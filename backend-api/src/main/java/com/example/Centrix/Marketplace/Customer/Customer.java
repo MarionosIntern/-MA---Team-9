@@ -2,7 +2,7 @@ package com.example.Centrix.Marketplace.Customer;
 
 import com.example.Centrix.Marketplace.Subscription.Subscription;
 import jakarta.persistence.*;
-// validation annotations removed to avoid compile dependency on jakarta.validation
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
