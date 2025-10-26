@@ -17,11 +17,6 @@ public class Provider{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Column(nullable = false)
-    private String name;
-
-
     public Long getId() {
         return id;
     }
@@ -29,6 +24,10 @@ public class Provider{
     public void setId(Long id) {
         this.id = id;
     }
+
+    @NotBlank
+    @Column(nullable = false)
+    private String name;
 
     public String getName() {
         return name;
@@ -38,7 +37,12 @@ public class Provider{
         this.name = name;
     }
 
-    public String getEmail() {
+    @Email
+    @NotBlank
+    @Column(unique = true, nullable = false)
+    private String email;
+
+      public String getEmail() {
         return email;
     }
 
@@ -46,7 +50,11 @@ public class Provider{
         this.email = email;
     }
 
-    public String getPassword() {
+    @NotBlank
+    @Column(nullable = false)
+    private String password;
+
+      public String getPassword() {
         return password;
     }
 
@@ -54,7 +62,12 @@ public class Provider{
         this.password = password;
     }
 
-    public String getAddress() {
+
+    @NotBlank
+    @Column(nullable = false)
+    private String address;
+
+      public String getAddress() {
         return address;
     }
 
@@ -62,6 +75,12 @@ public class Provider{
         this.address = address;
     }
 
+    @OneToOne(mappedBy = "provider", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("provider")
+
+    private Provider provider; 
+    private String phoneNumber;
+     
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -69,24 +88,6 @@ public class Provider{
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    @Email
-    @NotBlank
-    @Column(unique = true, nullable = false)
-    private String email;
-
-    @NotBlank
-    @Column(nullable = false)
-    private String password;
-
-    @NotBlank
-    @Column(nullable = false)
-    private String address;
-
-    @OneToOne(mappedBy = "provider", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("provider")
-
-    private Provider provider; 
-    private String phoneNumber;
 
     public Provider(Long id, String name, String email, String password, String address, String phoneNumber){
         this.id = id;
