@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -28,7 +30,10 @@ public class ProviderService {
             throw new IllegalArgumentException("Email already in use");
         }
 
+        provider.setName(providerDetails.getName());
         provider.setEmail(providerDetails.getEmail());
+        provider.setPassword(providerDetails.getPassword());
+        provider.setAddress(providerDetails.getAddress());
         provider.setPhoneNumber(providerDetails.getPhoneNumber());
 
         return providerRepository.save(provider);
@@ -42,5 +47,16 @@ public class ProviderService {
     public Provider getProviderByEmail(String email){
         return providerRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Provider not found with email: " + email));
+    }
+
+    public List<Provider> getAll(){
+        return providerRepository.findAll();
+    }
+
+    public void delete(Long id){
+        if (!providerRepository.existsById(id)) {
+            throw new EntityNotFoundException("Provider not found with id: " + id);
+        }
+        providerRepository.deleteById(id);
     }
 }
