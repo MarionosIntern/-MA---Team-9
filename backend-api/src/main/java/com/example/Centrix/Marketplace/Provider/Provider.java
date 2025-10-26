@@ -89,6 +89,8 @@ public class Provider{
         this.phoneNumber = phoneNumber;
     }
 
+    public Provider(){}
+
     public Provider(Long id, String name, String email, String password, String address, String phoneNumber){
         this.id = id;
         this.name = name;

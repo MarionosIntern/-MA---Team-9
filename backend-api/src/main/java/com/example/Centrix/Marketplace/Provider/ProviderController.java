@@ -2,6 +2,7 @@ package com.example.Centrix.Marketplace.Provider;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ public class ProviderController{
     private final ProviderService providerService;
 
     @postMapping
-    public ResponseEntity<Farmer> createProvider(@Valid @RequestBody Provider provider){
+    public ResponseEntity<Provider> createProvider(@Valid @RequestBody Provider provider){
         return ResponseEntity.ok(providerService.createProvider(provider));
     }
 
