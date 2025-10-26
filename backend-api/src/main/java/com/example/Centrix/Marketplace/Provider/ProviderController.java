@@ -6,13 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/api/providers")
 @RequiredArgsConstructor
 public class ProviderController{
     private final ProviderService providerService;
 
-    @postMapping
+    @PostMapping
     public ResponseEntity<Provider> createProvider(@Valid @RequestBody Provider provider){
         return ResponseEntity.ok(providerService.createProvider(provider));
     }
