@@ -1,4 +1,4 @@
-package com.example.Centrix.Marketplace.;
+package com.example.Centrix.Marketplace;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
