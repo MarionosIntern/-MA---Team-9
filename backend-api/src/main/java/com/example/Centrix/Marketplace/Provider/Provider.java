@@ -21,6 +21,8 @@ public class Provider{
     @Column(nullable = false)
     private String name;
 
+
+
     @Email
     @NotBlank
     @Column(unique = true, nullable = false)
@@ -40,7 +42,11 @@ public class Provider{
     private Provider provider; 
     private String phoneNumber;
 
-    public Provider(Long id){
+    public Provider(Long id, String name, String email, String password, String address, String phoneNumber){
         this.id = id;
+        this.name = name;
+        this.email = email; 
+        this.password = password;
+        this.address = address;
     }
 }

@@ -12,7 +12,7 @@ public class ProviderController{
     private final ProviderService providerService;
 
     @postMapping
-    public ResponseEntity<Farmer> createFarmer(@Valid @RequestBody Provider provider){
+    public ResponseEntity<Farmer> createProvider(@Valid @RequestBody Provider provider){
         return ResponseEntity.ok(providerService.createProvider(provider));
     }
 
