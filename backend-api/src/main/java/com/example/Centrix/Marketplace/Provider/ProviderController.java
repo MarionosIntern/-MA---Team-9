@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-@SuppressWarnings("rawtypes")
 @RestController
 @RequestMapping("/api/providers")
 public class ProviderController {
