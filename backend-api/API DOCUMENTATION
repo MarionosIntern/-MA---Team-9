@@ -1,0 +1,13 @@
+### Create Farmer
+```http
+POST /api/providers
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "jdoe@seller.com",
+    "password": "securePassword123",
+    "phoneNumber": "111-222-3333"
+}
+```
+
