@@ -13,24 +13,25 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
     private Long productId;
 
     @Column(name = "provider_id", nullable = false)
     private Long providerId;
 
-    @Column(nullable = false, length = 255)
+    @Column( name = "name", nullable = false, length = 255)
     private String name;
 
-    @Column(nullable = false) 
+    @Column(name = "category", nullable = false) 
     private String category;
 
-    @Column(nullable = false)
+    @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(nullable = false, length = 1000)
+    @Column(name = "description", nullable = false, length = 1000)
     private String description;
 
-    @Column(nullable = false)
+    @Column(name = "status", nullable = false)
     private String status; 
 
     public Product() {}

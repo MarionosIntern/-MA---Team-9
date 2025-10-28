@@ -2,6 +2,7 @@ package com.example.Centrix.Marketplace.Provider;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +29,8 @@ public class ProviderController {
     // CREATE
     @PostMapping
     public ResponseEntity<Provider> createProvider(@Valid @RequestBody Provider provider) {
-        Provider saved = providerService.createProvider(provider);
-        return ResponseEntity.ok(saved);
+        Provider created = providerService.createProvider(provider);
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     // UPDATE
