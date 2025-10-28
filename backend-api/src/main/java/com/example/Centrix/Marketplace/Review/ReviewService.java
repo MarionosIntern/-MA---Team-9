@@ -3,7 +3,7 @@ package com.example.Centrix.Marketplace.Review;
 import java.time.LocalDateTime;
 import java.util.List;
 import com.example.Centrix.Marketplace.Customer.Customer;
-import com.example.Centrix.Marketplace.Products.Products;
+import com.example.Centrix.Marketplace.Product.Product;
 import com.example.Centrix.Marketplace.Provider.Provider;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -19,22 +19,22 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
-    public double getAverageOverallRating(Products products) {
-        List<Review> reviews = reviewRepository.findByProducts(products);
+    public double getAverageOverallRating(Product product) {
+        List<Review> reviews = reviewRepository.findByProduct(product);
         return reviews.stream()
                 .mapToDouble(r -> r.overallRating != null ? r.overallRating : 0.0)
                 .average().orElse(0.0);
     }
 
-    public double getAverageQualityRating(Products products) {
-        List<Review> reviews = reviewRepository.findByProducts(products);
+    public double getAverageQualityRating(Product product) {
+        List<Review> reviews = reviewRepository.findByProduct(product);
         return reviews.stream()
                 .mapToDouble(r -> r.qualityRating != null ? r.qualityRating : 0.0)
                 .average().orElse(0.0);
     }
 
-    public double getAverageDeliveryRating(Products products) {
-        List<Review> reviews = reviewRepository.findByProducts(products);
+    public double getAverageDeliveryRating(Product product) {
+        List<Review> reviews = reviewRepository.findByProduct(product);
         return reviews.stream()
                 .mapToDouble(r -> r.deliveryRating != null ? r.deliveryRating : 0.0)
                 .average().orElse(0.0);
@@ -65,8 +65,8 @@ public class ReviewService {
         reviewRepository.deleteById(id);
     }
 
-    public List<Review> getReviewsByProducts(Products products) {
-        return reviewRepository.findByProducts(products);
+    public List<Review> getReviewsByProduct(Product product) {
+        return reviewRepository.findByProduct(product);
     }
 
     public List<Review> getReviewsByCustomer(Customer customer) {
@@ -74,6 +74,6 @@ public class ReviewService {
     }
 
     public List<Review> getReviewsByProvider(Provider provider) {
-        return reviewRepository.findByProductsProvider(provider);
+        return reviewRepository.findByProvider(provider);
     }
 }

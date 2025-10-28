@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 
 import com.example.Centrix.Marketplace.Customer.Customer;
-import com.example.Centrix.Marketplace.Products.Products;
-import com.example.Centrix.Marketplace.Provider.Provider;
+import com.example.Centrix.Marketplace.Product.Product;
+
 
 @Entity
 @Table(name = "reviews")
@@ -24,7 +24,7 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     @JsonIgnoreProperties("reviews")
-    Products products;
+    Product product;
 
     // Ratings and comments
     Double qualityRating;

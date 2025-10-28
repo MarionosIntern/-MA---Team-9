@@ -3,7 +3,7 @@ package com.example.Centrix.Marketplace.Review;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import com.example.Centrix.Marketplace.Products.Products;
+import com.example.Centrix.Marketplace.Product.Product;
 import com.example.Centrix.Marketplace.Provider.Provider;
 
 import org.springframework.http.ResponseEntity;
@@ -42,32 +42,32 @@ public class ReviewController {
     @GetMapping("/product/{productId}")
     public ResponseEntity<List<Review>> getProductReviews(@PathVariable Long productId) {
         // will resolve Products via ProductsService in future; here we accept productId and construct a lightweight lookup
-        Products p = new Products();
-        p.id = productId;
-        return ResponseEntity.ok(reviewService.getReviewsByProducts(p));
+        Product product = new Product();
+        product.setId(productId);
+        return ResponseEntity.ok(reviewService.getReviewsByProduct(product));
     }
 
     @GetMapping("/product/{productId}/ratings")
     public ResponseEntity<Map<String, Double>> getProductRatings(@PathVariable Long productId) {
-        Products p = new Products();
-        p.id = productId;
+        Product product = new Product();
+        product.setId(productId);
         Map<String, Double> ratings = new HashMap<>();
-        ratings.put("overall", reviewService.getAverageOverallRating(p));
-    ratings.put("quality", reviewService.getAverageQualityRating(p));
-        ratings.put("delivery", reviewService.getAverageDeliveryRating(p));
+        ratings.put("overall", reviewService.getAverageOverallRating(product));
+        ratings.put("quality", reviewService.getAverageQualityRating(product));
+        ratings.put("delivery", reviewService.getAverageDeliveryRating(product));
         return ResponseEntity.ok(ratings);
     }
 
     @GetMapping("/provider/{providerId}")
     public ResponseEntity<List<Review>> getProviderReviews(@PathVariable Long providerId) {
-        Provider prov = new Provider();
-        prov.id = providerId;
-        return ResponseEntity.ok(reviewService.getReviewsByProvider(prov));
+        Provider provider = new Provider();
+        provider.setId(providerId);
+        return ResponseEntity.ok(reviewService.getReviewsByProvider(provider));
     }
 
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<List<Review>> getCustomerReviews(@PathVariable Long customerId) {
-        Customer c = customerService.getCustomerById(customerId);
-        return ResponseEntity.ok(reviewService.getReviewsByCustomer(c));
+        Customer customer = customerService.getCustomerById(customerId);
+        return ResponseEntity.ok(reviewService.getReviewsByCustomer(customer));
     }
 }
