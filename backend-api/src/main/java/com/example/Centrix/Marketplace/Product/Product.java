@@ -1,30 +1,21 @@
 package com.example.Centrix.Marketplace.Product;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@SuppressWarnings("unused")
 @Entity
 @Table(name = "products")
+public class Product {
 
-public class Product{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 
-    @ManyToOne
-    @JoinColumn(name = "provider_id", nullable = false)
-
-    @Column(nullable = false)
+    @Column(name = "provider_id", nullable = false)
     private Long providerId;
 
     @Column(nullable = false, length = 255)
@@ -39,13 +30,12 @@ public class Product{
     @Column(nullable = false, length = 1000)
     private String description;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private String status; 
 
     public Product() {}
 
-    public Product(Long productId, long providerId, String name,String category,  double price, String description, String status) {
+    public Product(Long productId, Long providerId, String name, String category, double price, String description, String status) {
         this.productId = productId;
         this.providerId = providerId;
         this.name = name;
@@ -72,8 +62,8 @@ public class Product{
     public Long getProductId() {return productId;}
     public void setProductId(Long productId) {this.productId = productId;}
     
-    public long getProviderId() {return providerId;}
-    public void setProviderId(long providerId) {this.providerId = providerId;}
+    public Long getProviderId() {return providerId;}
+    public void setProviderId(Long providerId) {this.providerId = providerId;}
    
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
@@ -89,15 +79,5 @@ public class Product{
     
     public String getStatus() {return status;}
     public void setStatus(String status) {this.status = status;}
-
-
-
-
-
-
-
-
-
-
 }
 

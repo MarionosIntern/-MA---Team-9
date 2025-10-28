@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "CentrixMarketplaceApplication",
+            "request": "launch",
+            "mainClass": "com.example.Centrix.Marketplace.CentrixMarketplaceApplication",
+            "projectName": "Centrix-Marketplace-backend-api"
+        },
+        {
             "type": "jdk",
             "request": "launch",
             "name": "Launch Java App"
