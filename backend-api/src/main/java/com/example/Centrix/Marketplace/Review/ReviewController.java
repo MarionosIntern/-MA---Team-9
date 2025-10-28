@@ -42,15 +42,15 @@ public class ReviewController {
     @GetMapping("/product/{productId}")
     public ResponseEntity<List<Review>> getProductReviews(@PathVariable Long productId) {
         // will resolve Products via ProductsService in future; here we accept productId and construct a lightweight lookup
-        Product product = new Product();
-        product.setId(productId);
-        return ResponseEntity.ok(reviewService.getReviewsByProduct(product));
+    Product product = new Product();
+    product.setProductId(productId);
+    return ResponseEntity.ok(reviewService.getReviewsByProduct(product));
     }
 
     @GetMapping("/product/{productId}/ratings")
     public ResponseEntity<Map<String, Double>> getProductRatings(@PathVariable Long productId) {
-        Product product = new Product();
-        product.setId(productId);
+    Product product = new Product();
+    product.setProductId(productId);
         Map<String, Double> ratings = new HashMap<>();
         ratings.put("overall", reviewService.getAverageOverallRating(product));
         ratings.put("quality", reviewService.getAverageQualityRating(product));
@@ -60,9 +60,9 @@ public class ReviewController {
 
     @GetMapping("/provider/{providerId}")
     public ResponseEntity<List<Review>> getProviderReviews(@PathVariable Long providerId) {
-        Provider provider = new Provider();
-        provider.setId(providerId);
-        return ResponseEntity.ok(reviewService.getReviewsByProvider(provider));
+    Provider provider = new Provider();
+    provider.setId(providerId);
+    return ResponseEntity.ok(reviewService.getReviewsByProvider(provider));
     }
 
     @GetMapping("/customer/{customerId}")
