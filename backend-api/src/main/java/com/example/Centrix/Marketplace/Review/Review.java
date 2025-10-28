@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 
 import com.example.Centrix.Marketplace.Customer.Customer;
+import com.example.Centrix.Marketplace.Products.Products;
+import com.example.Centrix.Marketplace.Provider.Provider;
 
 @Entity
 @Table(name = "reviews")
@@ -18,9 +20,14 @@ public class Review {
     @JsonIgnoreProperties({"reviews", "subscriptions"})
     Customer customer;
 
-    // Products/ProduceBox type not present in backend; omit relation to keep package compile-clean
+    // Link to the Products entity (will exist in the Products package)
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnoreProperties("reviews")
+    Products products;
+
     // Ratings and comments
-    Double freshnessRating;
+    Double qualityRating;
     Double deliveryRating;
     Double overallRating;
 
