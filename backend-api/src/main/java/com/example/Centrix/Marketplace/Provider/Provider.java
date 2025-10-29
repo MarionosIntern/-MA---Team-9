@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -20,23 +19,23 @@ public class Provider {
     @Column(name = "provider_id")
     private Long id;
 
-    @NotBlank(message = "name is required")
+
     @Size(max = 120)
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotBlank(message = "email is required")
+    
     @Email
     @Size(max = 160)
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "password is required")
+   
     @Size(min = 6, max = 255)
     @Column(name = "password", nullable = false)
     private String password;
 
-    @NotBlank(message = "address is required")
+    
     @Size(max = 255)
     @Column(name = "address", nullable = false)
     private String address;
