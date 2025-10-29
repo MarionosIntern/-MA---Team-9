@@ -41,7 +41,7 @@ public class Provider {
     private String address;
 
 
-    @Column(name = "phone_number", nullable = true)
+    @Column(name = "phoneNumber", nullable = true)
     private String phoneNumber;
 
     public Provider() {}
