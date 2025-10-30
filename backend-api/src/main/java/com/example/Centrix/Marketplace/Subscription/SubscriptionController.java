@@ -39,4 +39,10 @@ public class SubscriptionController {
         Customer c = customerService.getCustomerById(customerId);
         return ResponseEntity.ok(subscriptionService.getActiveSubscriptionsByCustomer(c));
     }
+
+    // Alias: accept plural 'customers' path as some clients may request this
+    @GetMapping("/customers/{customerId}")
+    public ResponseEntity<List<Subscription>> getCustomerSubscriptionsPlural(@PathVariable("customerId") Long customerId) {
+        return getCustomerSubscriptions(customerId);
+    }
 }

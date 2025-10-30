@@ -1,6 +1,5 @@
 package com.example.Centrix.Marketplace.Customer;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +36,7 @@ public class CustomerService {
 
     public Customer updateCustomer(Long id, Customer customerDetails) {
         Customer customer = customerRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
 
         customer.name = customerDetails.name;
         customer.email = customerDetails.email;
@@ -49,7 +48,7 @@ public class CustomerService {
 
     public Customer getCustomerById(Long id) {
         return customerRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
     }
 
     public List<Customer> getAllCustomers() {
@@ -66,7 +65,7 @@ public class CustomerService {
 
     public void deleteCustomer(Long id) {
         if (!customerRepository.existsById(id)) {
-            throw new EntityNotFoundException("Customer not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
         }
         customerRepository.deleteById(id);
     }

@@ -175,7 +175,7 @@
         "name": "Get subscription by id",
         "request": {
           "method": "GET",
-          "url": "localhost:8080/api/subscriptions/1",
+          "url": "localhost:8080/api/subscriptions/customer/1",
           "headers": [ { "key": "Accept", "value": "application/json" } ]
         }
       },
@@ -192,13 +192,9 @@
         }
 
 {
-  "customer": { "id": 1 },
-  "productId": 1,
-  "frequency": "WEEKLY",
-  "quantity": 2,
-  "active": true
+  "type":"MONTHLY",
+  "customer": { "id": 10 }
 }
-
 
 
       },
@@ -308,3 +304,21 @@
     ]
   }
 }
+provider post  
+{
+    "name": "Beats.",
+    "email": "beats@headphones.example",
+    "password": "securePass123",
+    "address": "124 Farm Rd, Greensboro, NC",
+    "phoneNumber": "336-555-0123"
+  }
+
+  product post
+  {
+    "providerId": 1,
+    "name": "beats",
+    "category": "headphones",
+    "price": 12.99,
+    "description": "great quality.",
+    "status": "AVAILABLE"
+  }
