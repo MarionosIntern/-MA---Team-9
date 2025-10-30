@@ -4,11 +4,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import com.example.Centrix.Marketplace.Customer.Customer;
 import com.example.Centrix.Marketplace.Product.Product;
-import com.example.Centrix.Marketplace.Provider.Provider;
+// provider type not required here; we query by providerId (Long)
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Transactional
@@ -41,6 +43,14 @@ public class ReviewService {
     }
 
     public Review createReview(Review review) {
+        // Basic validation: ensure customer and product references (or ids) are present
+        if (review.customer == null || review.customer.getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Review must include a customer with an id");
+        }
+        if (review.product == null || review.product.getProductId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Review must include a product with an id");
+        }
+
         double qualityRating = review.qualityRating != null ? review.qualityRating : 0;
         double deliveryRating = review.deliveryRating != null ? review.deliveryRating : 0;
 
@@ -73,7 +83,12 @@ public class ReviewService {
         return reviewRepository.findByCustomer(customer);
     }
 
-    public List<Review> getReviewsByProvider(Provider provider) {
-        return reviewRepository.findByProvider(provider);
+    public List<Review> getReviewsByProviderId(Long providerId) {
+        // Product stores providerId; query reviews where review.product.providerId == providerId
+        return reviewRepository.findByProductProviderId(providerId);
+    }
+
+    public List<Review> getAllReviews() {
+        return reviewRepository.findAll();
     }
 }

@@ -1,8 +1,10 @@
 package com.example.Centrix.Marketplace.Customer;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -16,9 +18,20 @@ public class CustomerService {
     }
 
     public Customer createCustomer(Customer customer) {
-        if (customerRepository.existsByEmail(customer.email)) {
-            throw new IllegalStateException("Email already registered");
+        // Basic server-side validation to provide clear error responses
+        if (customer == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer payload is required");
         }
+        if (customer.email == null || customer.email.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is required");
+        }
+        if (customer.password == null || customer.password.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is required");
+        }
+        if (customerRepository.existsByEmail(customer.email)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already registered");
+        }
+
         return customerRepository.save(customer);
     }
 
