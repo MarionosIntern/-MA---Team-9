@@ -35,13 +35,13 @@
         }
 
 {
-  "name": "Alicia Example",
-  "email": "alicia@example.com",
-  "phoneNumber": "555-0100",
-  "shippingAddress": "123 Main St, Greensboro, NC",
-  "role": "customer"
+"name": "Alicia Example",
+"email": "alicia@example.com",
+"password": "s3cret123",
+"phoneNumber": "555-0100",
+"shippingAddress": "123 Main St, Greensboro, NC",
+"role": "customer"
 }
-
 
 
 
@@ -60,11 +60,13 @@
 
 
 
-        {
-  "name": "Alicia Updated",
-  "email": "alicia@example.com",
-  "phoneNumber": "555-0101",
-  "shippingAddress": "456 Elm St, Greensboro, NC"
+    {
+"name": "Alicia Updated",
+"email": "alicia.updated@example.com",
+"password": "newpass123",
+"phoneNumber": "555-0102",
+"shippingAddress": "789 Oak St, Greensboro, NC",
+"role": "customer"
 }
       },
       {

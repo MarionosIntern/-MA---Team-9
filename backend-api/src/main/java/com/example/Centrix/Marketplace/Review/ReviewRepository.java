@@ -6,12 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;   
 import com.example.Centrix.Marketplace.Customer.Customer;
 import com.example.Centrix.Marketplace.Product.Product;
-import com.example.Centrix.Marketplace.Provider.Provider;
+// Provider type not required in repository signatures; we query by providerId on Product
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByCustomer(Customer customer);
     List<Review> findByProduct(Product product);
-    List<Review> findByProvider(Provider provider);
+    // Query reviews by the provider id stored on the Product entity (product.providerId)
+    List<Review> findByProductProviderId(Long providerId);
 }
 

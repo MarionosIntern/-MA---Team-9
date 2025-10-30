@@ -2,6 +2,8 @@ package com.example.Centrix.Marketplace.Review;
 
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import java.time.LocalDateTime;
 
 import com.example.Centrix.Marketplace.Customer.Customer;
@@ -10,6 +12,7 @@ import com.example.Centrix.Marketplace.Product.Product;
 
 @Entity
 @Table(name = "reviews")
+@JsonAutoDetect(fieldVisibility = ANY)
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -20,12 +20,12 @@ public class CustomerController {
 
     // Field-specific endpoints
     @GetMapping("/{id}/name")
-    public ResponseEntity<String> getCustomerName(@PathVariable Long id) {
+    public ResponseEntity<String> getCustomerName(@PathVariable("id") Long id) {
         return ResponseEntity.ok(customerService.getCustomerById(id).name);
     }
 
     @PutMapping("/{id}/name")
-    public ResponseEntity<Void> setCustomerName(@PathVariable Long id, @RequestBody String name) {
+    public ResponseEntity<Void> setCustomerName(@PathVariable("id") Long id, @RequestBody String name) {
         Customer c = customerService.getCustomerById(id);
         c.name = name;
         customerService.updateCustomer(id, c);
@@ -33,12 +33,12 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}/shippingAddress")
-    public ResponseEntity<String> getShippingAddress(@PathVariable Long id) {
+    public ResponseEntity<String> getShippingAddress(@PathVariable("id") Long id) {
         return ResponseEntity.ok(customerService.getCustomerById(id).shippingAddress);
     }
 
     @PutMapping("/{id}/shippingAddress")
-    public ResponseEntity<Void> setShippingAddress(@PathVariable Long id, @RequestBody String address) {
+    public ResponseEntity<Void> setShippingAddress(@PathVariable("id") Long id, @RequestBody String address) {
         Customer c = customerService.getCustomerById(id);
         c.shippingAddress = address;
         customerService.updateCustomer(id, c);
@@ -46,12 +46,12 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}/phoneNumber")
-    public ResponseEntity<String> getPhoneNumber(@PathVariable Long id) {
+    public ResponseEntity<String> getPhoneNumber(@PathVariable("id") Long id) {
         return ResponseEntity.ok(customerService.getCustomerById(id).phoneNumber);
     }
 
     @PutMapping("/{id}/phoneNumber")
-    public ResponseEntity<Void> setPhoneNumber(@PathVariable Long id, @RequestBody String phone) {
+    public ResponseEntity<Void> setPhoneNumber(@PathVariable("id") Long id, @RequestBody String phone) {
         Customer c = customerService.getCustomerById(id);
         c.phoneNumber = phone;
         customerService.updateCustomer(id, c);
@@ -59,12 +59,12 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer customerDetails) {
+    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") Long id, @RequestBody Customer customerDetails) {
         return ResponseEntity.ok(customerService.updateCustomer(id, customerDetails));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
+    public ResponseEntity<Customer> getCustomer(@PathVariable("id") Long id) {
         return ResponseEntity.ok(customerService.getCustomerById(id));
     }
 
@@ -84,7 +84,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCustomer(@PathVariable("id") Long id) {
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();
     }

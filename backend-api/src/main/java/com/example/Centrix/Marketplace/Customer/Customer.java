@@ -4,11 +4,14 @@ import com.example.Centrix.Marketplace.Subscription.Subscription;
 import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@JsonAutoDetect(fieldVisibility = ANY)
 @Table(name = "customers")
 public class Customer {
     // explicit no-arg constructor (replaces Lombok @NoArgsConstructor)
@@ -50,6 +53,11 @@ public class Customer {
                 ", shippingAddress='" + shippingAddress + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
+    }
+
+    // Minimal getter for id so other packages can reference the customer id when needed
+    public Long getId() {
+        return this.id;
     }
 
 }
