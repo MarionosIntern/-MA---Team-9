@@ -1,0 +1,310 @@
+{
+  "type": "collection",
+  "data": {
+    "name": "Centrix API - Thunder Client",
+    "description": "Importable Thunder Client collection for Customer, Review, Subscription and Cart endpoints. Set {{baseUrl}} (e.g. http://localhost:8080)",
+    "items": [
+      {
+        "name": "Get all customers",
+        "request": {
+          "method": "GET",
+          "url": "localhost:8080/api/customers",
+          "headers": [
+            { "key": "Accept", "value": "application/json" }
+          ]
+        }
+      },
+      {
+        "name": "Get customer by id",
+        "request": {
+          "method": "GET",
+          "url": "localhost:8080/api/customers/1",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      },
+      {
+        "name": "Create customer (POST)",
+        "request": {
+          "method": "POST",
+          "url": "localhost:8080/api/customers",
+          "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"name\": \"Alicia Example\",\n  \"email\": \"alicia@example.com\",\n  \"phoneNumber\": \"555-0100\",\n  \"shippingAddress\": \"123 Main St, Greensboro, NC\",\n  \"role\": \"customer\"\n}"
+          }
+        }
+
+{
+"name": "Alicia Example",
+"email": "alicia@example.com",
+"password": "s3cret123",
+"phoneNumber": "555-0100",
+"shippingAddress": "123 Main St, Greensboro, NC",
+"role": "customer"
+}
+
+
+
+      },
+      {
+        "name": "Update customer (PUT)",
+        "request": {
+          "method": "PUT",
+          "url": "localhost:8080/api/customers/1",
+          "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"name\": \"Alicia Updated\",\n  \"email\": \"alicia@example.com\",\n  \"phoneNumber\": \"555-0101\",\n  \"shippingAddress\": \"456 Elm St, Greensboro, NC\"\n}"
+          }
+        }
+
+
+
+    {
+"name": "Alicia Updated",
+"email": "alicia.updated@example.com",
+"password": "newpass123",
+"phoneNumber": "555-0102",
+"shippingAddress": "789 Oak St, Greensboro, NC",
+"role": "customer"
+}
+      },
+      {
+        "name": "Delete customer",
+        "request": {
+          "method": "DELETE",
+          "url": "localhost:8080/api/customers/1",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      },
+
+      {
+        "name": "Get all reviews",
+        "request": {
+          "method": "GET",
+          "url": "localhost:8080/api/reviews",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      },
+      {
+        "name": "Get reviews for product",
+        "request": {
+          "method": "GET",
+          "url": "localhost:8080/api/reviews/product/1",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      },
+      {
+        "name": "Get product ratings (overall/quality/delivery)",
+        "request": {
+          "method": "GET",
+          "url": "localhost:8080/api/reviews/product/1/ratings",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      },
+      {
+        "name": "Get reviews for provider",
+        "request": {
+          "method": "GET",
+          "url": "localhost:8080/api/reviews/provider/1",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      },
+      {
+        "name": "Get reviews for customer",
+        "request": {
+          "method": "GET",
+          "url": "localhost:8080/api/reviews/customer/1",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      },
+      {
+        "name": "Create review (POST)",
+        "request": {
+          "method": "POST",
+          "url": "localhost:8080/api/reviews",
+          "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"customer\": { \"id\": 1 },\n  \"products\": { \"id\": 1 },\n  \"qualityRating\": 4.5,\n  \"deliveryRating\": 5.0,\n  \"comment\": \"Great product, arrived in excellent condition.\"\n}"
+          }
+        }
+
+{
+  "customer": { "id": 1 },
+  "products": { "id": 1 },
+  "qualityRating": 4.5,
+  "deliveryRating": 5.0,
+  "comment": "Great product, arrived in excellent condition."
+}
+
+
+      },
+      {
+        "name": "Add provider response to review",
+        "request": {
+          "method": "POST",
+          "url": "localhost:8080/api/reviews/1/provider-response",
+          "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+          "body": {
+            "mode": "raw",
+            "raw": "\"Thank you for your feedback!\""
+          }
+        }
+      },
+      {
+        "name": "Delete review",
+        "request": {
+          "method": "DELETE",
+          "url": "localhost:8080/api/reviews/1",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+
+        "Thank you for your feedback!"
+      },
+
+      {
+        "name": "Get all subscriptions",
+        "request": {
+          "method": "GET",
+          "url": "localhost:8080/api/subscriptions",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      },
+      {
+        "name": "Get subscription by id",
+        "request": {
+          "method": "GET",
+          "url": "localhost:8080/api/subscriptions/1",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      },
+      {
+        "name": "Create subscription (POST)",
+        "request": {
+          "method": "POST",
+          "url": "localhost:8080/api/subscriptions",
+          "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"customer\": { \"id\": 1 },\n  \"productId\": 1,\n  \"frequency\": \"WEEKLY\",\n  \"quantity\": 2,\n  \"active\": true\n}"
+          }
+        }
+
+{
+  "customer": { "id": 1 },
+  "productId": 1,
+  "frequency": "WEEKLY",
+  "quantity": 2,
+  "active": true
+}
+
+
+
+      },
+      {
+        "name": "Update subscription (PUT)",
+        "request": {
+          "method": "PUT",
+          "url": "localhost:8080/api/subscriptions/1",
+          "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"frequency\": \"BIWEEKLY\",\n  \"quantity\": 3,\n  \"active\": true\n}"
+          }
+        }
+
+
+{
+  "frequency": "BIWEEKLY",
+  "quantity": 3,
+  "active": true
+}
+
+
+      },
+      {
+        "name": "Delete subscription",
+        "request": {
+          "method": "DELETE",
+          "url": "localhost:8080/api/subscriptions/1",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      },
+
+      {
+        "name": "Get all carts",
+        "request": {
+          "method": "GET",
+          "url": "localhost:8080/api/carts",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      },
+      {
+        "name": "Get cart by id",
+        "request": {
+          "method": "GET",
+          "url": "localhost:8080/api/carts/1",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      },
+      {
+        "name": "Add item to cart (POST)",
+        "request": {
+          "method": "POST",
+          "url": "localhost:8080/api/carts",
+          "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"providerId\": 1,\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"title\": \"Sample Product\",\n      \"quantity\": 2,\n      \"unitPrice\": 5.99\n    }\n  ],\n  \"subscription\": null\n}"
+          }
+        }
+
+
+        {
+  "providerId": 1,
+  "items": [
+    {
+      "productId": 1,
+      "title": "Sample Product",
+      "quantity": 2,
+      "unitPrice": 5.99
+    }
+  ],
+  "subscription": null
+}
+      },
+      {
+        "name": "Update cart (PUT)",
+        "request": {
+          "method": "PUT",
+          "url": "localhost:8080/api/carts/1",
+          "headers": [ { "key": "Content-Type", "value": "application/json" } ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"items\": [ { \"productId\": 1, \"quantity\": 3, \"unitPrice\": 5.99 } ],\n  \"subscription\": null\n}"
+          }
+        }
+
+        {
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 3,
+      "unitPrice": 5.99
+    }
+  ],
+  "subscription": null
+}
+      },
+      {
+        "name": "Clear or delete cart (DELETE)",
+        "request": {
+          "method": "DELETE",
+          "url": "localhost:8080/api/carts/1",
+          "headers": [ { "key": "Accept", "value": "application/json" } ]
+        }
+      }
+    ]
+  }
+}
