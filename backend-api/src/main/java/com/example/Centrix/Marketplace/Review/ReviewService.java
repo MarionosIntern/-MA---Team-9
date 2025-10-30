@@ -12,13 +12,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.Centrix.Marketplace.Customer.CustomerRepository;
+import com.example.Centrix.Marketplace.Product.ProductRepository;
+
 @Service
 @Transactional
 public class ReviewService {
     private final ReviewRepository reviewRepository;
+    private final CustomerRepository customerRepository;
+    private final ProductRepository productRepository;
 
-    public ReviewService(ReviewRepository reviewRepository) {
+    public ReviewService(ReviewRepository reviewRepository, CustomerRepository customerRepository, ProductRepository productRepository) {
         this.reviewRepository = reviewRepository;
+        this.customerRepository = customerRepository;
+        this.productRepository = productRepository;
     }
 
     public double getAverageOverallRating(Product product) {
@@ -50,6 +57,20 @@ public class ReviewService {
         if (review.product == null || review.product.getProductId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Review must include a product with an id");
         }
+
+        Long customerId = review.customer.getId();
+        Long productId = review.product.getProductId();
+
+        if (!customerRepository.existsById(customerId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
+        }
+        if (!productRepository.existsById(productId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+        }
+
+        // replace the lightweight nested objects with managed entities to avoid detached references
+        review.customer = customerRepository.findById(customerId).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+        review.product = productRepository.findById(productId).orElseThrow(() -> new EntityNotFoundException("Product not found"));
 
         double qualityRating = review.qualityRating != null ? review.qualityRating : 0;
         double deliveryRating = review.deliveryRating != null ? review.deliveryRating : 0;
