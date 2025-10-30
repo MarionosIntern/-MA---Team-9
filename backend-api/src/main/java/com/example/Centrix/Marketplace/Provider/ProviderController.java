@@ -2,6 +2,7 @@ package com.example.Centrix.Marketplace.Provider;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,11 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-@SuppressWarnings("rawtypes")
 @RestController
 @RequestMapping("/api/providers")
 public class ProviderController {
@@ -27,10 +28,9 @@ public class ProviderController {
     }
 
     // CREATE
-    @PostMapping
-    public ResponseEntity<Provider> createProvider(@Valid @RequestBody Provider provider) {
-        Provider saved = providerService.createProvider(provider);
-        return ResponseEntity.ok(saved);
+    @PostMapping @ResponseStatus(HttpStatus.CREATED)
+    public Provider createProvider(@RequestBody Provider provider) {
+        return providerService.createProvider(provider);
     }
 
     // UPDATE

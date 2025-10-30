@@ -1,39 +1,47 @@
 package com.example.Centrix.Marketplace.Provider;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "providers", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_provider_email", columnNames = {"email"})
-})
+@Table(name = "providers")
 public class Provider {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "provider_id")
     private Long id;
 
-    @NotBlank(message = "name is required")
+
     @Size(max = 120)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @NotBlank(message = "email is required")
+    
     @Email
     @Size(max = 160)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "password is required")
+   
     @Size(min = 6, max = 255)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @NotBlank(message = "address is required")
+    
     @Size(max = 255)
+    @Column(name = "address", nullable = false)
     private String address;
 
-    @NotBlank(message = "phoneNumber is required")
-    @Size(max = 40)
+
+    @Column(name = "phoneNumber", nullable = true)
     private String phoneNumber;
 
     public Provider() {}
@@ -54,6 +62,7 @@ public class Provider {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }

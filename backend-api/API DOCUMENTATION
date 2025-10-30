@@ -1,13 +1,49 @@
-### Create Farmer
+### Create Provider
 ```http
 POST /api/providers
 Content-Type: application/json
+{
+  "name": "Liliana Rosa",
+  "email": "lil@seller.com",
+  "password": "securePassword123",
+  "address": "1201 Union St",
+  "phoneNumber": "222-332-3333"
+}
 
+GET /api/providers/1
+Content-Type: application/json
 {
     "name": "John Doe",
     "email": "jdoe@seller.com",
     "password": "securePassword123",
+    "address": "1201 Spring Garden",
     "phoneNumber": "111-222-3333"
 }
-```
 
+POST /api/products
+Content-Type: application/json
+```
+{
+  "providerId": 1,
+  "name": "Grey Baggy Pants",
+  "category": "Clothing",
+  "price": 22.50,
+  "description": "35 GSM Big & Tall knitted sweats",
+  "status": "ACTIVE"
+}
+
+GET /api/products/10
+Content-Type: application/json
+{
+  "productId": 10,
+  "providerId": 1,
+  "name": "Sony Headphones",
+  "category": "ELECTRONICS",
+  "price": 199.99,
+  "description": "Noise-cancelling over-ear",
+  "status": "ACTIVE"
+}
+
+DELETE /api/products/10
+
+DELETE /api/provider/21
