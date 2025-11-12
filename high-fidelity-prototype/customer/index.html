@@ -22,7 +22,7 @@
                     <span class="h4 mb-0">Centrix Marketplace</span>
                 </a>
                 <div class="d-flex align-items-center gap-3">
-            <a href="#" id="open-cart" class="text-decoration-none" aria-label="View cart"> MyCart <span id="cart-count"
+            <a href="cart.html" class = "btn-outline-primary" id ="open-cart" class="text-decoration-none" aria-label="View cart"> MyCart <span id="cart-count"
                 class="badge bg-primary text-white ms-1" aria-live="polite" aria-atomic="true">0</span></a>
                     <!-- Favorites icon (header) -->
                     <a href="favorites.html" id="favorites-link" class="text-decoration-none position-relative" aria-label="View favorites" title="Favorites">
@@ -392,6 +392,8 @@
                         });
                     }
                 })();
+                    document.getElementById('myCart').addEventListener('click', ()=>{ window.location.href='cart.html'; });
+
 </script>
 </body>
 

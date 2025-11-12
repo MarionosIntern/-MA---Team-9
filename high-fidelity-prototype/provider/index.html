@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centrix Marketplace</title>
+  <style>
+    :root{
+      --bg:#ffffff; --text:#0b0d10; --muted:#6b7280; --soft:#f5f7fa;
+      --dark:#0e1116; --dark-2:#1a1f26; --border:#e5e7eb; --card:#fff;
+      --blue:#2563eb; --blue-2:#1d4ed8; --chip:#f8fafc;
+    }
+    *{
+        box-sizing:border-box
+    }
+    body{
+        margin:0;
+        font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+        background:var(--bg);color:var(--text)
+    }
+
+    /* Skip link */
+    .skip{
+        position:absolute;
+        left:-9999px;
+        top:auto;
+        width:1px;
+        height:1px;
+        overflow:hidden
+    }
+    .skip:focus{
+        left:12px;
+        top:12px;
+        width:auto;
+        height:auto;
+        background:#fff;border:2px solid var(--blue);
+        padding:8px 10px;
+        border-radius:8px;
+        z-index:999
+    }
+
+    /* Header */
+    header{
+        background:#fff;
+        border-bottom:1px solid var(--border)
+    }
+    .hwrap{
+        max-width:1200px;
+        margin:0 auto;
+        padding:12px 20px;
+        display:flex;
+        align-items:center;
+        gap:16px
+    }
+    .brand{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        min-width:240px
+    }
+    .brand img{
+        height: 100px;
+    }
+    .brand .title{
+        font-size:1.35rem;
+        font-weight:800;
+        color:var(--blue)
+    }
+    .grow{
+        flex:1
+    }
+    .top-actions{
+        display:flex;
+        align-items:center;
+        gap:10px
+    }
+    .iconbtn{
+        background:#fff;
+        border:1px solid var(--border);
+        padding:8px 10px;border-radius:10px;
+        cursor:pointer;
+        font-weight:600
+    }
+    .badge{
+        display:inline-flex;
+        min-width:20px;
+        height:20px;
+        align-items:center;
+        justify-content:center;
+        background:var(--blue);
+        color:#fff;
+        border-radius:999px;
+        padding:0 6px;
+        font-size:.8rem;
+        margin-left:6px
+    }
+    .sign{
+        border-color:#cfd5df
+    }
+
+    /* Search bar row */
+    .bar{
+        max-width:1200px;
+        margin:10px auto 0;
+        padding:0 20px 16px;
+        border-bottom:1px solid var(--border)
+    }
+    .searchrow{
+        display:grid;
+        grid-template-columns:150px 1fr 120px;
+        gap:10px
+    }
+    @media(max-width:720px){
+        .searchrow{grid-template-columns:1fr}
+    }
+    select, input[type="search"], .btn{height:44px;border:1px solid var(--border);border-radius:10px}
+    select{
+        padding:0 12px;background:#fff
+    }
+    input[type="search"]{padding:0 12px}
+    .btn{
+        background:var(--blue);
+        color:#fff;
+        border:none;
+        font-weight:700;cursor:pointer
+    }
+    .btn:hover{
+        background:var(--blue-2)
+    }
+
+    main{
+        max-width:1200px;
+        margin:0 auto;
+        padding:18px 20px
+    }
+
+    /* Featured */
+    .feature-header{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        margin-top:8px
+    }
+    .feature-banner{
+        margin-top:12px;
+        background:var(--soft);
+        height:140px;
+        border:1px solid var(--border);
+        border-radius:12px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:var(--muted)
+    }
+    .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .chip{background:var(--chip);border:1px solid var(--border);padding:8px 12px;border-radius:999px;cursor:pointer}
+    .chip.active{background:rgba(37,99,235,.1);border-color:rgba(37,99,235,.35);color:#0b3aa3}
+
+    /* Products */
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-top:22px}
+    
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin-top:14px}
+    
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
+    
+    .thumb{height:180px;background:#f8fafc;border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    
+    .thumb img{max-width:100%;max-height:100%}
+    
+    .titlep{font-size:1.05rem;font-weight:700;margin-top:2px}
+    
+    .meta{color:var(--muted);font-size:.9rem}
+    
+    .price{font-weight:800}
+    
+    .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    
+    .ghost{background:#fff;border:1px solid var(--border);color:var(--blue);padding:8px 10px;border-radius:10px;cursor:pointer;font-weight:700}
+    
+    .ghost:hover{border-color:var(--blue)}
+    
+    .fav{background:#fff;border:1px solid var(--border);border-radius:10px;width:40px;height:40px;display:grid;place-items:center;cursor:pointer}
+    
+    .fav.active{background:rgba(37,99,235,.08);border-color:rgba(37,99,235,.35)}
+    
+    a.view{color:var(--blue);text-decoration:none}
+
+    footer{border-top:1px solid var(--border);background:#fff;margin-top:30px;color:var(--muted);padding:20px;text-align:center}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <header>
+    <div class="hwrap">
+      <div class="brand">
+        <img src="https://videos.openai.com/vg-assets/assets%2Ftask_01k45fkm6qf1n866wgcc5150rn%2F1756825911_img_1.webp?st=2025-09-22T13%3A36%3A07Z&se=2025-09-28T14%3A36%3A07Z&sks=b&skt=2025-09-22T13%3A36%3A07Z&ske=2025-09-28T14%3A36%3A07Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=cfbc986b-d2bc-4088-8b71-4f962129715b&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=HPzmo8S40QrAaVTHISr%2Brzb6xRpruHTeopVKPwLiZHM%3D&az=oaivgprodscus" alt="Centrix logo"/>
+        <div class="title">Centrix Marketplace</div>
+      </div>
+      <div class="grow"></div>
+      <div class="top-actions">
+        <button id="myCart" class="iconbtn">MyCart <span id="cartCount" class="badge">0</span></button>
+        <a href="signin.html"><button class="iconbtn sign">Sign in</button></a>
+        <a href="sell.html"><button class ="iconbtn sell">Upload</button></a>
+      </div>
+    </div>
+    <div class="bar">
+      <form id="searchForm" class="searchrow" role="search" aria-label="Search Centrix">
+        <select id="category">
+          <option value="all">All</option>
+          <option>Clothes</option>
+          <option>Shoes</option>
+          <option>Technology</option>
+          <option>Accessories</option>
+        </select>
+        <input id="query" type="search" placeholder="Search Centrix" />
+        <button class="btn" type="submit">Search ▾</button>
+      </form>
+    </div>
+  </header>
+
+  <main id="content">
+    <section>
+      <div class="feature-header">
+        <h2>Featured deals</h2>
+        <a href="#" class="view">Browse categories</a>
+      </div>
+      <div class="feature-banner">Featured banner</div>
+      <div class="chips" id="chips">
+        <button class="chip active" data-cat="all">All</button>
+        <button class="chip" data-cat="Clothes">Clothes</button>
+        <button class="chip" data-cat="Shoes">Shoes</button>
+        <button class="chip" data-cat="Technology">Technology</button>
+        <button class="chip" data-cat="Accessories">Accessories</button>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <h2>Popular products</h2>
+        <div class="meta" id="countText">Showing 0 of 0 results</div>
+      </div>
+      <div id="grid" class="grid"></div>
+    </section>
+  </main>
+
+  <footer>© <span id="year"></span> Centrix Market</footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Demo catalog
+    const CATALOG = [
+      {id:'tee', name:'Graphic Tee', price:15.00, cat:'Clothes', img:'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=600&auto=format&fit=crop'},
+      {id:'cargo', name:'Womens Cargo Pants', price:19.99, cat:'Clothes', img:'https://img4.dhresource.com/webp/m/0x0/f3/albu/jc/j/14/c5526e84-cc7e-4aa0-aded-81a47f9f0495.jpg'},
+      {id:'panda', name:'Panda Dunks', price:120, cat:'Shoes', img:'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=600&auto=format&fit=crop'},
+      {id:'sony', name:'Sony Camera', price:499, cat:'Technology', img:'https://www.bhphotovideo.com/images/images1500x1500/sony_ilce7rm2e_b_a7r_ii_camera_with_1364586.jpg'},
+      {id:'beats', name:'Beats Headphones', price:199, cat:'Accessories', img:'https://www.bhphotovideo.com/images/images2500x2500/beats_by_dr_dre_900_00108_01_studio_wireless_headphones_white_1016366.jpg'},
+      {id:'iphone', name:'iPhone', price:500, cat:'Technology', img:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600&auto=format&fit=crop'}
+    ];
+
+    // Per-user cart key
+    const USER_KEY='cm_user';
+    function getUser(){ try{ return JSON.parse(localStorage.getItem(USER_KEY)||'null'); }catch{ return null } }
+    function emailKey(){ const u=getUser(); return u && u.email ? encodeURIComponent(String(u.email).toLowerCase()) : 'guest'; }
+    function CART_KEY(){ return `cm_cart_${emailKey()}`; }
+
+    function getCart(){ try{ return JSON.parse(localStorage.getItem(CART_KEY())||'[]'); }catch{ return [] } }
+    function setCart(arr){ localStorage.setItem(CART_KEY(), JSON.stringify(arr)); }
+
+    const grid = document.getElementById('grid');
+    const countText = document.getElementById('countText');
+    const query = document.getElementById('query');
+    const category = document.getElementById('category');
+
+    function render(){
+      const q = (query.value||'').toLowerCase();
+      const cat = category.value;
+      const items = CATALOG.filter(p => (cat==='all' || p.cat===cat) && p.name.toLowerCase().includes(q));
+      const total = CATALOG.length;
+      countText.textContent = `Showing ${items.length} of ${total} results`;
+      grid.innerHTML = items.map(p => `
+        <article class="card" data-id="${p.id}">
+          <div class="thumb">${p.img?`<img src="${p.img}" alt="${p.name} thumbnail">`:'<span class="meta">No image</span>'}</div>
+          <div class="titlep">${p.name}</div>
+          <div class="meta">Seller: Unknown</div>
+          <div class="row">
+            <div class="price">$${p.price.toFixed(2)}</div>
+            <div class="row" style="gap:8px">
+              <button class="fav" aria-label="Favorite">♡</button>
+              <button class="ghost" data-add>Add</button>
+              <a class="view" href="products.html" data-add>View</a>
+            </div>
+          </div>
+        </article>`).join('');
+      updateCartBadge();
+    }
+
+    function updateCartBadge(){
+      const count = getCart().length;
+      document.getElementById('cartCount').textContent = count;
+    }
+
+    // Search + category
+    document.getElementById('searchForm').addEventListener('submit', (e)=>{ e.preventDefault(); render(); });
+    query.addEventListener('input', render);
+    category.addEventListener('change', render);
+
+    // Chips
+    document.getElementById('chips').addEventListener('click', (e)=>{
+      const b = e.target.closest('.chip'); if(!b) return;
+      document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      b.classList.add('active');
+      const val = b.dataset.cat || 'all';
+      category.value = val==='all' ? 'all' : val; render();
+    });
+
+    // Grid interactions
+    grid.addEventListener('click', (e)=>{
+      if(e.target.closest('.fav')){ e.target.closest('.fav').classList.toggle('active'); return; }
+      const addBtn = e.target.closest('[data-add]');
+      if(addBtn){
+        const id = addBtn.closest('[data-id]').dataset.id;
+        const p = CATALOG.find(x=>x.id===id);
+        const cart = getCart(); cart.push({name:p.name, price:p.price}); setCart(cart); updateCartBadge();
+      }
+    });
+
+    // Cart button
+    document.getElementById('myCart').addEventListener('click', ()=>{ window.location.href='cart.html'; });
+
+    render();
+  </script>
+</body>
+</html>
