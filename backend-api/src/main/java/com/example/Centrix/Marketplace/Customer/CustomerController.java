@@ -106,7 +106,7 @@ public class CustomerController {
     @PostMapping
     public String createCustomer(@ModelAttribute Customer customer) {
         Customer saved = customerService.createCustomer(customer);
-        return "redirect:/customers/" + saved.getCustomerId();
+        return "redirect:/customers/" + saved.getId();
     }
 
     // ================================
