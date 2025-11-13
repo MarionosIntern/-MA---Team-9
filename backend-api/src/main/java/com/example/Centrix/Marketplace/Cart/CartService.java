@@ -2,6 +2,8 @@ package com.example.Centrix.Marketplace.Cart;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Transactional
@@ -21,7 +23,7 @@ public class CartService {
 
         public CartResponse addItemToCart(Long cartId, CartRequest request) {
                 Cart cart = cartRepository.findById(cartId)
-                                .orElseThrow(() -> new IllegalArgumentException("Cart not found"));
+                                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
 
                 CartItem item = new CartItem(request.productId, request.unitPrice, request.quantity);
                 item.cart = cart;
@@ -33,7 +35,7 @@ public class CartService {
 
         public CartResponse applySubscription(Long cartId, String subscriptionName) {
                 Cart cart = cartRepository.findById(cartId)
-                                .orElseThrow(() -> new IllegalArgumentException("Cart not found"));
+                                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
 
                 cart.subscription = subscriptionName;
                 Cart saved = cartRepository.save(cart);
@@ -43,7 +45,7 @@ public class CartService {
 
         public void clearCart(Long cartId) {
                 Cart cart = cartRepository.findById(cartId)
-                                .orElseThrow(() -> new IllegalArgumentException("Cart not found"));
+                                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
 
                 cart.items.clear();
                 cartRepository.save(cart);

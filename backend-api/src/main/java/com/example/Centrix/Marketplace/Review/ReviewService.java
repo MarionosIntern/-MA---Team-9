@@ -80,7 +80,7 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
-    public Review addFarmerResponse(Long id, String response) {
+    public Review addProviderResponse(Long id, String response) {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Review not found"));
 
@@ -112,4 +112,6 @@ public class ReviewService {
     public List<Review> getAllReviews() {
         return reviewRepository.findAll();
     }
+
+    
 }
