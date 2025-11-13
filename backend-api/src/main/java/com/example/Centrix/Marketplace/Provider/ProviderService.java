@@ -49,6 +49,18 @@ public class ProviderService {
                 .orElseThrow(() -> new EntityNotFoundException("Provider not found with email: " + email));
     }
 
+    public Provider authenticate(String email, String password){
+        Provider provider  = providerRepository.findByEmail(email)
+        .orElseThrow(() -> new EntityNotFoundException("Provider not found with email: " + email));
+         if(!provider.getEmail().equals(email) && !provider.getPassword().equals(password)){
+            throw new IllegalArgumentException("Invalid email and password");
+        }
+        if(!provider.getPassword().equals(password)){
+            throw new IllegalArgumentException("Invalid password");
+        }
+        return provider;
+    }
+
     public List<Provider> getAll(){
         return providerRepository.findAll();
     }

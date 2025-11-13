@@ -46,4 +46,8 @@ public class ProductService{
         repo.delete(existingProduct);
     }
 
+    public List<Product> getAllProducts(){
+        return repo.findAll();
+    }
+
 }
