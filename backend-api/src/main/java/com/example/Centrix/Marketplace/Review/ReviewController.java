@@ -34,18 +34,18 @@ public class ReviewController {
     }
 
     @PostMapping("/{id}/provider-response")
-    public ResponseEntity<Review> addProviderResponse(@PathVariable Long id, @RequestBody String response) {
-        return ResponseEntity.ok(reviewService.addFarmerResponse(id, response));
+    public ResponseEntity<Review> addProviderResponse(@PathVariable("id") Long id, @RequestBody String response) {
+        return ResponseEntity.ok(reviewService.addProviderResponse(id, response));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteReview(@PathVariable("id") Long id) {
         reviewService.deleteReview(id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<List<Review>> getProductReviews(@PathVariable Long productId) {
+    public ResponseEntity<List<Review>> getProductReviews(@PathVariable("productId") Long productId) {
         // will resolve Products via ProductsService in future; here we accept productId and construct a lightweight lookup
     Product product = new Product();
     product.setProductId(productId);
@@ -53,7 +53,7 @@ public class ReviewController {
     }
 
     @GetMapping("/product/{productId}/ratings")
-    public ResponseEntity<Map<String, Double>> getProductRatings(@PathVariable Long productId) {
+    public ResponseEntity<Map<String, Double>> getProductRatings(@PathVariable("productId") Long productId) {
     Product product = new Product();
     product.setProductId(productId);
         Map<String, Double> ratings = new HashMap<>();
@@ -64,13 +64,13 @@ public class ReviewController {
     }
 
     @GetMapping("/provider/{providerId}")
-    public ResponseEntity<List<Review>> getProviderReviews(@PathVariable Long providerId) {
+    public ResponseEntity<List<Review>> getProviderReviews(@PathVariable("providerId") Long providerId) {
         // Product stores providerId; query reviews by that providerId directly
         return ResponseEntity.ok(reviewService.getReviewsByProviderId(providerId));
     }
 
     @GetMapping("/customer/{customerId}")
-    public ResponseEntity<List<Review>> getCustomerReviews(@PathVariable Long customerId) {
+    public ResponseEntity<List<Review>> getCustomerReviews(@PathVariable("customerId") Long customerId) {
         Customer customer = customerService.getCustomerById(customerId);
         return ResponseEntity.ok(reviewService.getReviewsByCustomer(customer));
     }
