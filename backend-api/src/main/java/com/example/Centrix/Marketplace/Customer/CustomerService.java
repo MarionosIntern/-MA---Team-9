@@ -43,9 +43,13 @@ public class CustomerService {
     // ================================
     // 3️⃣ Get customer by name
     // ================================
-    public List<Customer> getCustomerByName(String name) {
-        return customerRepository.findByShippingAddressContaining(name);
+   public List<Customer> getCustomerByName(String name) {
+    if (name == null || name.isBlank()) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Name is required");
     }
+    return customerRepository.findByNameContainingIgnoreCase(name);
+}
+
 
     // ================================
     // 4️⃣ Get customer by email
