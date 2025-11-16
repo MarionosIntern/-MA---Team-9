@@ -121,7 +121,7 @@
     function group(items){const m=new Map();for(const it of items){const k=it.name;const p=m.get(k)||{name:k,price:Number(it.price)||0,qty:0};p.qty++;m.set(k,p)}return [...m.values()]}
 
     function render(){const mount=document.getElementById('cartContainer');const items=getCart();
-      if(!items.length){mount.innerHTML=`<div class='muted'>Your cart is empty. <a class='link' href='shop.html'>Browse items</a>.</div>`;updateSummary([])}
+      if(!items.length){mount.innerHTML=`<div class='muted'>Your cart is empty. <a class='link' href='index.html'>Browse items</a>.</div>`;updateSummary([])}
       else{const rows=group(items);let html=`<table><thead><tr><th>Item</th><th class='price'>Price</th><th>Qty</th><th class='total'>Line Total</th><th></th></tr></thead><tbody>`;for(const r of rows){html+=`<tr data-name='${r.name}'><td>${r.name}</td><td class='price'>${format(r.price)}</td><td><div class='qty'><button onclick="chg('${r.name}',-1)">-</button><input type='number' min='1' value='${r.qty}' onchange="setQty('${r.name}',this.value)"><button onclick="chg('${r.name}',1)">+</button></div></td><td class='total'>${format(r.qty*r.price)}</td><td><button class='ghost' onclick="rem('${r.name}')">Remove</button></td></tr>`} html+=`</tbody></table>`;mount.innerHTML=html;updateSummary(rows)}
       updateBadge(); renderOrders(); greet();}
 
@@ -143,4 +143,4 @@
     render();
   </script>
 </body>
-</html>
+</html> 

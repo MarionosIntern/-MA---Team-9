@@ -2,18 +2,18 @@ package com.example.Centrix.Marketplace.Review;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import com.example.Centrix.Marketplace.Customer.Customer;
-import com.example.Centrix.Marketplace.Product.Product;
-// provider type not required here; we query by providerId (Long)
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.Centrix.Marketplace.Customer.Customer;
 import com.example.Centrix.Marketplace.Customer.CustomerRepository;
+import com.example.Centrix.Marketplace.Product.Product;
 import com.example.Centrix.Marketplace.Product.ProductRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 @Transactional
@@ -80,7 +80,7 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
-    public Review addFarmerResponse(Long id, String response) {
+    public Review addProviderResponse(Long id, String response) {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Review not found"));
 

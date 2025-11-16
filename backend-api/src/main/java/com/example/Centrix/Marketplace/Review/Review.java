@@ -1,9 +1,9 @@
 package com.example.Centrix.Marketplace.Review;
 
-import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
+import java.time.LocalDateTime;
+
+import com.example.Centrix.Marketplace.Customer.Customer;
+import com.example.Centrix.Marketplace.Product.Product;
 import java.time.LocalDateTime;
 
 import com.example.Centrix.Marketplace.Customer.Customer;
@@ -45,6 +45,25 @@ public class Review {
     LocalDateTime providerResponseDate;
 
     public Review() {}
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public Customer getCustomer() {
+        return customer;
+    }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    public Product getProduct() {
+        return product;
+    }
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }
 
 

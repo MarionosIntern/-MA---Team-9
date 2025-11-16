@@ -1,16 +1,21 @@
 package com.example.Centrix.Marketplace.Review;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-import com.example.Centrix.Marketplace.Product.Product;
-// Provider type not required in controller; we query by providerId (Long)
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Centrix.Marketplace.Customer.Customer;
 import com.example.Centrix.Marketplace.Customer.CustomerService;
+import com.example.Centrix.Marketplace.Product.Product;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -35,7 +40,7 @@ public class ReviewController {
 
     @PostMapping("/{id}/provider-response")
     public ResponseEntity<Review> addProviderResponse(@PathVariable Long id, @RequestBody String response) {
-        return ResponseEntity.ok(reviewService.addFarmerResponse(id, response));
+        return ResponseEntity.ok(reviewService.addProviderResponse(id, response));
     }
 
     @DeleteMapping("/{id}")
