@@ -14,6 +14,7 @@ public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
     private final CustomerService customerService;
+    
 
     public SubscriptionController(SubscriptionService subscriptionService, CustomerService customerService) {
         this.subscriptionService = subscriptionService;
@@ -30,6 +31,24 @@ public class SubscriptionController {
         return "subscription/list"; // templates/subscription/list.html
     }
 
+     // ================================
+    // ✅ Display subscriptions for the current user
+    // ================================
+    @GetMapping("")
+    public String listSubscriptions(Model model) {
+        // Get the "logged-in" customer (currently hardcoded to ID 1)
+        Customer currentCustomer = customerService.getCurrentCustomer();
+
+        // Retrieve subscriptions for that customer
+        model.addAttribute("subscriptions", subscriptionService.getAllForUser(currentCustomer.getId()));
+
+        // Add optional info for template
+        model.addAttribute("customer", currentCustomer);
+        model.addAttribute("title", "Your Subscriptions");
+
+        // Render the subscriptions page (subscription.fthl)
+        return "subscription";
+    }
     // ================================
     // 2️⃣ Get subscription by ID
     // ================================

@@ -1,7 +1,7 @@
 package com.example.Centrix.Marketplace.Customer;
 
 import com.example.Centrix.Marketplace.Subscription.*;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
- 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 
@@ -22,10 +19,11 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final SubscriptionService subscriptionService;
 
-    // Constructor Injection
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, SubscriptionService subscriptionService) {
         this.customerService = customerService;
+        this.subscriptionService = subscriptionService;
     }
 
     // ================================
@@ -146,6 +144,18 @@ public class CustomerController {
     public String redirectToList() {
         return "redirect:/customers";
     }
+
+     @GetMapping("/customer")
+    public String dashboard(Model model) {
+    // Get the current customer (for now, you could hardcode or fetch by ID)
+    Customer customer = customerService.getCurrentCustomer(); // Replace with actual logged-in ID logic
+    model.addAttribute("customer", customer);
+
+    // Add this line to show subscriptions
+    model.addAttribute("subscriptions", subscriptionService.getAllForUser(customer.getId()));
+
+    return "customer";
+}
 }
 
 

@@ -34,7 +34,7 @@
 
         <div class="d-flex justify-content-end align-items-center">
             <h5 class="me-3">Total: <span class="text-success">$${cartTotal}</span></h5>
-            <a href="/checkout" class="btn btn-primary">Proceed to Checkout</a>
+            <a href="/api/cart/checkout/${cartId}" class="btn btn-primary">Proceed to Checkout</a>
         </div>
 
     <#else>

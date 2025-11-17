@@ -33,6 +33,15 @@ public class CartController {
         model.addAttribute("title", "Cart Details");
         return "cart/details"; // templates/cart/details.html
     }
+    @GetMapping("/cart")
+    public String showCart(@PathVariable Long cartId, Model model) {
+        model.addAttribute("cartItems", cartService.getItems(cartId));
+        model.addAttribute("cartTotal", cartService.getTotal(cartId));
+        model.addAttribute("subscription", cartService.getAppliedSubscription(cartId));
+        model.addAttribute("cartId", cartId);
+        return "cart"; // renders cart.fthl
+    }
+
 
     // ================================
     // 3️⃣ Show form to create a new cart
@@ -70,6 +79,23 @@ public class CartController {
         cartService.applySubscription(cartId, subscription);
         return "redirect:/cart/" + cartId;
     }
+
+    @GetMapping("/checkout/{cartId}")
+    public String showCheckout(@PathVariable Long cartId, Model model) {
+        model.addAttribute("cartItems", cartService.getItems(cartId));
+        model.addAttribute("cartTotal", cartService.getTotal(cartId));
+        model.addAttribute("subscription", cartService.getAppliedSubscription(cartId));
+        model.addAttribute("cartId", cartId);
+        return "checkout"; // renders checkout.fthl
+    }
+
+    @PostMapping("/checkout/{cartId}/submit")
+    public String processCheckout(@PathVariable Long cartId) {
+        // You can later call orderService.placeOrder(cartId)
+        // For now, redirect to confirmation page
+        return "redirect:/confirmation";
+    }
+
 
     // ================================
     // 7️⃣ Clear the cart

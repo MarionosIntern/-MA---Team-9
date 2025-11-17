@@ -84,4 +84,36 @@ public class CartService {
         cart.getItems().clear();
         cartRepository.save(cart);
     }
+
+     public List<CartItem> getItems(Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+        return cart.getItems();
+    }
+
+    // ================================
+    // 8️⃣ Get total price of items in a cart
+    // ================================
+    public double getTotal(Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+        return cart.getTotal();
+    }
+
+    public String getAppliedSubscription(Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+        String sub = cart.getSubscription();
+        return (sub != null && !sub.isBlank()) ? sub : "NONE";
+    }
+
+    public Cart getMostRecentCart() {
+    List<Cart> carts = cartRepository.findAll();
+    if (carts.isEmpty()) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No carts found");
+    }
+    // Return the last one (assuming ascending IDs)
+    return carts.get(carts.size() - 1);
+}
+
 }

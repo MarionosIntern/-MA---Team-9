@@ -88,6 +88,14 @@ public class SubscriptionService {
 
         return subscriptionRepository.findByCustomerAndActive(customer, true);
     }
+
+    // ✅ Correct version of getAllForUser()
+    public List<Subscription> getAllForUser(Long customerId) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
+
+        return subscriptionRepository.findByCustomer(customer);
+    }
 }
 
 

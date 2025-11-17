@@ -98,6 +98,17 @@ public class CustomerService {
         }
         customerRepository.deleteById(id);
     }
+
+    public Customer getCurrentCustomer() {
+        Long currentCustomerId = 1L; // Placeholder until authentication is wired in
+        return getCurrentCustomer(currentCustomerId);
+    }
+
+    public Customer getCurrentCustomer(Long id) {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
+    }
+
 }
 
 

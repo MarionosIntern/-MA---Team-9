@@ -12,7 +12,7 @@ import com.example.Centrix.Marketplace.Product.Product;
 
 @Entity
 @Table(name = "reviews")
-@JsonAutoDetect(fieldVisibility = ANY)
+
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +30,12 @@ public class Review {
     Product product;
 
     // Ratings and comments
-    Double qualityRating;
-    Double deliveryRating;
-    Double overallRating;
+    @Column
+   private Double qualityRating;
+    @Column
+    private Double deliveryRating;
+    @Column
+    private Double overallRating;
 
     @Column(columnDefinition = "TEXT")
     String comment;
