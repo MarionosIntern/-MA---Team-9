@@ -1,66 +1,90 @@
 package com.example.Centrix.Marketplace.Cart;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/cart")
+@Controller
+@RequestMapping("/cart")
 public class CartController {
+
     private final CartService cartService;
 
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }
 
-    @PostMapping("/create/{providerId}")
-    public ResponseEntity<CartResponse> createCart(@PathVariable Long providerId) {
-        return ResponseEntity.ok(cartService.createCart(providerId));
+    // ================================
+    // 1️⃣ Show cart list or dashboard
+    // ================================
+    @GetMapping
+    public String viewAllCarts(Model model) {
+        model.addAttribute("cartList", cartService.getAllCarts());
+        model.addAttribute("title", "All Carts");
+        return "cart/list";  // templates/cart/list.html
     }
 
-    // plural alias to support clients that call /api/carts
-    @PostMapping("/carts/create/{providerId}")
-    public ResponseEntity<CartResponse> createCartPlural(@PathVariable Long providerId) {
-        return createCart(providerId);
-    }
-
-    @PostMapping("/{cartId}/add")
-    public ResponseEntity<CartResponse> addItem(@PathVariable Long cartId, @RequestBody CartRequest request) {
-        return ResponseEntity.ok(cartService.addItemToCart(cartId, request));
-    }
-
-    @PostMapping("/carts/{cartId}/add")
-    public ResponseEntity<CartResponse> addItemPlural(@PathVariable Long cartId, @RequestBody CartRequest request) {
-        return addItem(cartId, request);
-    }
-
-    @PutMapping("/{cartId}/subscription")
-    public ResponseEntity<CartResponse> applySubscription(@PathVariable Long cartId, @RequestParam String subscription) {
-        return ResponseEntity.ok(cartService.applySubscription(cartId, subscription));
-    }
-
-    @PutMapping("/carts/{cartId}/subscription")
-    public ResponseEntity<CartResponse> applySubscriptionPlural(@PathVariable Long cartId, @RequestParam String subscription) {
-        return applySubscription(cartId, subscription);
-    }
-
+    // ================================
+    // 2️⃣ View individual cart
+    // ================================
     @GetMapping("/{cartId}")
-    public ResponseEntity<CartResponse> getCart(@PathVariable Long cartId) {
-        return ResponseEntity.ok(cartService.getCart(cartId));
+    public String viewCart(@PathVariable Long cartId, Model model) {
+        model.addAttribute("cart", cartService.getCart(cartId));
+        model.addAttribute("title", "Cart Details");
+        return "cart/details"; // templates/cart/details.html
     }
 
-    @GetMapping("/carts/{cartId}")
-    public ResponseEntity<CartResponse> getCartPlural(@PathVariable("cartId") Long cartId) {
-        return getCart(cartId);
+    // ================================
+    // 3️⃣ Show form to create a new cart
+    // ================================
+    @GetMapping("/create")
+    public String showCreateForm(Model model) {
+        model.addAttribute("cartRequest", new CartRequest());
+        model.addAttribute("title", "Create New Cart");
+        return "cart/create"; // templates/cart/create.html
     }
 
-    @DeleteMapping("/{cartId}/clear")
-    public ResponseEntity<Void> clearCart(@PathVariable Long cartId) {
+    // ================================
+    // 4️⃣ Handle cart creation (with providerId)
+    // ================================
+    @PostMapping("/create")
+    public String createCart(@RequestParam Long providerId, @ModelAttribute CartRequest cartRequest) {
+        cartService.createCart(providerId, cartRequest);
+        return "redirect:/cart";
+    }
+
+    // ================================
+    // 5️⃣ Add an item to a cart
+    // ================================
+    @PostMapping("/{cartId}/add")
+    public String addItem(@PathVariable Long cartId, @ModelAttribute CartRequest request) {
+        cartService.addItemToCart(cartId, request);
+        return "redirect:/cart/" + cartId;
+    }
+
+    // ================================
+    // 6️⃣ Apply subscription discount
+    // ================================
+    @PostMapping("/{cartId}/subscription")
+    public String applySubscription(@PathVariable Long cartId, @RequestParam String subscription) {
+        cartService.applySubscription(cartId, subscription);
+        return "redirect:/cart/" + cartId;
+    }
+
+    // ================================
+    // 7️⃣ Clear the cart
+    // ================================
+    @GetMapping("/{cartId}/clear")
+    public String clearCart(@PathVariable Long cartId) {
         cartService.clearCart(cartId);
-        return ResponseEntity.noContent().build();
+        return "redirect:/cart";
     }
 
-    @DeleteMapping("/carts/{cartId}/clear")
-    public ResponseEntity<Void> clearCartPlural(@PathVariable Long cartId) {
-        return clearCart(cartId);
+    // ================================
+    // 8️⃣ Redirect root to /cart
+    // ================================
+    @GetMapping("/")
+    public String redirectToList() {
+        return "redirect:/cart";
     }
 }

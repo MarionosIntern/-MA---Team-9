@@ -7,30 +7,99 @@ import java.util.List;
 @Entity
 @Table(name = "carts")
 public class Cart {
+
+    // ================================
+    // 1️⃣ Fields
+    // ================================
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    // store provider reference by id to avoid coupling if Provider entity is added later
-    Long providerId;
+    // store provider reference by id to avoid coupling
+    @Column(nullable = false)
+    private Long providerId;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<CartItem> items = new ArrayList<>();
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CartItem> items = new ArrayList<>();
 
-    // simple subscription name (placeholder). Integration with Subscription entity can be restored later.
-    String subscription = "NONE";
+    // simple subscription name (placeholder)
+    @Column(nullable = false)
+    private String subscription = "NONE";
 
-    public Cart() {}
+    // ================================
+    // 2️⃣ Constructors
+    // ================================
+    public Cart() {
+    }
 
     public Cart(Long providerId) {
         this.providerId = providerId;
     }
 
-    // compute total as sum(quantity * unitPrice) — subscription discounts can be applied later when Subscription is available
+    // ================================
+    // 3️⃣ Getters & Setters
+    // ================================
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
+    }
+
+    public List<CartItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<CartItem> items) {
+        this.items = items;
+    }
+
+    public String getSubscription() {
+        return subscription;
+    }
+
+    public void setSubscription(String subscription) {
+        this.subscription = subscription;
+    }
+
+    // ================================
+    // 4️⃣ Business Logic
+    // ================================
+    // Compute total = Σ(quantity × unitPrice)
     public double getTotal() {
-        double subtotal = items.stream()
-                .mapToDouble(item -> item.unitPrice * item.quantity)
+        return items.stream()
+                .mapToDouble(item -> item.getUnitPrice() * item.getQuantity())
                 .sum();
-        return subtotal;
+    }
+
+    // ================================
+    // 5️⃣ Helper Method
+    // ================================
+    public void addItem(CartItem item) {
+        items.add(item);
+        item.setCart(this);
+    }
+
+    // ================================
+    // 6️⃣ toString (for debugging/logging)
+    // ================================
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", providerId=" + providerId +
+                ", items=" + items.size() +
+                ", subscription='" + subscription + '\'' +
+                ", total=" + getTotal() +
+                '}';
     }
 }
