@@ -1,11 +1,16 @@
 package com.example.Centrix.Marketplace.Product;
 
+import com.example.Centrix.Marketplace.Provider.Provider;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name = "products")
@@ -16,8 +21,14 @@ public class Product {
     @Column(name = "product_id")
     private Long productId;
 
-    @Column(name = "provider_id", nullable = false)
+   
+    @Column(name =  "provider_id", nullable = false)
     private Long providerId;
+   
+
+    @OneToOne
+    @JoinColumn(name =  "provider", nullable = false)
+    private Provider provider;
 
     @Column( name = "name", nullable = false, length = 255)
     private String name;

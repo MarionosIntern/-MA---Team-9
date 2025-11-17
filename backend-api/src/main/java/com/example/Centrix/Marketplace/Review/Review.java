@@ -4,15 +4,21 @@ import java.time.LocalDateTime;
 
 import com.example.Centrix.Marketplace.Customer.Customer;
 import com.example.Centrix.Marketplace.Product.Product;
+
 import java.time.LocalDateTime;
 
 import com.example.Centrix.Marketplace.Customer.Customer;
 import com.example.Centrix.Marketplace.Product.Product;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.*;
+import jakarta.persistence.Column;
 
 
 @Entity
 @Table(name = "reviews")
-@JsonAutoDetect(fieldVisibility = ANY)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
