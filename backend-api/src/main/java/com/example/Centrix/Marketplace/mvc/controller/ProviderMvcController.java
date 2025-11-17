@@ -42,7 +42,7 @@ public class ProviderMvcController{
     @PostMapping("/signup")
     public String signUp(@ModelAttribute Provider provider){
         providerService.createProvider(provider);
-        return "redirect:/signin";
+        return "redirect:/providers/signin";
     }
 
     @PostMapping("/signin")
@@ -60,7 +60,7 @@ public class ProviderMvcController{
     public String home(HttpSession session, Model model){
         Long providerId = (Long) session.getAttribute("providerID");
         if(providerId == null){
-            return "redirect: signin";
+            return "redirect: providers/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
         model.addAttribute("provider", provider);

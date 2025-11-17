@@ -1,4 +1,4 @@
-<#import "/layout.ftlh" as layout>
+<#import "/layout.ftl" as layout>
 
 <@layout.site title="Provider Login – Centrix Marketplace" showSearch=false>
 

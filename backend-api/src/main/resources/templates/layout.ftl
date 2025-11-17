@@ -1,4 +1,4 @@
-<#-- layout.ftlh: shared layouts for Centrix Marketplace -->
+<#-- layout.ftl: shared layouts for Centrix Marketplace -->
 
 <#macro site title showSearch=false>
 <!DOCTYPE html>
