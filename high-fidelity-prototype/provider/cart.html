@@ -81,7 +81,8 @@
       </div>
       <div class="grow"></div>
       <button class="iconbtn" onclick="location.href='index.html'">Continue Shopping</button>
-      <button id="myCart" class="iconbtn">MyCart <span id="cartCount" class="badge">0</span></button>
+      <a href="cart.html" class = "btn-outline-primary" id ="open-cart" class="text-decoration-none" aria-label="View cart"> MyCart <span id="cart-count"
+        class="badge bg-primary text-white ms-1" aria-live="polite" aria-atomic="true">0</span></a>
     </div>
   </header>
 
@@ -137,7 +138,7 @@
     checkoutBtn.onclick=()=>{const u=getUser();if(!getCart().length){alert('Your cart is empty.');return} if(!u){alert('Please sign in on the Shop page (demo).');return} const rows=group(getCart());const sub=rows.reduce((s,r)=>s+r.qty*r.price,0);const tax=sub*TAX_RATE;const total=sub+tax;const order={id:Math.floor(100000+Math.random()*900000),date:new Date().toISOString(),items:rows,subtotal:sub,tax,total};const os=getOrders();os.unshift(order);setOrders(os);alert(`Thanks, ${u.name}! Your demo order #${order.id} is placed.`);setCart([]);renderOrders();render()}
 
     function greet(){const u=getUser();userNote.textContent=u?`Signed in as ${u.name} (${u.email})`:'Not signed in.';ordersBox.open=!!u}
-    function updateBadge(){document.getElementById('cartCount').textContent=getCart().length}
+    function updateBadge(){document.getElementById('cart-count').textContent=getCart().length}
     myCart.onclick=()=>location.href='cart.html'
 
     render();

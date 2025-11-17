@@ -129,7 +129,7 @@
     function CART_KEY(){return `cm_cart_${emailKey()}`}
     function getCart(){try{return JSON.parse(localStorage.getItem(CART_KEY())||'[]')}catch{return []}}
 
-    function updateBadge(){document.getElementById('cartCount').textContent=getCart().length}
+    function updateBadge(){document.getElementById('cart-count').textContent=getCart().length}
     document.getElementById('myCart').onclick=()=>location.href='cart.html'
 
     const form=document.getElementById('sellForm');
