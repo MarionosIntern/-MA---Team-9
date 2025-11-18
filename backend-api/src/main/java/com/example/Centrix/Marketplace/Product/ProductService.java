@@ -3,47 +3,68 @@ package com.example.Centrix.Marketplace.Product;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class ProductService{
-    private final ProductRepository repo;
+@Transactional
+public class ProductService {
 
-    public ProductService(ProductRepository repo) {
-        this.repo = repo;
+    private final ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
-    public List<Product> findAllProducts(Long providerId, String category ){
+    // -----------------------------
+    // Find all products with filters
+    // -----------------------------
+    public List<Product> findAllProducts(Long providerId, String category) {
+
         if (providerId != null) {
-            return repo.findByProviderId(providerId);
-        } else if (category != null) {
-            return repo.findByCategory(category);
-        } else {
-            return repo.findAll();
+            return productRepository.findByProviderId(providerId);
         }
+
+        if (category != null) {
+            return productRepository.findByCategory(category);
+        }
+
+        return productRepository.findAll();
     }
 
-    public Product findById(Long productId){
-        return repo.findById(productId).orElseThrow(() -> new RuntimeException("Product not found" + productId));
+    // -----------------------------
+    // Find product by ID
+    // -----------------------------
+    public Product findById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found: " + id));
     }
 
-    public Product create(Product p){
-        p.setProductId(null);
-        return repo.save(p);
+    // -----------------------------
+    // Create product
+    // -----------------------------
+    public Product create(Product product) {
+        return productRepository.save(product);
     }
 
-    public Product update(Long id, Product p){
-        Product existingProduct = findById(id);
-        existingProduct.setName(p.getName());
-        existingProduct.setCategory(p.getCategory());
-        existingProduct.setPrice(p.getPrice());
-        existingProduct.setDescription(p.getDescription());
-        existingProduct.setStatus(p.getStatus());
-        return repo.save(existingProduct);
-    }
-    
-    public void delete(Long id){
-        Product existingProduct = findById(id);
-        repo.delete(existingProduct);
+    // -----------------------------
+    // Update product
+    // -----------------------------
+    public Product update(Long id, Product updated) {
+        Product existing = findById(id);
+
+        existing.setName(updated.getName());
+        existing.setCategory(updated.getCategory());
+        existing.setPrice(updated.getPrice());
+        existing.setDescription(updated.getDescription());
+        existing.setStatus(updated.getStatus());
+
+        return productRepository.save(existing);
     }
 
+    // -----------------------------
+    // Delete product
+    // -----------------------------
+    public void delete(Long id) {
+        productRepository.deleteById(id);
+    }
 }

@@ -2,51 +2,74 @@ package com.example.Centrix.Marketplace.Product;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/products")
-public class ProductController{
-    private final ProductService service;
+@Controller
+@RequestMapping("/products")
+public class ProductController {
 
-    public ProductController(ProductService service){
-        this.service = service;
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
-    @GetMapping
-    public List<Product> findAllProducts(@RequestParam(required = false) Long providerId,
-                                         @RequestParam(required = false) String category){
-        return service.findAllProducts(providerId, category);
+    // VIEW: product list
+    @GetMapping("")
+    public String listProducts(Model model,
+                               @RequestParam(required = false) Long providerId,
+                               @RequestParam(required = false) String category) {
+
+        List<Product> products = productService.findAllProducts(providerId, category);
+        model.addAttribute("products", products);
+        model.addAttribute("title", "Product List");
+        return "product/list";
     }
 
+    // VIEW: product details
     @GetMapping("/{id}")
-    public Product findById(@PathVariable Long id){
-        return service.findById(id);
+    public String productDetails(@PathVariable Long id, Model model) {
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
+        return "product/details";
     }
 
-    @PostMapping @ResponseStatus(HttpStatus.CREATED)
-    public Product create(@RequestBody Product p){
-        return service.create(p);
+    // VIEW: show create form
+    @GetMapping("/create")
+    public String showCreateForm(Model model) {
+        model.addAttribute("product", new Product());
+        return "product/create";
     }
 
-    @PutMapping("/{id}")
-    public Product update(@PathVariable Long id, @RequestBody Product p){
-        return service.update(id, p);
+    // POST: create product
+    @PostMapping("/create")
+    public String createProduct(@ModelAttribute Product p) {
+        productService.create(p);
+        return "redirect:/products";
     }
 
-    @DeleteMapping("/{id}") @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id){
-        service.delete(id);
+    // VIEW: edit form
+    @GetMapping("/{id}/edit")
+    public String editForm(@PathVariable Long id, Model model) {
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
+        return "product/edit";
     }
 
+    // POST: update product
+    @PostMapping("/{id}/edit")
+    public String editProduct(@PathVariable Long id, @ModelAttribute Product p) {
+        productService.update(id, p);
+        return "redirect:/products/" + id;
+    }
+
+    // DELETE
+    @GetMapping("/{id}/delete")
+    public String deleteProduct(@PathVariable Long id) {
+        productService.delete(id);
+        return "redirect:/products";
+    }
 }
+
