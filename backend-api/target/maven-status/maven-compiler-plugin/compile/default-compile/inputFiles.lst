@@ -1,4 +1,5 @@
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\ApiExceptionHandler.java
+C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\AuthController.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Cart\Cart.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Cart\CartController.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Cart\CartItem.java
@@ -6,15 +7,18 @@ C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\mai
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Cart\CartRequest.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Cart\CartResponse.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Cart\CartService.java
+C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Cart\SessionCartItem.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\CentrixMarketplaceApplication.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Customer\Customer.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Customer\CustomerController.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Customer\CustomerRepository.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Customer\CustomerService.java
+C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Favorites\FavoritesController.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\HomeController.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Product\Product.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Product\ProductController.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Product\ProductRepository.java
+C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Product\ProductRestController.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Product\ProductService.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Provider\Provider.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Provider\ProviderController.java
@@ -24,8 +28,10 @@ C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\mai
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Review\ReviewController.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Review\ReviewRepository.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Review\ReviewService.java
+C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\SessionConstants.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Subscription\Subscription.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Subscription\SubscriptionController.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Subscription\SubscriptionRepository.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Subscription\SubscriptionService.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Subscription\SubscriptionType.java
+C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\support\SessionModelAttributes.java
