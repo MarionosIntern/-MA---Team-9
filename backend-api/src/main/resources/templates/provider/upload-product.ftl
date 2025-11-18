@@ -33,6 +33,11 @@
                                   rows="3" required></textarea>
                     </div>
 
+                     <div class="mb-3">
+                        <label class="form-label cm-form-label">Status i.e Describe the condition of the product</label>
+                        <input class="form-control cm-form-control" type="text" name="status" required>
+                    </div>
+
                     <button class="btn btn-primary" type="submit">Publish product</button>
                     <a href="/providers/home" class="btn btn-outline-secondary ms-2">Cancel</a>
                 </form>

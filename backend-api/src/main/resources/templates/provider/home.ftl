@@ -33,7 +33,7 @@
                             <td>$${product.price?string["0.00"]}</td>
                             <td><span class="badge bg-secondary">${product.status}</span></td>
                             <td class="text-end">
-                                <a href="/providers/products/${product.id}/edit"
+                                <a href="/providers/products/${product.productId}/edit"
                                    class="btn btn-sm btn-outline-primary">Edit</a>
                             </td>
                         </tr>

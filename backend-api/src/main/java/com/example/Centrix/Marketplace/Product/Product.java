@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 
@@ -20,13 +20,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long productId;
-
-   
+    
     @Column(name =  "provider_id", nullable = false)
     private Long providerId;
    
-
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name =  "provider", nullable = false)
     private Provider provider;
 
@@ -73,8 +71,11 @@ public class Product {
     // Getters and Setters
     public Long getProductId() {return productId;}
     public void setProductId(Long productId) {this.productId = productId;}
-    
-    public Long getProviderId() {return providerId;}
+
+    public Long getProvider() {return provider.getId();}
+    public void setProvider(Provider provider) {this.provider = provider;}
+
+    public Long getProviderId() {return provider.getId();}
     public void setProviderId(Long providerId) {this.providerId = providerId;}
    
     public String getName() {return name;}

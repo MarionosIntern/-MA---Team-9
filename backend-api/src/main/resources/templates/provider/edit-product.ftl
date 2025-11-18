@@ -11,7 +11,7 @@
 
         <div class="card bg-white">
             <div class="card-body">
-                <form action="/providers/products/${product.id}/edit" method="post">
+                <form action="/providers/products/${product.productId}/edit" method="post">
                     <div class="mb-3">
                         <label class="form-label cm-form-label">Product name</label>
                         <input class="form-control cm-form-control"

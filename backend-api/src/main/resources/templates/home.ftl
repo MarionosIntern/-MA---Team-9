@@ -25,7 +25,7 @@
         <div class="container">
             <div class="cm-section-header">
                 <h2>Popular products</h2>
-                <small>Showing ${products?size} of ${products?size} results</small>
+                <p>Showing ${products?size} of ${products?size} results</p>
             </div>
 
             <div class="row g-3">
@@ -57,9 +57,9 @@
         <div class="container">
             <h3 class="h6 mb-1">Contact Us</h3>
             <p class="mb-0">
-                Questions or ready to get started? Reach out and we’ll respond within 1 business day.
+                Questions or ready to get started? Reach out and we’ll respond as fast as we can.
             </p>
         </div>
     </section>
-
+    
 </@layout.site>

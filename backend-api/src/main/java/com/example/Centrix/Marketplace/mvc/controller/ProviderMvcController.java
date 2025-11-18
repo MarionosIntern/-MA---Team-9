@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,13 +35,23 @@ public class ProviderMvcController{
     @GetMapping("/signup")
     public String signupForm(Model model) {
         model.addAttribute("provider", new Provider());
-        return "provider/signup";
+        return "/signup";
     }
 
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute Provider provider){
+    public String signUp(@RequestParam("name") String name,
+                         @RequestParam("email") String email,
+                         @RequestParam("password") String password,
+                         @RequestParam("address") String address,
+                         @RequestParam (value = "phoneNumber", required = false) String phoneNumber){
+        Provider provider = new Provider(); 
+        provider.setName(name);
+        provider.setEmail(email);
+        provider.setPassword(password);
+        provider.setAddress(address);
+        provider.setPhoneNumber(phoneNumber);
         providerService.createProvider(provider);
-        return "redirect:/providers/signin";
+        return "redirect:/signin";
     }
 
     @PostMapping("/signin")
@@ -58,12 +67,14 @@ public class ProviderMvcController{
 
     @GetMapping("/home")
     public String home(HttpSession session, Model model){
-        Long providerId = (Long) session.getAttribute("providerID");
+        Long providerId = (Long) session.getAttribute("providerId");
         if(providerId == null){
-            return "redirect: providers/signin";
+            return "redirect:/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
         model.addAttribute("provider", provider);
+        List<Product> products = productService.findAllProducts(providerId, null);
+        model.addAttribute("products", products);
         return "provider/home";
     }
 
@@ -77,12 +88,10 @@ public class ProviderMvcController{
     public String uploadProductForm(HttpSession session, Model model){
         Long providerId = (Long) session.getAttribute("providerId");
         if(providerId == null){
-            return "redirect:/sigin";
+            return "redirect:/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
-        if(provider.getProducts() != null){
-            return "redirect:/providers/home";
-        }
+        
         return "provider/upload-product";
     }
 
@@ -93,11 +102,15 @@ public class ProviderMvcController{
                                 @RequestParam String description,
                                 @RequestParam String status,
                                 HttpSession session){
+       
         Long providerId = (Long) session.getAttribute("providerId");
+        Provider provider = providerService.getProviderById(providerId);
         if(providerId == null){
             return "redirect:/signin";
         }
         Product product = new Product();
+        product.setProvider(provider);
+        product.setProviderId(providerId);
         product.setName(name);
         product.setCategory(category);
         product.setPrice(price);
@@ -106,14 +119,14 @@ public class ProviderMvcController{
 
         productService.create(product);
 
-        return "redirect:/provider/home";
+        return "redirect:/providers/home";
     }
 
     @GetMapping("profile/edit")
     public String editProfileForm(HttpSession session, Model model){
         Long providerId = (Long) session.getAttribute("providerId");
         if(providerId == null){
-            return "redirect:/siginin";
+            return "redirect:/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
         model.addAttribute("provider", provider);
@@ -145,7 +158,7 @@ public class ProviderMvcController{
             updatedProvider.setPassword(newPassword != null && !newPassword.trim().isEmpty() ? newPassword : currentPassword); 
             
             providerService.updateProvider(providerId, updatedProvider);
-            return "redirect:/provider/home";
+            return "redirect:/providers/home";
         } catch (Exception e) {
             model.addAttribute("provider", providerService.getProviderById(providerId));
             model.addAttribute("error", "Password is invalid");
@@ -163,7 +176,7 @@ public class ProviderMvcController{
         Product product = productService.findById(providerId);
 
         if(!product.getProviderId().equals(provider.getId())){
-            return "redirect:/provider/home";
+            return "redirect:/providers/home";
         }
 
         model.addAttribute("product", product);
@@ -180,7 +193,7 @@ public class ProviderMvcController{
                                HttpSession session){
         Long providerId = (Long) session.getAttribute("providerId");
         if(providerId == null){
-            return "redirect:/siginin";
+            return "redirect:/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
         Product existingProduct = productService.findById(id);
@@ -204,7 +217,7 @@ public class ProviderMvcController{
      public String viewReviews(HttpSession session, Model model){
         Long providerId = (Long) session.getAttribute("providerId");
         if(providerId == null){
-            return "redirect:/siginin";
+            return "redirect:/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
         if(provider.getProducts() == null){

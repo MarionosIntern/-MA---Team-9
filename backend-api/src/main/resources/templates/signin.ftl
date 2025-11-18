@@ -24,7 +24,7 @@
                         <input class="form-control cm-form-control" type="password" name="password" required>
                     </div>
 
-                    <button class="btn btn-primary w-100" type="submit">Sign in</button>
+                    <button class="btn btn-primary w-100"  type="submit">Sign in</button>
                 </form>
 
                 <p class="mt-3 cm-muted text-center">

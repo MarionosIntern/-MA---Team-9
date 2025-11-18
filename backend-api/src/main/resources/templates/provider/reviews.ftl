@@ -5,6 +5,8 @@
     <div class="container py-3">
         <h1 class="h5 mb-3">Customer Reviews</h1>
 
+        <a href="/providers/reviews/fake" class="demo-button">Generate demo review</a>
+
         <#if reviews?? && reviews?size gt 0>
             <#list reviews as review>
                 <div class="cm-review-card mb-3 p-3">
