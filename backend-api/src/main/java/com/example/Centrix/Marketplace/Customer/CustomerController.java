@@ -1,6 +1,6 @@
 package com.example.Centrix.Marketplace.Customer;
 
-import com.example.Centrix.Marketplace.Subscription.*;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +18,8 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerService customerService;
-    private final SubscriptionService subscriptionService;
-
-    public CustomerController(CustomerService customerService, SubscriptionService subscriptionService) {
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
-        this.subscriptionService = subscriptionService;
     }
 
     // ================================
@@ -136,26 +133,19 @@ public class CustomerController {
         return "redirect:/customers";
     }
 
-    // ================================
-    // 🔁 Default redirect
-    // ================================
-    @GetMapping("/")
-    public String redirectToList() {
-        return "redirect:/customers";
-    }
-
-     @GetMapping("/customer")
-    public String dashboard(Model model) {
-    // Get the current customer (for now, you could hardcode or fetch by ID)
-    Customer customer = customerService.getCurrentCustomer(); // Replace with actual logged-in ID logic
-    model.addAttribute("customer", customer);
-
-    // Add this line to show subscriptions
-    model.addAttribute("subscriptions", subscriptionService.getAllForUser(customer.getId()));
-
-    return "customer";
+ // ================================
+// 🔁 Default redirect
+// ================================
+@GetMapping("/")
+public String redirectToList() {
+    return "redirect:/customers";
 }
 }
+
+
+    
+
+
 
 
 

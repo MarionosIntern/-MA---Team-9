@@ -33,13 +33,13 @@ public class CartController {
         model.addAttribute("title", "Cart Details");
         return "cart/details"; // templates/cart/details.html
     }
-    @GetMapping("/cart")
+    @GetMapping("/{cartId}/cart")
     public String showCart(@PathVariable Long cartId, Model model) {
         model.addAttribute("cartItems", cartService.getItems(cartId));
         model.addAttribute("cartTotal", cartService.getTotal(cartId));
         model.addAttribute("subscription", cartService.getAppliedSubscription(cartId));
         model.addAttribute("cartId", cartId);
-        return "cart"; // renders cart.fthl
+        return "cart/cart"; // renders cart.fthl
     }
 
 
@@ -86,7 +86,7 @@ public class CartController {
         model.addAttribute("cartTotal", cartService.getTotal(cartId));
         model.addAttribute("subscription", cartService.getAppliedSubscription(cartId));
         model.addAttribute("cartId", cartId);
-        return "checkout"; // renders checkout.fthl
+        return "cart/checkout"; // renders checkout.fthl
     }
 
     @PostMapping("/checkout/{cartId}/submit")
