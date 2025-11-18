@@ -43,6 +43,7 @@ public class ProductService {
     // Create product
     // -----------------------------
     public Product create(Product product) {
+        sanitizeImageUrl(product);
         return productRepository.save(product);
     }
 
@@ -55,6 +56,7 @@ public class ProductService {
         existing.setName(updated.getName());
         existing.setCategory(updated.getCategory());
         existing.setPrice(updated.getPrice());
+        existing.setImageUrl(normalizeImageUrl(updated.getImageUrl()));
         existing.setDescription(updated.getDescription());
         existing.setStatus(updated.getStatus());
 
@@ -66,5 +68,17 @@ public class ProductService {
     // -----------------------------
     public void delete(Long id) {
         productRepository.deleteById(id);
+    }
+
+    private void sanitizeImageUrl(Product product) {
+        product.setImageUrl(normalizeImageUrl(product.getImageUrl()));
+    }
+
+    private String normalizeImageUrl(String raw) {
+        if (raw == null) {
+            return null;
+        }
+        String trimmed = raw.trim();
+        return trimmed.isBlank() ? null : trimmed;
     }
 }

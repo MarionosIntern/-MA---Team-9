@@ -18,7 +18,7 @@ public class HomeController {
         this.productService = productService;
     }
 
-    @GetMapping({"/", "/home"})
+    @GetMapping({"/", "/home", "/customer/home"})
     public String showHome(Model model) {
         List<Product> products = productService.findAllProducts(null, null);
         model.addAttribute("products", products);
