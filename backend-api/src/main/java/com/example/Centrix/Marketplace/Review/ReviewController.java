@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/reviews")
+@RequestMapping("/reviews")
 public class ReviewController {
 
     private final ReviewService reviewService;
@@ -35,7 +35,7 @@ public class ReviewController {
     // =====================================
     // ✅ 2️⃣ List reviews for current customer
     // =====================================
-    @GetMapping("")
+    @GetMapping
     public String listReviews(Model model) {
         Customer currentCustomer = customerService.getCurrentCustomer();
         model.addAttribute("reviews", reviewService.getAllForCustomer(currentCustomer.getId()));

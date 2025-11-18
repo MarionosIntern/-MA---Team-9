@@ -24,7 +24,7 @@ public class SubscriptionController {
     // ================================
     // 1️⃣ List all subscriptions
     // ================================
-    @GetMapping
+    @GetMapping("/all")
     public String getAllSubscriptions(Model model) {
         model.addAttribute("subscriptionList", subscriptionService.getAllSubscriptions());
         model.addAttribute("title", "Subscription List");
@@ -93,14 +93,7 @@ public String getSubscriptionsByCustomerName(@RequestParam(required = false) Str
         return "redirect:/subscriptions";
     }
 
-    // ================================
-    // 6️⃣ Cancel a subscription
-    // ================================
-    @GetMapping("/cancel/{id}")
-    public String cancelSubscription(@PathVariable Long id) {
-        subscriptionService.cancelSubscription(id);
-        return "redirect:/subscriptions";
-    }
+    
 
     // ================================
     // 7️⃣ Show all subscriptions for a specific customer
@@ -111,6 +104,22 @@ public String getSubscriptionsByCustomerName(@RequestParam(required = false) Str
         model.addAttribute("title", "Subscriptions for Customer ID: " + customerId);
         return "subscription/list";
     }
+
+    @GetMapping("/cancel/{id}")
+    public String showCancelConfirmation(@PathVariable Long id, Model model) {
+    Subscription subscription = subscriptionService.getSubscriptionById(id);
+    model.addAttribute("subscription", subscription);
+    return "subscription/cancel-confirmation";
+}
+    @PostMapping("/cancel/{id}")
+public String cancelSubscription(@PathVariable Long id) {
+    subscriptionService.cancelSubscription(id);
+    return "redirect:/subscriptions";
+}
+
+
+
+
 
     // ================================
     // 8️⃣ Default redirect

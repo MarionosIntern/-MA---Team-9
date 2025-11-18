@@ -157,9 +157,11 @@ public class ReviewService {
     // ✅ Optional: Search by customer name
     // =======================================
     public List<Review> searchReviewsByCustomerName(String name) {
-        List<Customer> matchingCustomers = customerRepository.findByNameContainingIgnoreCase(name);
-        return matchingCustomers.stream()
-                .flatMap(c -> reviewRepository.findByCustomer(c).stream())
-                .toList();
-    }
+    List<Customer> customers = customerRepository.findByNameContainingIgnoreCase(name);
+    return customers.stream()
+            .flatMap(c -> reviewRepository.findByCustomer(c).stream())
+            .toList();
+}
+
+
 }
