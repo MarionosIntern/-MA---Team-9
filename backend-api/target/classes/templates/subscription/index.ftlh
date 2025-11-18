@@ -1,93 +1,77 @@
-<#-- templates/subscription/index.ftlh -->
-<#include "/layout/header.ftlh">
+<#import "/layouts/base.ftlh" as layout>
 
-<div class="page-container">
+<@layout.block pageTitle="Your Subscriptions">
 
-    <h2 class="page-title">Your Subscriptions</h2>
-
-    <div class="customer-summary">
-        <p><strong>Name:</strong> ${customer.name}</p>
-        <p><strong>Email:</strong> ${customer.email}</p>
+<div class="container py-5">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+        <div>
+            <p class="text-uppercase small text-muted mb-1">Customer</p>
+            <h1 class="h4 mb-0">${customer.name!'Centrix customer'}</h1>
+            <p class="text-muted mb-0">${customer.email!'No email on file'}</p>
+        </div>
+        <a href="/subscriptions/create" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-1"></i> Create subscription
+        </a>
     </div>
 
-    <hr/>
-
-    <#-- If the user has subscriptions -->
     <#if subscriptions?has_content>
-
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Type</th>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Status</th>
-                    <th>Total Days</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <#list subscriptions as sub>
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
                     <tr>
-                        <td>${sub.id}</td>
-                        <td>${sub.type}</td>
-
-                        <td>${sub.startDate?string("yyyy-MM-dd")}</td>
-                        <td>
-                            <#if sub.endDate??>
-                                ${sub.endDate?string("yyyy-MM-dd")}
-                            <#else>
-                                —
-                            </#if>
-                        </td>
-
-                        <td>
-                            <#if sub.active>
-                                <span class="badge badge-success">Active</span>
-                            <#else>
-                                <span class="badge badge-secondary">Inactive</span>
-                            </#if>
-                        </td>
-
-                        <td>
-                            <#if sub.endDate??>
-                                ${sub.startDate?long?number_to_date("yyyy-MM-dd")?date_diff(sub.endDate?long?number_to_date("yyyy-MM-dd"))} days
-                            <#else>
-                                Ongoing
-                            </#if>
-                        </td>
-
-                        <td>
-                            <a href="/subscriptions/${sub.id}" class="btn btn-info btn-sm">Details</a>
-
-                            <#if sub.active>
-                                <a href="/subscriptions/cancel/${sub.id}"
-                                   class="btn btn-danger btn-sm"
-                                   onclick="return confirm('Cancel this subscription?');">
-                                   Cancel
-                                </a>
-                            </#if>
-                        </td>
-
+                        <th scope="col">ID</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Start</th>
+                        <th scope="col">End</th>
+                        <th scope="col">Status</th>
+                        <th scope="col" class="text-end">Actions</th>
                     </tr>
-                </#list>
-            </tbody>
-        </table>
-
-    <#-- If the user has NO subscriptions -->
+                    </thead>
+                    <tbody>
+                    <#list subscriptions as sub>
+                        <tr>
+                            <td>${sub.id}</td>
+                            <td>${sub.type}</td>
+                            <td>${sub.startDate?string("yyyy-MM-dd")}</td>
+                            <td>
+                                <#if sub.endDate??>
+                                    ${sub.endDate?string("yyyy-MM-dd")}
+                                <#else>
+                                    <span class="text-muted">Ongoing</span>
+                                </#if>
+                            </td>
+                            <td>
+                                <span class="badge ${sub.active?then('text-bg-success','text-bg-secondary')}">
+                                    ${sub.active?then('Active','Inactive')}
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="/subscriptions/${sub.id}" class="btn btn-outline-primary">Details</a>
+                                    <a href="/subscriptions/update/${sub.id}" class="btn btn-outline-secondary">Edit</a>
+                                    <#if sub.active>
+                                        <a href="/subscriptions/cancel/${sub.id}"
+                                           class="btn btn-outline-danger"
+                                           onclick="return confirm('Cancel this subscription?');">Cancel</a>
+                                    </#if>
+                                </div>
+                            </td>
+                        </tr>
+                    </#list>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     <#else>
-        <div class="empty-state">
-            <h3>You have no active subscriptions.</h3>
-            <p>Choose a subscription option below to get started.</p>
-
-            <a href="/subscriptions/create" class="btn btn-primary">
-                Create Subscription
-            </a>
+        <div class="card shadow-sm">
+            <div class="card-body text-center py-5">
+                <h2 class="h5 mb-2">No subscriptions yet</h2>
+                <p class="text-muted mb-4">Start a plan to unlock recurring delivery and billing automation.</p>
+                <a href="/subscriptions/create" class="btn btn-primary">Create subscription</a>
+            </div>
         </div>
     </#if>
-
 </div>
 
-<#include "/layout/footer.ftlh">
+</@layout.block>
