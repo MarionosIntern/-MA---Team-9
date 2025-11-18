@@ -1,27 +1,20 @@
 package com.example.Centrix.Marketplace.Customer;
 
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.persistence.criteria.CriteriaBuilder.In;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import org.springframework.http.HttpStatus;
+
+import org.springframework.web.server.ResponseStatusException;
+
+
+
 
 import java.util.List;
 import java.util.Optional;
 @Service
 public class CustomerService {
-
-    private static final String UPLOAD_DIR = "uploads/profile_pics"; // optional
 
     @Autowired
     private CustomerRepository customerRepository;
