@@ -1,4 +1,4 @@
-<#import "layouts/base.fthl" as layout>
+<#import "/layouts/base.ftlh" as layout>
 <@layout.block pageTitle="Create Customer">
 
 <div class="container py-5">
