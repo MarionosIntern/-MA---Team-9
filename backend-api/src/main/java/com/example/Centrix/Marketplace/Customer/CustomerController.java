@@ -22,9 +22,8 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    // ================================
-    // 1️⃣ List all customers
-    // ================================
+    //  List all customers
+    
     @GetMapping
     public String getAllCustomers(Model model) {
         List<Customer> customers = customerService.getAllCustomers();
@@ -33,9 +32,9 @@ public class CustomerController {
         return "customer/list"; // points to templates/customer/list.html
     }
 
-    // ================================
-    // 2️⃣ View a customer by ID
-    // ================================
+    
+    //  View a customer by ID
+    
     @GetMapping("/{id}")
     public String getCustomerById(@PathVariable Long id, Model model) {
         Customer customer = customerService.getCustomerById(id)
@@ -45,9 +44,8 @@ public class CustomerController {
         return "customer/details"; // templates/customer/details.html
     }
 
-    // ================================
-    // 3️⃣ Search by name
-    // ================================
+    // Search by name
+   
     @GetMapping("/searchByName")
     public String getCustomerByName(@RequestParam(required = false) String name, Model model) {
         if (name == null || name.isBlank()) {
@@ -58,9 +56,9 @@ public class CustomerController {
         return "customer/list";
     }
 
-    // ================================
-    // 4️⃣ Search by email
-    // ================================
+    // 
+    //  Search by email
+    
     @GetMapping("/searchByEmail")
     public String getCustomerByEmail(@RequestParam(required = false) String email, Model model) {
         if (email == null || email.isBlank()) {
@@ -71,9 +69,9 @@ public class CustomerController {
         return "customer/list";
     }
 
-    // ================================
-    // 5️⃣ Search by phone number
-    // ================================
+    // 
+    //  Search by phone number
+    // 
     @GetMapping("/searchByPhone")
     public String getCustomerByPhone(@RequestParam(required = false) String phoneNumber, Model model) {
         if (phoneNumber == null || phoneNumber.isBlank()) {
@@ -84,9 +82,9 @@ public class CustomerController {
         return "customer/list";
     }
 
-    // ================================
-    // 6️⃣ Create Form
-    // ================================
+    
+    //  Create Form
+   
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("customer", new Customer());
@@ -94,18 +92,17 @@ public class CustomerController {
         return "customer/create";
     }
 
-    // ================================
-    // 7️⃣ Save new customer
-    // ================================
+   
+    //  Save new customer
+  
     @PostMapping
     public String createCustomer(@ModelAttribute Customer customer) {
         Customer saved = customerService.createCustomer(customer);
         return "redirect:/customers/" + saved.getId();
     }
 
-    // ================================
-    // 8️⃣ Update Form
-    // ================================
+    //  Update Form
+   
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model) {
         Customer customer = customerService.getCustomerById(id)
@@ -115,27 +112,27 @@ public class CustomerController {
         return "customer/update";
     }
 
-    // ================================
-    // 9️⃣ Save updated customer
-    // ================================
+   
+    //  Save updated customer
+    
     @PostMapping("/update/{id}")
     public String updateCustomer(@PathVariable Long id, @ModelAttribute Customer customer) {
         customerService.updateCustomer(id, customer);
         return "redirect:/customers/" + id;
     }
 
-    // ================================
-    // 🔟 Delete customer
-    // ================================
+
+    //  Delete customer
+    
     @GetMapping("/delete/{id}")
     public String deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
         return "redirect:/customers";
     }
 
- // ================================
-// 🔁 Default redirect
-// ================================
+
+// Default redirect
+
 @GetMapping("/")
 public String redirectToList() {
     return "redirect:/customers";

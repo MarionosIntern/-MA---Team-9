@@ -19,8 +19,8 @@ public class ProductController {
     // VIEW: product list
     @GetMapping("")
     public String listProducts(Model model,
-                               @RequestParam(required = false) Long providerId,
-                               @RequestParam(required = false) String category) {
+                               @RequestParam(name = "providerId", required = false) Long providerId,
+                               @RequestParam(name = "category", required = false) String category) {
 
         List<Product> products = productService.findAllProducts(providerId, category);
         model.addAttribute("products", products);

@@ -13,9 +13,9 @@ import jakarta.persistence.GenerationType;
 @Table(name = "customers")
 public class Customer {
 
-    // ================================
-    // 1️⃣ Fields
-    // ================================
+    
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,11 +38,11 @@ public class Customer {
     @Column
     private String profilePicturePath;
 
-    // ================================
-    // 2️⃣ Constructors
-    // ================================
+    
+    //  Constructors
+   
 
-    // Required by JPA (no-args constructor)
+    
     public Customer() {
     }
 
@@ -67,9 +67,9 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    // ================================
-    // 3️⃣ Getters and Setters
-    // ================================
+
+    //  Getters and Setters
+    
 
     public Long getId() {
         return id;
@@ -127,9 +127,9 @@ public class Customer {
         this.profilePicturePath = profilePicturePath;
     }
 
-    // ================================
-    // 4️⃣ toString (for debugging)
-    // ================================
+    
+    // toString (for debugging)
+    
     @Override
     public String toString() {
         return "Customer{" +

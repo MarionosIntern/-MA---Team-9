@@ -34,9 +34,9 @@ public class CartController {
         this.productService = productService;
     }
 
-    // ================================
+    
     // Admin/Provider cart screens
-    // ================================
+    
     @GetMapping
     public String viewAllCarts(Model model) {
         model.addAttribute("cartList", cartService.getAllCarts());
@@ -110,9 +110,9 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    // ================================
+    
     // Session-based customer cart
-    // ================================
+    
 
     @GetMapping("/view")
     public String viewSessionCart(HttpSession session, Model model) {

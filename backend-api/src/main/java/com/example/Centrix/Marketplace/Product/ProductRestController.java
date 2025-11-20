@@ -24,8 +24,8 @@ public class ProductRestController{
     }
 
     @GetMapping
-    public List<Product> findAllProducts(@RequestParam(required = false) Long providerId,
-                                         @RequestParam(required = false) String category){
+    public List<Product> findAllProducts(@RequestParam(name = "providerId", required = false) Long providerId,
+                                         @RequestParam(name = "category", required = false) String category){
         return service.findAllProducts(providerId, category);
     }
 
