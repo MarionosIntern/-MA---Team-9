@@ -19,23 +19,23 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    // ================================
-    // 1️⃣ Get all customers
-    // ================================
+    
+    //  Get all customers
+   
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
 
-    // ================================
-    // 2️⃣ Get customer by ID
-    // ================================
+    
+    //  Get customer by ID
+    
     public Optional<Customer> getCustomerById(Long id) {
         return customerRepository.findById(id);
     }
 
-    // ================================
-    // 3️⃣ Get customer by name
-    // ================================
+    
+    //  Get customer by name
+    
    public List<Customer> getCustomerByName(String name) {
     if (name == null || name.isBlank()) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Name is required");
@@ -44,30 +44,30 @@ public class CustomerService {
 }
 
 
-    // ================================
-    // 4️⃣ Get customer by email
-    // ================================
+    
+    //  Get customer by email
+   
     public Optional<Customer> getCustomerByEmail(String email) {
         return customerRepository.findByEmail(email);
     }
 
-    // ================================
-    // 5️⃣ Get customer by phone (if applicable)
-    // ================================
+   
+    //  Get customer by phone (if applicable)
+    
     public List<Customer> getCustomerByPhoneNumber(String phoneNumber) {
         return customerRepository.findByPhoneNumberContaining(phoneNumber);
     }
 
-    // ================================
-    // 6️⃣ Create new customer
-    // ================================
+   
+    //  Create new customer
+    
     public Customer createCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
 
-    // ================================
-    // 7️⃣ Update existing customer
-    // ================================
+   
+    //  Update existing customer
+   
     public Customer updateCustomer(Long id, Customer customer) {
         Customer existing = customerRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
@@ -82,9 +82,9 @@ public class CustomerService {
         return customerRepository.save(existing);
     }
 
-    // ================================
-    // 8️⃣ Delete customer
-    // ================================
+    
+    //  Delete customer
+    
     public void deleteCustomer(Long id) {
         if (!customerRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");

@@ -21,9 +21,9 @@ public class SubscriptionController {
         this.customerService = customerService;
     }
 
-    // ================================
-    // 1️⃣ List all subscriptions
-    // ================================
+   
+    // List all subscriptions
+    
     @GetMapping("/all")
     public String getAllSubscriptions(Model model) {
         model.addAttribute("subscriptionList", subscriptionService.getAllSubscriptions());
@@ -31,9 +31,9 @@ public class SubscriptionController {
         return "subscription/list"; // templates/subscription/list.html
     }
 
-     // ================================
-    // ✅ Display subscriptions for the current user
-    // ================================
+    
+    //  Display subscriptions for the current user
+    
     @GetMapping("")
     public String listSubscriptions(Model model) {
         // Get the "logged-in" customer (currently hardcoded to ID 1)
@@ -49,9 +49,9 @@ public class SubscriptionController {
         // Render the subscriptions page (subscription.fthl)
         return "subscription";
     }
-    // ================================
-    // 2️⃣ Get subscription by ID
-    // ================================
+   
+    //  Get subscription by ID
+    
     @GetMapping("/{id}")
     public String getSubscriptionById(@PathVariable Long id, Model model) {
         model.addAttribute("subscription", subscriptionService.getSubscriptionById(id));
@@ -59,9 +59,9 @@ public class SubscriptionController {
         return "subscription/details"; // templates/subscription/details.html
     }
 
-    // ================================
-    // 3️⃣ Get subscriptions by customer name
-    // ================================
+    
+    //  Get subscriptions by customer name
+    
    @GetMapping("/searchByCustomerName")
 public String getSubscriptionsByCustomerName(@RequestParam(required = false) String name, Model model) {
     if (name == null || name.isBlank()) {
@@ -74,9 +74,9 @@ public String getSubscriptionsByCustomerName(@RequestParam(required = false) Str
     return "customer/list"; // or "subscription/list" if you want to show their subscriptions too
 }
 
-    // ================================
-    // 4️⃣ Show form to create subscription
-    // ================================
+    
+    //  Show form to create subscription
+    
     @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("subscription", new Subscription());
@@ -84,9 +84,9 @@ public String getSubscriptionsByCustomerName(@RequestParam(required = false) Str
         return "subscription/create"; // templates/subscription/create.html
     }
 
-    // ================================
-    // 5️⃣ Handle new subscription creation
-    // ================================
+    
+    //  Handle new subscription creation
+    
     @PostMapping("/create")
     public String createSubscription(@ModelAttribute Subscription subscription) {
         subscriptionService.createSubscription(subscription);
@@ -95,9 +95,9 @@ public String getSubscriptionsByCustomerName(@RequestParam(required = false) Str
 
     
 
-    // ================================
-    // 7️⃣ Show all subscriptions for a specific customer
-    // ================================
+    
+    //  Show all subscriptions for a specific customer
+   
     @GetMapping("/customer/{customerId}")
     public String getCustomerSubscriptions(@PathVariable Long customerId, Model model) {
         model.addAttribute("subscriptionList", subscriptionService.getSubscriptionsByCustomerId(customerId));
@@ -121,9 +121,9 @@ public String cancelSubscription(@PathVariable Long id) {
 
 
 
-    // ================================
-    // 8️⃣ Default redirect
-    // ================================
+    
+    //  Default redirect
+    
     @GetMapping("/")
     public String redirectToList() {
         return "redirect:/subscriptions";

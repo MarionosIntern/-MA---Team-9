@@ -17,16 +17,14 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    // ================================
-    // 1️⃣ Get all carts
-    // ================================
+    
+    //  Get all carts
+    
     public List<Cart> getAllCarts() {
         return cartRepository.findAll();
     }
-
-    // ================================
-    // 2️⃣ Create a new cart for a provider
-    // ================================
+    //  Create a new cart for a provider
+    
     public Cart createCart(Long providerId, CartRequest request) {
         if (providerId == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provider ID is required");
@@ -37,9 +35,9 @@ public class CartService {
         return cart;
     }
 
-    // ================================
-    // 3️⃣ Add an item to the cart
-    // ================================
+    
+    //  Add an item to the cart
+    
     public Cart addItemToCart(Long cartId, CartRequest request) {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
@@ -55,9 +53,9 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    // ================================
-    // 4️⃣ Apply a subscription to the cart
-    // ================================
+
+    // Apply a subscription to the cart
+   
     public Cart applySubscription(Long cartId, String subscriptionName) {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
@@ -66,17 +64,16 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    // ================================
-    // 5️⃣ Get a single cart
-    // ================================
+    
+    // Get a single cart
+    
     public Cart getCart(Long cartId) {
         return cartRepository.findById(cartId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
     }
 
-    // ================================
-    // 6️⃣ Clear all items in a cart
-    // ================================
+    // Clear all items in a cart
+    
     public void clearCart(Long cartId) {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
@@ -91,9 +88,8 @@ public class CartService {
         return cart.getItems();
     }
 
-    // ================================
-    // 8️⃣ Get total price of items in a cart
-    // ================================
+    // Get total price of items in a cart
+   
     public double getTotal(Long cartId) {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));

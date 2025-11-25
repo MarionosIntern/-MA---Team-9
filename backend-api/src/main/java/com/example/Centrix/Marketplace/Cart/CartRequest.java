@@ -2,18 +2,16 @@ package com.example.Centrix.Marketplace.Cart;
 
 public class CartRequest {
 
-    // ================================
-    // 1️⃣ Fields
-    // ================================
+    
     private Long productId;
     private double unitPrice;
     private int quantity;
 
-    // ================================
-    // 2️⃣ Constructors
-    // ================================
+    // 
+    //  Constructors
+    // 
     public CartRequest() {
-        // Required for Spring form binding
+       
     }
 
     public CartRequest(Long productId, double unitPrice, int quantity) {
@@ -22,9 +20,9 @@ public class CartRequest {
         this.quantity = quantity;
     }
 
-    // ================================
-    // 3️⃣ Getters & Setters
-    // ================================
+    
+    //  Getters & Setters
+    
     public Long getProductId() {
         return productId;
     }
@@ -49,9 +47,7 @@ public class CartRequest {
         this.quantity = quantity;
     }
 
-    // ================================
-    // 4️⃣ Helper (optional)
-    // ================================
+    
     public double getSubtotal() {
         return unitPrice * quantity;
     }

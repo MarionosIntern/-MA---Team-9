@@ -6,9 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "cart_items")
 public class CartItem {
 
-    // ================================
-    // 1️⃣ Fields
-    // ================================
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,9 +25,7 @@ public class CartItem {
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
-    // ================================
-    // 2️⃣ Constructors
-    // ================================
+    
     public CartItem() {}
 
     public CartItem(Long productId, double unitPrice, int quantity) {
@@ -38,9 +34,7 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    // ================================
-    // 3️⃣ Getters & Setters
-    // ================================
+    
     public Long getId() {
         return id;
     }

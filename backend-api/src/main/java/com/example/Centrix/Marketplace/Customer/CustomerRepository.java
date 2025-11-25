@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    List<Customer> findByNameContainingIgnoreCase(String name); // 🔹 NEW
+    List<Customer> findByNameContainingIgnoreCase(String name); 
 
     List<Customer> findByShippingAddressContaining(String address);
     List<Customer> findByPhoneNumberContaining(String phoneNumber);

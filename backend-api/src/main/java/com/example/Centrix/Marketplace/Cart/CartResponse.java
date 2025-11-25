@@ -2,20 +2,18 @@ package com.example.Centrix.Marketplace.Cart;
 
 public class CartResponse {
 
-    // ================================
-    // 1️⃣ Fields
-    // ================================
+    
     private Long cartId;
     private int itemCount;
     private double total;
     private String subscription;
     private Long providerId;
 
-    // ================================
-    // 2️⃣ Constructors
-    // ================================
+    
+    //  Constructors
+    
     public CartResponse() {
-        // Default constructor for frameworks (like Spring)
+       
     }
 
     public CartResponse(Long cartId, int itemCount, double total, String subscription, Long providerId) {
@@ -26,9 +24,9 @@ public class CartResponse {
         this.providerId = providerId;
     }
 
-    // ================================
-    // 3️⃣ Getters & Setters
-    // ================================
+    
+    //  Getters & Setters
+    
     public Long getCartId() {
         return cartId;
     }
@@ -69,9 +67,7 @@ public class CartResponse {
         this.providerId = providerId;
     }
 
-    // ================================
-    // 4️⃣ Helper Methods (optional)
-    // ================================
+     
     @Override
     public String toString() {
         return "CartResponse{" +

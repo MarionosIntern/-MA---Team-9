@@ -8,9 +8,7 @@ import java.util.List;
 @Table(name = "carts")
 public class Cart {
 
-    // ================================
-    // 1️⃣ Fields
-    // ================================
+   
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,9 +24,7 @@ public class Cart {
     @Column(nullable = false)
     private String subscription = "NONE";
 
-    // ================================
-    // 2️⃣ Constructors
-    // ================================
+   
     public Cart() {
     }
 
@@ -36,9 +32,7 @@ public class Cart {
         this.providerId = providerId;
     }
 
-    // ================================
-    // 3️⃣ Getters & Setters
-    // ================================
+    
     public Long getId() {
         return id;
     }
@@ -71,27 +65,20 @@ public class Cart {
         this.subscription = subscription;
     }
 
-    // ================================
-    // 4️⃣ Business Logic
-    // ================================
-    // Compute total = Σ(quantity × unitPrice)
+    
     public double getTotal() {
         return items.stream()
                 .mapToDouble(item -> item.getUnitPrice() * item.getQuantity())
                 .sum();
     }
 
-    // ================================
-    // 5️⃣ Helper Method
-    // ================================
+    
     public void addItem(CartItem item) {
         items.add(item);
         item.setCart(this);
     }
 
-    // ================================
-    // 6️⃣ toString (for debugging/logging)
-    // ================================
+    
     @Override
     public String toString() {
         return "Cart{" +
