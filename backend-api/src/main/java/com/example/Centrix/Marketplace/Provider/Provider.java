@@ -1,14 +1,6 @@
 package com.example.Centrix.Marketplace.Provider;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "providers")
@@ -19,29 +11,19 @@ public class Provider {
     @Column(name = "provider_id")
     private Long id;
 
-
-    @Size(max = 120)
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 120)
     private String name;
 
-    
-    @Email
-    @Size(max = 160)
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true, length = 160)
     private String email;
 
-   
-    @Size(min = 6, max = 255)
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
 
-    
-    @Size(max = 255)
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false, length = 255)
     private String address;
 
-
-    @Column(name = "phoneNumber", nullable = true)
+    @Column(name = "phoneNumber")
     private String phoneNumber;
 
     public Provider() {}
@@ -67,9 +49,7 @@ public class Provider {
                 '}';
     }
 
-
     // Getters & Setters
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

@@ -5,56 +5,111 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class CartService {
-        private final CartRepository cartRepository;
 
-        public CartService(CartRepository cartRepository) {
-                this.cartRepository = cartRepository;
+    private final CartRepository cartRepository;
+
+    public CartService(CartRepository cartRepository) {
+        this.cartRepository = cartRepository;
+    }
+
+    
+    //  Get all carts
+    
+    public List<Cart> getAllCarts() {
+        return cartRepository.findAll();
+    }
+    //  Create a new cart for a provider
+    
+    public Cart createCart(Long providerId, CartRequest request) {
+        if (providerId == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provider ID is required");
         }
 
-        public CartResponse createCart(Long providerId) {
-                Cart cart = new Cart(providerId);
-                Cart saved = cartRepository.save(cart);
+        Cart cart = new Cart(providerId);
+        cartRepository.save(cart);
+        return cart;
+    }
 
-                return new CartResponse(saved.id, 0, 0.0, saved.subscription, saved.providerId);
+    
+    //  Add an item to the cart
+    
+    public Cart addItemToCart(Long cartId, CartRequest request) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+
+        if (request == null || request.getProductId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid item details");
         }
 
-        public CartResponse addItemToCart(Long cartId, CartRequest request) {
-                Cart cart = cartRepository.findById(cartId)
-                                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+        CartItem item = new CartItem(request.getProductId(), request.getUnitPrice(), request.getQuantity());
+        item.setCart(cart);
 
-                CartItem item = new CartItem(request.productId, request.unitPrice, request.quantity);
-                item.cart = cart;
-                cart.items.add(item);
+        cart.getItems().add(item);
+        return cartRepository.save(cart);
+    }
 
-                Cart saved = cartRepository.save(cart);
-                return new CartResponse(saved.id, saved.items.size(), saved.getTotal(), saved.subscription, saved.providerId);
-        }
 
-        public CartResponse applySubscription(Long cartId, String subscriptionName) {
-                Cart cart = cartRepository.findById(cartId)
-                                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+    // Apply a subscription to the cart
+   
+    public Cart applySubscription(Long cartId, String subscriptionName) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
 
-                cart.subscription = subscriptionName;
-                Cart saved = cartRepository.save(cart);
+        cart.setSubscription(subscriptionName);
+        return cartRepository.save(cart);
+    }
 
-                return new CartResponse(saved.id, saved.items.size(), saved.getTotal(), saved.subscription, saved.providerId);
-        }
+    
+    // Get a single cart
+    
+    public Cart getCart(Long cartId) {
+        return cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+    }
 
-        public void clearCart(Long cartId) {
-                Cart cart = cartRepository.findById(cartId)
-                                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+    // Clear all items in a cart
+    
+    public void clearCart(Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
 
-                cart.items.clear();
-                cartRepository.save(cart);
-        }
+        cart.getItems().clear();
+        cartRepository.save(cart);
+    }
 
-        public CartResponse getCart(Long cartId) {
-                Cart cart = cartRepository.findById(cartId)
-                                .orElseThrow(() -> new IllegalArgumentException("Cart not found"));
+     public List<CartItem> getItems(Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+        return cart.getItems();
+    }
 
-                return new CartResponse(cart.id, cart.items.size(), cart.getTotal(), cart.subscription, cart.providerId);
-        }
+    // Get total price of items in a cart
+   
+    public double getTotal(Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+        return cart.getTotal();
+    }
+
+    public String getAppliedSubscription(Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+        String sub = cart.getSubscription();
+        return (sub != null && !sub.isBlank()) ? sub : "NONE";
+    }
+
+    public Cart getMostRecentCart() {
+    List<Cart> carts = cartRepository.findAll();
+    if (carts.isEmpty()) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No carts found");
+    }
+    // Return the last one (assuming ascending IDs)
+    return carts.get(carts.size() - 1);
+}
+
 }

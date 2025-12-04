@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
     List<Subscription> findByCustomerAndActive(Customer customer, boolean active);
+
+    List<Subscription> findByCustomer(Customer managedCustomer);
 }

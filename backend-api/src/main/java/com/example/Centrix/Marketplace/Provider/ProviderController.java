@@ -2,80 +2,262 @@ package com.example.Centrix.Marketplace.Provider;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import jakarta.validation.Valid;
+import com.example.Centrix.Marketplace.Product.Product;
+import com.example.Centrix.Marketplace.Product.ProductService;
+import com.example.Centrix.Marketplace.Provider.Provider;
+import com.example.Centrix.Marketplace.Provider.ProviderService;
+import com.example.Centrix.Marketplace.Review.Review;
+import com.example.Centrix.Marketplace.Review.ReviewService;
 
-@RestController
-@RequestMapping("/api/providers")
-public class ProviderController {
+import jakarta.servlet.http.HttpSession;
 
-    
+@Controller
+@RequestMapping("/providers")
+public class ProviderController{
     private final ProviderService providerService;
+    private final ProductService productService;
+    private final ReviewService reviewService;
 
-    public ProviderController(ProviderService providerService) {
+    public ProviderController(ProviderService providerService, ProductService productService, ReviewService reviewService) {
         this.providerService = providerService;
+        this.productService = productService;
+        this.reviewService = reviewService;
     }
 
-    // CREATE
-    @PostMapping @ResponseStatus(HttpStatus.CREATED)
-    public Provider createProvider(@RequestBody Provider provider) {
-        return providerService.createProvider(provider);
+    @GetMapping("/signup")
+    public String signupForm(Model model) {
+        model.addAttribute("provider", new Provider());
+        return "/signup";
     }
 
-    // UPDATE
-    @PutMapping("/{id}")
-    public ResponseEntity<Provider> updateProvider(
-            @PathVariable Long id,
-            @Valid @RequestBody Provider providerDetails) {
-        Provider updated = providerService.updateProvider(id, providerDetails);
-        return ResponseEntity.ok(updated);
+    @PostMapping("/signup")
+    public String signUp(@RequestParam("name") String name,
+                         @RequestParam("email") String email,
+                         @RequestParam("password") String password,
+                         @RequestParam("address") String address,
+                         @RequestParam (value = "phoneNumber", required = false) String phoneNumber){
+        Provider provider = new Provider(); 
+        provider.setName(name);
+        provider.setEmail(email);
+        provider.setPassword(password);
+        provider.setAddress(address);
+        provider.setPhoneNumber(phoneNumber);
+        providerService.createProvider(provider);
+        return "redirect:/signin";
     }
 
-    // READ by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Provider> getProviderById(@PathVariable Long id) {
-        Provider provider = providerService.getProviderById(id);
-        return ResponseEntity.ok(provider);
+    @PostMapping("/signin")
+    public String signin(@RequestParam String email, @RequestParam String password, HttpSession session){
+        try {
+            Provider provider = providerService.authenticate(email, password);
+            session.setAttribute("providerId", provider.getId());
+            return "redirect:/providers/home";
+        } catch (Exception e) {
+            return "redirect:/signin?error";
+        }
     }
 
-    // READ BY NAME
-    @GetMapping("/{id}/name")
-    public ResponseEntity<String> getProviderByName(@PathVariable Long id){
-        return ResponseEntity.ok(providerService.getProviderById(id).getName());
+    @GetMapping("/home")
+    public String home(HttpSession session, Model model){
+        Long providerId = (Long) session.getAttribute("providerId");
+        if(providerId == null){
+            return "redirect:/signin";
+        }
+        Provider provider = providerService.getProviderById(providerId);
+        model.addAttribute("provider", provider);
+        List<Product> products = productService.findAllProducts(providerId, null);
+        model.addAttribute("products", products);
+        return "provider/home";
     }
 
-    // UPDATE NAME
-    @PutMapping("/{id}/name")
-    public ResponseEntity<Void> setProviderName(@PathVariable Long id, @RequestBody String name){
-        Provider p = providerService.getProviderById(id);
-        p.setName(name);
-        providerService.updateProvider(id, p);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("providerId");
+        return "redirect:/signin";
+    }
+
+    @GetMapping("/products/upload")
+    public String uploadProductForm(HttpSession session, Model model){
+        Long providerId = (Long) session.getAttribute("providerId");
+        if(providerId == null){
+            return "redirect:/signin";
+        }
+        Provider provider = providerService.getProviderById(providerId);
+        
+        return "provider/upload-product";
+    }
+
+    @PostMapping("/products/upload")
+    public String uploadProduct(@RequestParam String name,
+                                @RequestParam String category,
+                                @RequestParam double price,
+                                @RequestParam String description,
+                                @RequestParam String status,
+                                HttpSession session){
+       
+        Long providerId = (Long) session.getAttribute("providerId");
+        Provider provider = providerService.getProviderById(providerId);
+        if(providerId == null){
+            return "redirect:/signin";
+        }
+        Product product = new Product();
+        product.setProvider(provider);
+        product.setProviderId(providerId);
+        product.setName(name);
+        product.setCategory(category);
+        product.setPrice(price);
+        product.setDescription(description);
+        product.setStatus(status);
+
+        productService.create(product);
+
+        return "redirect:/providers/home";
+    }
+
+    @GetMapping("profile/edit")
+    public String editProfileForm(HttpSession session, Model model){
+        Long providerId = (Long) session.getAttribute("providerId");
+        if(providerId == null){
+            return "redirect:/signin";
+        }
+        Provider provider = providerService.getProviderById(providerId);
+        model.addAttribute("provider", provider);
+        return "provider/edit-profile";
+    }
+
+    @PostMapping("profile/edit")
+    public String editProfile(@RequestParam String name,
+                              @RequestParam String email,
+                              @RequestParam (required = false) String phoneNumber,
+                              @RequestParam String address,
+                              @RequestParam String currentPassword,
+                              @RequestParam (required = false) String newPassword, HttpSession session,
+                              Model model){
+        Long providerId = (Long) session.getAttribute("providerId");
+        if(providerId == null){
+            return "redirect:/signin";
+        }
+
+        try {
+            Provider provider = providerService.getProviderById(providerId);
+            providerService.authenticate(email, currentPassword);
+
+            Provider updatedProvider = new Provider();
+            updatedProvider.setName(name);
+            updatedProvider.setEmail(email);
+            updatedProvider.setAddress(address);
+            updatedProvider.setPhoneNumber(phoneNumber);
+            updatedProvider.setPassword(newPassword != null && !newPassword.trim().isEmpty() ? newPassword : currentPassword); 
+            
+            providerService.updateProvider(providerId, updatedProvider);
+            return "redirect:/providers/home";
+        } catch (Exception e) {
+            model.addAttribute("provider", providerService.getProviderById(providerId));
+            model.addAttribute("error", "Password is invalid");
+            return "redirect:/provider/edit-profile";
+        }
+     }
+
+     @GetMapping("products/{id}/edit")
+     public String editProductForm(@PathVariable Long id, HttpSession session, Model model){
+        Long providerId = (Long) session.getAttribute("providerId");
+        if(providerId == null){
+            return "redirect:/signin";
+        }
+        Provider provider = providerService.getProviderById(providerId);
+        Product product = productService.findById(providerId);
+
+        if(!product.getProviderId().equals(provider.getId())){
+            return "redirect:/providers/home";
+        }
+
+        model.addAttribute("product", product);
+        return "provider/edit-product";
+     }
+
+     @PostMapping("products/{id}/edit")
+     public String editProduct(@PathVariable Long id,
+                               @RequestParam String name,
+                               @RequestParam String category,
+                               @RequestParam double price,
+                               @RequestParam String description,
+                               @RequestParam String status,
+                               HttpSession session){
+        Long providerId = (Long) session.getAttribute("providerId");
+        if(providerId == null){
+            return "redirect:/signin";
+        }
+        Provider provider = providerService.getProviderById(providerId);
+        Product existingProduct = productService.findById(id);
+
+        if(!existingProduct.getProviderId().equals(provider.getId())){
+            return "redirect:/providers/home";
+        }
+
+        Product updatedProduct = new Product();
+        updatedProduct.setName(name);
+        updatedProduct.setCategory(category);
+        updatedProduct.setPrice(price);
+        updatedProduct.setDescription(description);
+        updatedProduct.setStatus(status);
+
+        productService.update(id, updatedProduct);
+        return "redirect:/providers/home";
+     }
+@GetMapping("/reviews")
+public String viewReviews(HttpSession session, Model model){
+    Long providerId = (Long) session.getAttribute("providerId");
+
+    if (providerId == null) {
+        return "redirect:/signin";
+    }
+
+    Provider provider = providerService.getProviderById(providerId);
+
+    // Fetch all reviews associated with this provider
+    List<Review> reviews = reviewService.getReviewsByProviderId(providerId);
+
+    model.addAttribute("provider", provider);
+    model.addAttribute("reviews", reviews);
+
+    return "provider/reviews";
+}
+
+
+     @PostMapping("/reviews/{id}/reply")
+     public String respondToReview(@PathVariable Long id,
+                                   @RequestParam String response,
+                                   HttpSession session){
+        Long providerId = (Long) session.getAttribute("providerId");
+        if(providerId == null){
+            return "redirect:/signin";
+        }
+        Provider provider = providerService.getProviderById(providerId);
+        Review review = reviewService.addProviderResponse(id, response);
+
+        if(review.getProduct().getProviderId().equals(provider.getId())){
+            return "redirect:/providers/reviews";
+        }
+        reviewService.addProviderResponse(id, response);
+        return "redirect:/providers/reviews";
     }
 
 
-    // READ all (optional)
-    @GetMapping
-    public ResponseEntity<List<Provider>> getAllProviders() {
-        List<Provider> list = providerService.getAll();
-        return ResponseEntity.ok(list);
-    }
 
-    // DELETE
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProvider(@PathVariable Long id) {
-        providerService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
+
+     
+
+
+
+
+
+
 }
