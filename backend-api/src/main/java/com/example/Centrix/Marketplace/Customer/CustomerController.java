@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.Centrix.Marketplace.SessionConstants;
+
 import java.util.List;
 
 
@@ -128,6 +131,18 @@ public class CustomerController {
     public String deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
         return "redirect:/customers";
+    }
+
+
+
+    // View Profile
+    @GetMapping("/customers/profile")
+    public String viewProfile(@PathVariable Long id, Model model) {
+        String customer = SessionConstants.CUSTOMER_ID "CURRENT_CUSTOMER"  ;
+              .orElseThrow(() -> new IllegalArgumentException("Invalid customer ID: " + id));
+        model.addAttribute("customer", customer);
+        model.addAttribute("title", "Customer Profile");
+        return "customer/profile"; // templates/customer/profile.html
     }
 
 
