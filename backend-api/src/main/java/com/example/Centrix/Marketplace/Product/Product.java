@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 
 @Entity
@@ -18,7 +19,6 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
     private Long productId;
     
     @Column(name =  "provider_id", nullable = false)
@@ -29,30 +29,99 @@ public class Product {
     private Provider provider;
 
     @Column( name = "name", nullable = false, length = 255)
+
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "category", nullable = false) 
     private String category;
 
-    @Column(name = "price", nullable = false)
     private double price;
 
-    @Column(name = "description", nullable = false, length = 1000)
+    @Column(name = "image_url", columnDefinition = "TEXT")
+    private String imageUrl;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "status", nullable = false)
-    private String status; 
+    private String status;
 
-    public Product() {}
+    // -----------------------------
+    // Provider relationship
+    // -----------------------------
+    @ManyToOne
+    @JoinColumn(name = "provider_id")
+    private Provider provider;
 
-    public Product(Long productId, Long providerId, String name, String category, double price, String description, String status) {
-        this.productId = productId;
-        this.providerId = providerId;
+    @Column(name = "provider_id", insertable = false, updatable = false)
+    private Long providerId;
+
+    // -----------------------------
+    // Getters & Setters
+    // -----------------------------
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long id) {
+        this.productId = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
         this.category = category;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+        this.providerId = provider != null ? provider.getId() : null;
+    }
+
+    public Long getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
-        this.status = status;
     }
 
     @Override
@@ -93,4 +162,11 @@ public class Product {
     public String getStatus() {return status;}
     public void setStatus(String status) {this.status = status;}
 }
+    public String getStatus() {
+        return status;
+    }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+}

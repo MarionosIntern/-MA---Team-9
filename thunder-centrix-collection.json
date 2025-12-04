@@ -132,10 +132,10 @@
 
 {
   "customer": { "id": 1 },
-  "products": { "id": 1 },
+  "product": { "productId": 1 },
   "qualityRating": 4.5,
   "deliveryRating": 5.0,
-  "comment": "Great product, arrived in excellent condition."
+  "comment": "Great product"
 }
 
 

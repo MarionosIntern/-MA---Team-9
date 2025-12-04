@@ -7,47 +7,63 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
-@Transactional
 public class ProviderService {
+
     private final ProviderRepository providerRepository;
 
-    public Provider createProvider(Provider provider){
-        if (providerRepository.existsByEmail(provider.getEmail())) {
-            throw new IllegalArgumentException("Email already in use");
-        }
+    // ✅ Constructor Injection (prevents your earlier compilation error)
+    public ProviderService(ProviderRepository providerRepository) {
+        this.providerRepository = providerRepository;
+    }
+
+    // ---------------------------------------------------------
+    // CREATE PROVIDER (Signup)
+    // ---------------------------------------------------------
+    public Provider createProvider(Provider provider) {
         return providerRepository.save(provider);
     }
 
-    public Provider updateProvider(Long id, Provider providerDetails){
-        Provider provider = providerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Provider not found with id: " + id));
-        
-        provider.setName(providerDetails.getName());
-        if (!provider.getEmail().equals(providerDetails.getEmail()) && 
-            providerRepository.existsByEmail(providerDetails.getEmail())) {
-            throw new IllegalArgumentException("Email already in use");
+    // ---------------------------------------------------------
+    // AUTHENTICATE (Signin)
+    // ---------------------------------------------------------
+    public Provider authenticate(String email, String password) {
+        Provider provider = providerRepository.findByEmail(email);
+
+        if (provider == null) {
+            throw new RuntimeException("Provider not found");
         }
 
-        provider.setName(providerDetails.getName());
-        provider.setEmail(providerDetails.getEmail());
-        provider.setPassword(providerDetails.getPassword());
-        provider.setAddress(providerDetails.getAddress());
-        provider.setPhoneNumber(providerDetails.getPhoneNumber());
+        if (!provider.getPassword().equals(password)) {
+            throw new RuntimeException("Invalid password");
+        }
 
-        return providerRepository.save(provider);
+        return provider;
     }
 
-    public Provider getProviderById(Long id){
+    // ---------------------------------------------------------
+    // GET PROVIDER BY ID (Home, Edit Profile)
+    // ---------------------------------------------------------
+    public Provider getProviderById(Long id) {
         return providerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Provider not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Provider not found"));
     }
 
-    public Provider getProviderByEmail(String email){
-        return providerRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("Provider not found with email: " + email));
+    // ---------------------------------------------------------
+    // UPDATE PROVIDER (Edit Profile)
+    // ---------------------------------------------------------
+    public Provider updateProvider(Long id, Provider updatedData) {
+        Provider provider = getProviderById(id);
+
+        provider.setName(updatedData.getName());
+        provider.setEmail(updatedData.getEmail());
+        provider.setAddress(updatedData.getAddress());
+        provider.setPhoneNumber(updatedData.getPhoneNumber());
+        provider.setPassword(updatedData.getPassword());
+
+        return providerRepository.save(provider);
     }
 
     public Provider authenticate(String email, String password){
@@ -63,13 +79,24 @@ public class ProviderService {
     }
 
     public List<Provider> getAll(){
+    // ---------------------------------------------------------
+    // LIST ALL PROVIDERS (not used but helpful)
+    // ---------------------------------------------------------
+    public Iterable<Provider> getAllProviders() {
         return providerRepository.findAll();
     }
 
-    public void delete(Long id){
-        if (!providerRepository.existsById(id)) {
-            throw new EntityNotFoundException("Provider not found with id: " + id);
-        }
+    // ---------------------------------------------------------
+    // DELETE PROVIDER (optional)
+    // ---------------------------------------------------------
+    public void deleteProvider(Long id) {
         providerRepository.deleteById(id);
+    }
+
+    // ---------------------------------------------------------
+    // FIND BY EMAIL (helper for login)
+    // ---------------------------------------------------------
+    public Provider findByEmail(String email) {
+        return providerRepository.findByEmail(email);
     }
 }
