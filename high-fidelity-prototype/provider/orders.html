@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Your Orders - Centrix Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <header class="site-header py-3 border-bottom">
+      <div class="container d-flex align-items-center justify-content-between">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none">
+          <img src="https://videos.openai.com/vg-assets/assets%2Ftask_01k45fkm6qf1n866wgcc5150rn%2F1756825911_img_1.webp?st=2025-09-22T13%3A36%3A07Z&se=2025-09-28T14%3A36%3A07Z&sks=b&skt=2025-09-22T13%3A36%3A07Z&ske=2025-09-28T14%3A36%3A07Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=cfbc986b-d2bc-4088-8b71-4f962129715b&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=HPzmo8S40QrAaVTHISr%2Brzb6xRpruHTeopVKPwLiZHM%3D&az=oaivgprodscus" alt="Centrix Marketplace logo" width="56" height="56" class="me-2">
+          <span class="h4 mb-0">Centrix Marketplace</span>
+        </a>
+        <div>
+          <a href="favorites.html" class="me-3">Favorites</a>
+          <a href="signin.html" class="btn btn-outline-primary btn-sm">Sign in</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container py-5">
+      <h2>Your orders</h2>
+      <div id="orders-list">Loading…</div>
+    </main>
+
+    <script>
+      const ORDERS_KEY = 'centrix_orders';
+      function readOrders(){ try{ return JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]'); }catch(e){ return []; } }
+      function writeOrders(list){ localStorage.setItem(ORDERS_KEY, JSON.stringify(list)); }
+
+      function render(){
+        const list = readOrders();
+        const el = document.getElementById('orders-list');
+        if(list.length===0){ el.innerHTML = '<div class="text-muted">No orders yet.</div>'; return; }
+        el.innerHTML = list.map((o,idx)=>`
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">${o.title} <small class="text-muted">(${o.provider||''})</small></h5>
+              <p class="card-text">Qty: ${o.qty} — Total: $${(o.total||0).toFixed? (o.total.toFixed(2)) : o.total}</p>
+              <p class="text-muted">Status: <strong id="status-${idx}">${o.status||'placed'}</strong></p>
+              <div class="d-flex gap-2">
+                ${o.status==='delivered' ? `<a class="btn btn-sm btn-link" href="./reviews.html?id=${encodeURIComponent(o.id)}">Leave a review</a>` : `<button data-idx="${idx}" class="btn btn-sm btn-primary mark-delivered">Mark delivered</button>`}
+                <button data-idx="${idx}" class="btn btn-sm btn-outline-secondary remove-order">Remove</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        document.querySelectorAll('.mark-delivered').forEach(btn=> btn.addEventListener('click', function(){
+          const idx = parseInt(this.getAttribute('data-idx'),10);
+          const arr = readOrders(); if(!arr[idx]) return; arr[idx].status='delivered'; writeOrders(arr); render();
+        }));
+
+        document.querySelectorAll('.remove-order').forEach(btn=> btn.addEventListener('click', function(){
+          const idx = parseInt(this.getAttribute('data-idx'),10);
+          const arr = readOrders(); if(!arr[idx]) return; arr.splice(idx,1); writeOrders(arr); render();
+        }));
+      }
+
+      render();
+    </script>
+  </body>
+</html>

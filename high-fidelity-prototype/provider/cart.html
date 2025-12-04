@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart • Centrix Marketplace</title>
+  <style>
+    :root{--bg:#fff;--text:#0b0d10;--muted:#6b7280;--soft:#f5f7fa;--border:#e5e7eb;--card:#fff;--blue:#2563eb;--blue-2:#1d4ed8}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:var(--bg);color:var(--text)}
+    /* Header */
+    header{background:#fff;border-bottom:1px solid var(--border)}
+
+    .hwrap{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+
+    .brand{display:flex;align-items:center;gap:10px}
+
+    .brand img{height:100px;}
+
+    .title{font-size:1.35rem;font-weight:800;color:#2563eb}
+
+    .grow{flex:1}
+
+    .iconbtn{background:#fff;border:1px solid var(--border);padding:8px 10px;border-radius:10px;cursor:pointer;font-weight:600}
+
+    .badge{display:inline-flex;min-width:20px;height:20px;align-items:center;justify-content:center;background:var(--blue);color:#fff;border-radius:999px;padding:0 6px;font-size:.8rem;margin-left:6px}
+
+    .btn{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+
+    .btn:hover{background:var(--blue-2)}
+
+    .ghost{background:#fff;border:1px solid var(--border);color:var(--blue)}
+
+    main{max-width:1200px;margin:0 auto;padding:18px 20px}
+
+    h1{margin:8px 0 14px}
+
+    .grid{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+
+    @media(max-width:960px){.grid{grid-template-columns:1fr}}
+
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+
+    table{width:100%;border-collapse:collapse}
+
+    th,td{padding:12px 10px;border-bottom:1px solid var(--border);text-align:left}
+
+    th{background:#f3f5f8}
+
+    td.price,td.total{text-align:right;font-variant-numeric:tabular-nums}
+
+    .qty{display:inline-flex;align-items:center;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+
+    .qty button{all:unset;padding:6px 10px;cursor:pointer;background:#f6f6f6}
+
+    .qty input{width:46px;text-align:center;border:none;padding:6px 0}
+
+    .line{display:flex;justify-content:space-between;margin:8px 0}
+
+    .total{font-size:1.1rem;font-weight:800}
+
+    .muted{color:var(--muted)}
+
+    a.link{color:var(--blue);text-decoration:none;font-weight:600}
+
+    a.link:hover{text-decoration:underline}
+
+    details{margin-top:10px}
+
+    details summary{cursor:pointer;font-weight:700}
+
+    .order{border-top:1px dashed var(--border);padding-top:10px;margin-top:10px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hwrap">
+      <div class="brand">
+        <img src="https://videos.openai.com/vg-assets/assets%2Ftask_01k45fkm6qf1n866wgcc5150rn%2F1756825911_img_1.webp?st=2025-09-22T13%3A36%3A07Z&se=2025-09-28T14%3A36%3A07Z&sks=b&skt=2025-09-22T13%3A36%3A07Z&ske=2025-09-28T14%3A36%3A07Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=cfbc986b-d2bc-4088-8b71-4f962129715b&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=HPzmo8S40QrAaVTHISr%2Brzb6xRpruHTeopVKPwLiZHM%3D&az=oaivgprodscus" alt="Centrix logo"/>
+        <div class="title">Centrix Marketplace</div>
+      </div>
+      <div class="grow"></div>
+      <button class="iconbtn" onclick="location.href='index.html'">Continue Shopping</button>
+      <a href="cart.html" class = "btn-outline-primary" id ="open-cart" class="text-decoration-none" aria-label="View cart"> MyCart <span id="cart-count"
+        class="badge bg-primary text-white ms-1" aria-live="polite" aria-atomic="true">0</span></a>
+    </div>
+  </header>
+
+  <main>
+    <h1>Your Cart</h1>
+    <div class="grid">
+      <section class="card">
+        <div id="cartContainer"></div>
+      </section>
+      <aside class="card">
+        <h2>Summary</h2>
+        <div class="line"><span>Items</span><span id="sumItems">0</span></div>
+        <div class="line"><span>Subtotal</span><span id="sumSubtotal">$0.00</span></div>
+        <div class="line"><span>Tax (7%)</span><span id="sumTax">$0.00</span></div>
+        <div class="line total"><span>Total</span><span id="sumTotal">$0.00</span></div>
+        <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+          <button class="ghost" id="clearCart">Clear Cart</button>
+          <button class="btn" id="checkoutBtn">Checkout</button>
+        </div>
+        <p class="muted" id="userNote" style="margin-top:10px"></p>
+        <details id="ordersBox"><summary>Order history</summary><div id="orders"></div></details>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const USER_KEY='cm_user'; const TAX_RATE=.07;
+    function getUser(){try{return JSON.parse(localStorage.getItem(USER_KEY)||'null')}catch{return null}}
+    function emailKey(){const u=getUser();return u&&u.email?encodeURIComponent(String(u.email).toLowerCase()):'guest'}
+    function CART_KEY(){return `cm_cart_${emailKey()}`} function ORDERS_KEY(){return `cm_orders_${emailKey()}`}
+    function format(n){return n.toLocaleString(undefined,{style:'currency',currency:'USD'})}
+    function getCart(){try{return JSON.parse(localStorage.getItem(CART_KEY())||'[]')}catch{return []}}
+    function setCart(a){localStorage.setItem(CART_KEY(),JSON.stringify(a))}
+    function getOrders(){try{return JSON.parse(localStorage.getItem(ORDERS_KEY())||'[]')}catch{return []}}
+    function setOrders(a){localStorage.setItem(ORDERS_KEY(),JSON.stringify(a))}
+
+    function group(items){const m=new Map();for(const it of items){const k=it.name;const p=m.get(k)||{name:k,price:Number(it.price)||0,qty:0};p.qty++;m.set(k,p)}return [...m.values()]}
+
+    function render(){const mount=document.getElementById('cartContainer');const items=getCart();
+      if(!items.length){mount.innerHTML=`<div class='muted'>Your cart is empty. <a class='link' href='index.html'>Browse items</a>.</div>`;updateSummary([])}
+      else{const rows=group(items);let html=`<table><thead><tr><th>Item</th><th class='price'>Price</th><th>Qty</th><th class='total'>Line Total</th><th></th></tr></thead><tbody>`;for(const r of rows){html+=`<tr data-name='${r.name}'><td>${r.name}</td><td class='price'>${format(r.price)}</td><td><div class='qty'><button onclick="chg('${r.name}',-1)">-</button><input type='number' min='1' value='${r.qty}' onchange="setQty('${r.name}',this.value)"><button onclick="chg('${r.name}',1)">+</button></div></td><td class='total'>${format(r.qty*r.price)}</td><td><button class='ghost' onclick="rem('${r.name}')">Remove</button></td></tr>`} html+=`</tbody></table>`;mount.innerHTML=html;updateSummary(rows)}
+      updateBadge(); renderOrders(); greet();}
+
+    function updateSummary(rows){const items=rows||[];const count=items.reduce((s,r)=>s+r.qty,0);const sub=items.reduce((s,r)=>s+r.qty*r.price,0);const tax=sub*TAX_RATE;const total=sub+tax;sumItems.textContent=count;sumSubtotal.textContent=format(sub);sumTax.textContent=format(tax);sumTotal.textContent=format(total)}
+    function priceOf(name,arr){const a=arr||getCart();const h=a.find(i=>i.name===name);return h?Number(h.price):0}
+    function chg(name,d){let a=getCart();if(d>0)a.push({name,price:priceOf(name,a)});else{const i=a.findIndex(x=>x.name===name);if(i>-1)a.splice(i,1)} setCart(a);render()}
+    function setQty(name,qStr){let q=Math.max(1,parseInt(qStr||'1',10));let a=getCart().filter(i=>i.name!==name);const p=priceOf(name);for(let i=0;i<q;i++)a.push({name,price:p}); setCart(a);render()}
+    function rem(name){setCart(getCart().filter(i=>i.name!==name));render()}
+    clearCart.onclick=()=>{setCart([]);render()}
+
+    function renderOrders(){const box=orders;const os=getOrders();if(!os.length){box.innerHTML='<div class="muted">No orders yet.</div>';return} box.innerHTML=os.map(o=>{const lines=o.items.map(it=>`${it.qty}× ${it.name} @ ${format(it.price)}`).join('<br>');return `<div class='order'><div><strong>Order #${o.id}</strong> • <span class='muted'>${new Date(o.date).toLocaleString()}</span></div><div class='muted'>${lines}</div><div style='margin-top:6px'><strong>Total:</strong> ${format(o.total)} (Subtotal ${format(o.subtotal)} + Tax ${format(o.tax)})</div></div>`}).join('')}
+
+    checkoutBtn.onclick=()=>{const u=getUser();if(!getCart().length){alert('Your cart is empty.');return} if(!u){alert('Please sign in on the Shop page (demo).');return} const rows=group(getCart());const sub=rows.reduce((s,r)=>s+r.qty*r.price,0);const tax=sub*TAX_RATE;const total=sub+tax;const order={id:Math.floor(100000+Math.random()*900000),date:new Date().toISOString(),items:rows,subtotal:sub,tax,total};const os=getOrders();os.unshift(order);setOrders(os);alert(`Thanks, ${u.name}! Your demo order #${order.id} is placed.`);setCart([]);renderOrders();render()}
+
+    function greet(){const u=getUser();userNote.textContent=u?`Signed in as ${u.name} (${u.email})`:'Not signed in.';ordersBox.open=!!u}
+    function updateBadge(){document.getElementById('cart-count').textContent=getCart().length}
+    myCart.onclick=()=>location.href='cart.html'
+
+    render();
+  </script>
+</body>
+</html> 

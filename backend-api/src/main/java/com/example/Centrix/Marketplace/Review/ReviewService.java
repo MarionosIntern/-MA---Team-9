@@ -8,11 +8,17 @@ import com.example.Centrix.Marketplace.Customer.CustomerRepository;
 import com.example.Centrix.Marketplace.Product.Product;
 import com.example.Centrix.Marketplace.Product.ProductRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.example.Centrix.Marketplace.Customer.Customer;
+import com.example.Centrix.Marketplace.Customer.CustomerRepository;
+import com.example.Centrix.Marketplace.Product.Product;
+import com.example.Centrix.Marketplace.Product.ProductRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 @Transactional

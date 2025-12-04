@@ -1,6 +1,15 @@
 package com.example.Centrix.Marketplace.Provider;
 
+
+import java.util.List;
+
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.example.Centrix.Marketplace.Product.Product;
 
 @Entity
 @Table(name = "providers")
@@ -25,6 +34,10 @@ public class Provider {
 
     @Column(name = "phoneNumber")
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("provider")
+    private List<Product> products;
 
     public Provider() {}
 
@@ -67,4 +80,8 @@ public class Provider {
 
     public String getPhoneNumber() { return phoneNumber; }
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
+    public List<Product> getProducts() { return products; }
+    
+}
 }

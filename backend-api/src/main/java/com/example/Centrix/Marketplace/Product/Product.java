@@ -1,7 +1,17 @@
 package com.example.Centrix.Marketplace.Product;
 
 import com.example.Centrix.Marketplace.Provider.Provider;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "products")
@@ -10,6 +20,15 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
+    
+    @Column(name =  "provider_id", nullable = false)
+    private Long providerId;
+   
+    @ManyToOne
+    @JoinColumn(name =  "provider", nullable = false)
+    private Provider provider;
+
+    @Column( name = "name", nullable = false, length = 255)
 
     @Column(nullable = false)
     private String name;
@@ -105,6 +124,44 @@ public class Product {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", providerId=" + providerId +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
+    // Getters and Setters
+    public Long getProductId() {return productId;}
+    public void setProductId(Long productId) {this.productId = productId;}
+
+    public Long getProvider() {return provider.getId();}
+    public void setProvider(Provider provider) {this.provider = provider;}
+
+    public Long getProviderId() {return provider.getId();}
+    public void setProviderId(Long providerId) {this.providerId = providerId;}
+   
+    public String getName() {return name;}
+    public void setName(String name) {this.name = name;}
+
+    public String getCategory() {return category;}
+    public void setCategory(String category) {this.category = category;}
+    
+    public double getPrice() {return price;}
+    public void setPrice(double price) {this.price = price;}
+    
+    public String getDescription() {return description;}
+    public void setDescription(String description) {this.description = description;}
+    
+    public String getStatus() {return status;}
+    public void setStatus(String status) {this.status = status;}
+}
     public String getStatus() {
         return status;
     }

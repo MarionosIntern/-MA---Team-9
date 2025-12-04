@@ -74,6 +74,10 @@ public class ProductService {
         product.setImageUrl(normalizeImageUrl(product.getImageUrl()));
     }
 
+    public List<Product> getAllProducts(){
+        return repo.findAll();
+    }
+
     private String normalizeImageUrl(String raw) {
         if (raw == null) {
             return null;

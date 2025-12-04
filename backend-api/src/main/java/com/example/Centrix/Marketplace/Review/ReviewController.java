@@ -1,5 +1,21 @@
 package com.example.Centrix.Marketplace.Review;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.Centrix.Marketplace.Customer.Customer;
+import com.example.Centrix.Marketplace.Customer.CustomerService;
+import com.example.Centrix.Marketplace.Product.Product;
 import com.example.Centrix.Marketplace.Customer.Customer;
 import com.example.Centrix.Marketplace.Customer.CustomerService;
 import org.springframework.stereotype.Controller;
@@ -44,6 +60,9 @@ public class ReviewController {
         return "review/index"; // templates/review/index.fthl
     }
 
+    @PostMapping("/{id}/provider-response")
+    public ResponseEntity<Review> addProviderResponse(@PathVariable Long id, @RequestBody String response) {
+        return ResponseEntity.ok(reviewService.addProviderResponse(id, response));
     // =====================================
     // ✅ 3️⃣ View a single review
     // =====================================

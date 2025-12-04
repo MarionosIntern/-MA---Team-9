@@ -6,6 +6,20 @@ import java.time.LocalDateTime;
 import com.example.Centrix.Marketplace.Customer.Customer;
 import com.example.Centrix.Marketplace.Product.Product;
 
+import java.time.LocalDateTime;
+
+import com.example.Centrix.Marketplace.Customer.Customer;
+import com.example.Centrix.Marketplace.Product.Product;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.*;
+import jakarta.persistence.Column;
+
+
+@Entity
+@Table(name = "reviews")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Entity
 @Table(name = "reviews")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -49,6 +63,26 @@ public class Review {
 
     // ----- Constructors -----
     public Review() {}
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public Customer getCustomer() {
+        return customer;
+    }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    public Product getProduct() {
+        return product;
+    }
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+}
 
     public Review(Customer customer, Product product, Double qualityRating,
                   Double deliveryRating, String comment) {
