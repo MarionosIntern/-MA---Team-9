@@ -1,5 +1,5 @@
 <#import "/layouts/base.ftlh" as layout>
-<@layout.base title="New Review">
+<@layout.block pageTitle="New Review">
 
 <h1>Create Review</h1>
 
@@ -23,4 +23,4 @@
     <button type="submit">Submit</button>
 </form>
 
-</@layout.base>
+</@layout.block>

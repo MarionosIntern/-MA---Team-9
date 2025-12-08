@@ -7,6 +7,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByProviderId(Long providerId);
 
-    List<Product> findByCategory(String category);
+    List<Product> findByCategoryIgnoreCase(String category);
+
+    List<Product> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String name, String description);
 
 }

@@ -18,14 +18,29 @@ public class ProductService {
     // -----------------------------
     // Find all products with filters
     // -----------------------------
-    public List<Product> findAllProducts(Long providerId, String category) {
+    public List<Product> findAllProducts(Long providerId, String category, String searchTerm) {
+        // Normalize inputs
+        boolean hasSearch = searchTerm != null && !searchTerm.trim().isBlank();
+        String normalizedCategory = (category != null && !"all".equalsIgnoreCase(category))
+                ? category.trim()
+                : null;
 
+        // Provider filter takes priority
         if (providerId != null) {
-            return productRepository.findByProviderId(providerId);
+            List<Product> products = productRepository.findByProviderId(providerId);
+            return hasSearch ? filterBySearch(products, searchTerm) : products;
         }
 
-        if (category != null) {
-            return productRepository.findByCategory(category);
+        // Category filter
+        if (normalizedCategory != null) {
+            List<Product> products = productRepository.findByCategoryIgnoreCase(normalizedCategory);
+            return hasSearch ? filterBySearch(products, searchTerm) : products;
+        }
+
+        // Search-only
+        if (hasSearch) {
+            return productRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(
+                    searchTerm, searchTerm);
         }
 
         return productRepository.findAll();
@@ -72,6 +87,15 @@ public class ProductService {
 
     private void sanitizeImageUrl(Product product) {
         product.setImageUrl(normalizeImageUrl(product.getImageUrl()));
+    }
+
+    private List<Product> filterBySearch(List<Product> source, String searchTerm) {
+        String term = searchTerm.trim().toLowerCase();
+        return source.stream()
+                .filter(p ->
+                        (p.getName() != null && p.getName().toLowerCase().contains(term)) ||
+                        (p.getDescription() != null && p.getDescription().toLowerCase().contains(term)))
+                .toList();
     }
 
     private String normalizeImageUrl(String raw) {

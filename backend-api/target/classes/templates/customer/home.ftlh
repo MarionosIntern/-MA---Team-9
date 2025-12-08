@@ -152,7 +152,8 @@
         </div>
         <div class="d-flex flex-wrap gap-2">
             <#list ["All","Clothes","Shoes","Technology","Accessories","Home","Outdoors","Beauty"] as category>
-                <button class="category-chip">${category}</button>
+                <a class="category-chip text-decoration-none"
+                   href="/products?category=${category?url}">${category}</a>
             </#list>
         </div>
     </div>

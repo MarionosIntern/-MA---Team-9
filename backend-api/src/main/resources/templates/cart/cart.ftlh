@@ -45,14 +45,20 @@
         </table>
 
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-            <div class="d-flex align-items-center gap-2">
-                <h5 class="mb-0">Total: <span class="text-success">$${(cartTotal!0)?string["0.00"]}</span></h5>
-                <form action="/cart/clear" method="post">
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3">
+                <div>
+                    <div>Subtotal: <strong>$${(cartTotal!0)?string["0.00"]}</strong></div>
+                    <#if discount?? && discount gt 0>
+                        <div class="text-success">Savings: -$${(discount)?string["0.00"]}</div>
+                    </#if>
+                    <div class="h5 mb-0">Total: <span class="text-success">$${(grandTotal!cartTotal)?string["0.00"]}</span></div>
+                </div>
+                <form action="/cart/clear" method="post" class="d-flex align-items-center">
                     <input type="hidden" name="redirect" value="/cart/view">
                     <button type="submit" class="btn btn-outline-secondary btn-sm">Clear cart</button>
                 </form>
             </div>
-            <button class="btn btn-primary" type="button" disabled>Checkout coming soon</button>
+            <a class="btn btn-primary" href="/cart/checkout">Proceed to checkout</a>
         </div>
     <#else>
         <div class="alert alert-info">Your cart is empty. <a href="/">Browse products</a>.</div>

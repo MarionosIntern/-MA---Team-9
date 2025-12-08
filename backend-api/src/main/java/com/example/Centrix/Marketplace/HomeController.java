@@ -20,7 +20,7 @@ public class HomeController {
 
     @GetMapping({"/", "/home", "/customer/home"})
     public String showHome(Model model) {
-        List<Product> products = productService.findAllProducts(null, null);
+        List<Product> products = productService.findAllProducts(null, null, null);
         model.addAttribute("products", products);
         return "customer/home";
     }
