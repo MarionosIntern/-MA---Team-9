@@ -1,5 +1,12 @@
 package com.example.Centrix.Marketplace.Provider;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -59,6 +66,19 @@ public class ProviderService {
         return providerRepository.save(provider);
     }
 
+    public Provider authenticate(String email, String password){
+        Provider provider  = providerRepository.findByEmail(email)
+        .orElseThrow(() -> new EntityNotFoundException("Provider not found with email: " + email));
+         if(!provider.getEmail().equals(email) && !provider.getPassword().equals(password)){
+            throw new IllegalArgumentException("Invalid email and password");
+        }
+        if(!provider.getPassword().equals(password)){
+            throw new IllegalArgumentException("Invalid password");
+        }
+        return provider;
+    }
+
+    public List<Provider> getAll(){
     // ---------------------------------------------------------
     // LIST ALL PROVIDERS (not used but helpful)
     // ---------------------------------------------------------

@@ -22,7 +22,7 @@ a:hover { color: darken(var(--brand), 10%); text-decoration: none }
 .product-badge{position:absolute;top:8px;right:8px;background:var(--brand);color:#7e1d1d;padding:4px 8px;border-radius:6px;font-size:.75rem}
 
 .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
-.skip-link:focus{left:10px;top:10px;width:auto;height:auto;z-index:1000;background:#375670;padding:8px;border:1px solid #ccc}
+.skip-link:focus{left:10px;top:10px;width:auto;height:auto;z-index:1000;background:#70b4ec;padding:8px;border:1px solid #ccc}
 
 @media(max-width:767px){
   .site-header .form-control{min-width:120px}

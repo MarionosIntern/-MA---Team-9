@@ -89,13 +89,8 @@ public class ProductService {
         product.setImageUrl(normalizeImageUrl(product.getImageUrl()));
     }
 
-    private List<Product> filterBySearch(List<Product> source, String searchTerm) {
-        String term = searchTerm.trim().toLowerCase();
-        return source.stream()
-                .filter(p ->
-                        (p.getName() != null && p.getName().toLowerCase().contains(term)) ||
-                        (p.getDescription() != null && p.getDescription().toLowerCase().contains(term)))
-                .toList();
+    public List<Product> getAllProducts(){
+        return repo.findAll();
     }
 
     private String normalizeImageUrl(String raw) {
