@@ -30,14 +30,16 @@
                     <p class="lead fw-semibold mb-4">$${(product.price!0)?string["0.00"]}</p>
                     <p>${product.description!'This product does not have a description yet.'}</p>
 
-                    <hr>
-                    <p class="text-uppercase text-muted small mb-3">Actions</p>
-                    <div class="d-flex flex-wrap gap-2 mb-3">
-                        <a href="/products/${product.productId!0}/edit" class="btn btn-primary">Edit</a>
-                        <a href="/products/${product.productId!0}/delete"
-                           class="btn btn-outline-danger"
-                           onclick="return confirm('Delete this product?');">Delete</a>
-                    </div>
+                    <#if providerLoggedIn?? && providerLoggedIn>
+                        <hr>
+                        <p class="text-uppercase text-muted small mb-3">Actions</p>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <a href="/products/${product.productId!0}/edit" class="btn btn-primary">Edit</a>
+                            <a href="/products/${product.productId!0}/delete"
+                               class="btn btn-outline-danger"
+                               onclick="return confirm('Delete this product?');">Delete</a>
+                        </div>
+                    </#if>
 
                     <dl class="row mb-0">
                         <dt class="col-sm-4">ID</dt>

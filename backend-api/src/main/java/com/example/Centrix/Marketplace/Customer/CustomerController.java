@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import jakarta.servlet.http.HttpSession;
 
 import com.example.Centrix.Marketplace.SessionConstants;
+
+import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 
@@ -136,14 +140,25 @@ public class CustomerController {
 
 
     // View Profile
-    @GetMapping("/customers/profile")
-    public String viewProfile(@PathVariable Long id, Model model) {
-        String customer = SessionConstants.CUSTOMER_ID "CURRENT_CUSTOMER"  ;
-              .orElseThrow(() -> new IllegalArgumentException("Invalid customer ID: " + id));
-        model.addAttribute("customer", customer);
-        model.addAttribute("title", "Customer Profile");
-        return "customer/profile"; // templates/customer/profile.html
+   @GetMapping("/customers/profile/{id}")
+public String viewProfile(@PathVariable Long id,
+                          HttpSession session,
+                          RedirectAttributes redirectAttributes,
+                          Model model) {
+    // Optional: ensure the path id matches the logged-in user
+    Object sessionId = session.getAttribute(SessionConstants.CUSTOMER_ID);
+    if (sessionId == null || !id.equals(sessionId)) {
+        redirectAttributes.addFlashAttribute("loginError", "Please sign in to view your profile.");
+        return "redirect:/signin";
     }
+
+    Customer customer = customerService.getCustomerById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid customer ID: " + id));
+
+    model.addAttribute("customer", customer);
+    model.addAttribute("title", "Customer Profile");
+    return "customer/details"; // reuse your existing template
+}
 
 
 // Default redirect

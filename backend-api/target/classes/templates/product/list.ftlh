@@ -8,9 +8,11 @@
             <p class="text-uppercase small text-muted mb-1">Inventory</p>
             <h1 class="h4 mb-0">Products (${products?size})</h1>
         </div>
-        <a href="/products/create" class="btn btn-primary">
-            <i class="bi bi-plus-lg me-1"></i> Add product
-        </a>
+        <#if providerLoggedIn?? && providerLoggedIn>
+            <a href="/products/create" class="btn btn-primary">
+                <i class="bi bi-plus-lg me-1"></i> Add product
+            </a>
+        </#if>
     </div>
 
     <div class="card shadow-sm">
@@ -23,7 +25,11 @@
                     <th scope="col">Category</th>
                     <th scope="col">Price</th>
                     <th scope="col">Status</th>
-                    <th scope="col" class="text-end">Actions</th>
+                    <#if providerLoggedIn?? && providerLoggedIn>
+                        <th scope="col" class="text-end">Actions</th>
+                    <#else>
+                        <th scope="col" class="text-end">View</th>
+                    </#if>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,24 +51,35 @@
                             </td>
                             <td>$${(product.price!0)?string["0.00"]}</td>
                             <td>
-                                <span class="badge ${product.status?lower_case == 'inactive'?then('text-bg-secondary','text-bg-success')}">
-                                    ${product.status!'Active'}
+                                <#assign statusLabel = (product.status!'Active')>
+                                <#assign statusLower = statusLabel?lower_case>
+                                <#assign badgeClass = (statusLower == 'inactive')?then('text-bg-secondary','text-bg-success')>
+                                <span class="badge ${badgeClass}">
+                                    ${statusLabel}
                                 </span>
                             </td>
                             <td class="text-end">
-                                <div class="btn-group btn-group-sm">
-                                    <a href="/products/${product.productId!0}" class="btn btn-outline-primary">View</a>
-                                    <a href="/products/${product.productId!0}/edit" class="btn btn-outline-secondary">Edit</a>
-                                    <a href="/products/${product.productId!0}/delete" class="btn btn-outline-danger"
-                                       onclick="return confirm('Delete this product?');">Delete</a>
-                                </div>
+                                <#if providerLoggedIn?? && providerLoggedIn>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="/products/${product.productId!0}" class="btn btn-outline-primary">View</a>
+                                        <a href="/products/${product.productId!0}/edit" class="btn btn-outline-secondary">Edit</a>
+                                        <a href="/products/${product.productId!0}/delete" class="btn btn-outline-danger"
+                                           onclick="return confirm('Delete this product?');">Delete</a>
+                                    </div>
+                                <#else>
+                                    <a href="/products/${product.productId!0}" class="btn btn-sm btn-outline-primary">View</a>
+                                </#if>
                             </td>
                         </tr>
                     </#list>
                 <#else>
                     <tr>
-                        <td colspan="5" class="text-center py-4 text-muted">
-                            No products found. <a href="/products/create">Create the first product</a>.
+                        <td colspan="6" class="text-center py-4 text-muted">
+                            <#if providerLoggedIn?? && providerLoggedIn>
+                                No products found. <a href="/products/create">Create the first product</a>.
+                            <#else>
+                                No products found. Check back soon.
+                            </#if>
                         </td>
                     </tr>
                 </#if>

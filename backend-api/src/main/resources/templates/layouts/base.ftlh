@@ -51,7 +51,8 @@
 
         <!-- Search Bar -->
         <div class="mt-3">
-            <form id="search-form" class="d-flex" role="search" aria-label="Search products">
+            <form id="search-form" class="d-flex" role="search" aria-label="Search products"
+                  action="/products" method="get">
                 <select name="category" class="form-select me-2" style="max-width:180px;">
                     <option value="all" selected>All</option>
                     <option value="Clothes">Clothes</option>

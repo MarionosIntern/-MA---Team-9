@@ -27,7 +27,7 @@
 
         <ul class="navbar-nav ms-auto cm-navbar-right">
             <li class="nav-item">
-                <a class="nav-link cm-nav-link" href="/signin">Provider login</a>
+                <a class="nav-link cm-nav-link" href="/providers/signin">Provider login</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link cm-nav-link" href="/providers/signup">Become a provider</a>

@@ -40,4 +40,9 @@ public class SessionModelAttributes {
         Object name = session.getAttribute(SessionConstants.CUSTOMER_NAME);
         return name != null ? name.toString() : null;
     }
+
+    @ModelAttribute("providerLoggedIn")
+    public boolean providerLoggedIn(HttpSession session) {
+        return session.getAttribute(SessionConstants.PROVIDER_ID) != null;
+    }
 }

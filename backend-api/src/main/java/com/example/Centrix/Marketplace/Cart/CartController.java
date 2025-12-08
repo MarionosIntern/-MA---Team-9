@@ -117,8 +117,19 @@ public class CartController {
     @GetMapping("/view")
     public String viewSessionCart(HttpSession session, Model model) {
         List<SessionCartItem> cartItems = getSessionCart(session);
+        double subtotal = calculateCartTotal(cartItems);
+
+        String couponCode = (String) session.getAttribute(SessionConstants.COUPON_CODE);
+        String subscriptionCode = (String) session.getAttribute(SessionConstants.SUBSCRIPTION_CODE);
+        double discount = calculateDiscount(subtotal, couponCode, subscriptionCode);
+        double grandTotal = Math.max(subtotal - discount, 0);
+
         model.addAttribute("cartItems", cartItems);
-        model.addAttribute("cartTotal", calculateCartTotal(cartItems));
+        model.addAttribute("cartTotal", subtotal);
+        model.addAttribute("discount", discount);
+        model.addAttribute("grandTotal", grandTotal);
+        model.addAttribute("couponCode", couponCode);
+        model.addAttribute("subscriptionCode", subscriptionCode);
         model.addAttribute("cartId", session.getId());
         return "cart/cart";
     }
@@ -166,8 +177,89 @@ public class CartController {
                                    HttpSession session,
                                    RedirectAttributes redirectAttributes) {
         session.removeAttribute(SessionConstants.CART_KEY);
+        session.removeAttribute(SessionConstants.COUPON_CODE);
+        session.removeAttribute(SessionConstants.SUBSCRIPTION_CODE);
         redirectAttributes.addFlashAttribute("cartMessage", "Cart cleared.");
         return "redirect:" + normalizeRedirect(redirectTo);
+    }
+
+    @GetMapping("/checkout")
+    public String showSessionCheckout(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        List<SessionCartItem> cartItems = getSessionCart(session);
+        if (cartItems.isEmpty()) {
+            redirectAttributes.addFlashAttribute("cartMessage", "Add items to your cart before checking out.");
+            return "redirect:/cart/view";
+        }
+
+        double subtotal = calculateCartTotal(cartItems);
+        String couponCode = (String) session.getAttribute(SessionConstants.COUPON_CODE);
+        String subscriptionCode = (String) session.getAttribute(SessionConstants.SUBSCRIPTION_CODE);
+        double discount = calculateDiscount(subtotal, couponCode, subscriptionCode);
+        double grandTotal = Math.max(subtotal - discount, 0);
+
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("cartTotal", subtotal);
+        model.addAttribute("discount", discount);
+        model.addAttribute("grandTotal", grandTotal);
+        model.addAttribute("couponCode", couponCode);
+        model.addAttribute("subscriptionCode", subscriptionCode);
+        return "cart/checkout";
+    }
+
+    @PostMapping("/checkout/apply-coupon")
+    public String applyCoupon(@RequestParam String couponCode,
+                              HttpSession session,
+                              RedirectAttributes redirectAttributes) {
+        double rate = getCouponRate(couponCode);
+        if (rate == 0) {
+            redirectAttributes.addFlashAttribute("checkoutError", "Coupon not recognized.");
+            session.removeAttribute(SessionConstants.COUPON_CODE);
+        } else {
+            session.setAttribute(SessionConstants.COUPON_CODE, couponCode.trim().toUpperCase());
+            redirectAttributes.addFlashAttribute("checkoutMessage", "Coupon applied.");
+        }
+        return "redirect:/cart/checkout";
+    }
+
+    @PostMapping("/checkout/apply-subscription")
+    public String applySubscription(@RequestParam String subscription,
+                                    HttpSession session,
+                                    RedirectAttributes redirectAttributes) {
+        double rate = getSubscriptionRate(subscription);
+        if (rate == 0) {
+            redirectAttributes.addFlashAttribute("checkoutError", "Subscription special not recognized.");
+            session.removeAttribute(SessionConstants.SUBSCRIPTION_CODE);
+        } else {
+            session.setAttribute(SessionConstants.SUBSCRIPTION_CODE, subscription.trim().toUpperCase());
+            redirectAttributes.addFlashAttribute("checkoutMessage", "Subscription special applied.");
+        }
+        return "redirect:/cart/checkout";
+    }
+
+    @PostMapping("/checkout/submit")
+    public String submitCheckout(@RequestParam String name,
+                                 @RequestParam String email,
+                                 @RequestParam String address,
+                                 @RequestParam(required = false) String phone,
+                                 @RequestParam String payment,
+                                 @RequestParam(required = false) String cardNumber,
+                                 @RequestParam(required = false) String cardExpiry,
+                                 @RequestParam(required = false) String cardCvv,
+                                 HttpSession session,
+                                 RedirectAttributes redirectAttributes) {
+        // For now we simply clear the cart and pretend the payment was processed.
+        session.removeAttribute(SessionConstants.CART_KEY);
+        session.removeAttribute(SessionConstants.COUPON_CODE);
+        session.removeAttribute(SessionConstants.SUBSCRIPTION_CODE);
+
+        redirectAttributes.addFlashAttribute("checkoutSuccess",
+                "Thanks " + name + "! Your order is confirmed. A receipt was sent to " + email + ".");
+        return "redirect:/cart/confirmation";
+    }
+
+    @GetMapping("/confirmation")
+    public String confirmation() {
+        return "cart/confirmation";
     }
 
     @SuppressWarnings("unchecked")
@@ -185,6 +277,35 @@ public class CartController {
         return items.stream()
                 .mapToDouble(SessionCartItem::getSubtotal)
                 .sum();
+    }
+
+    private double calculateDiscount(double subtotal, String couponCode, String subscriptionCode) {
+        double couponRate = getCouponRate(couponCode);
+        double subscriptionRate = getSubscriptionRate(subscriptionCode);
+        double combinedRate = Math.min(couponRate + subscriptionRate, 0.5); // safety cap
+        return subtotal * combinedRate;
+    }
+
+    private double getCouponRate(String couponCode) {
+        if (couponCode == null) return 0;
+        String code = couponCode.trim().toUpperCase();
+        return switch (code) {
+            case "SAVE10" -> 0.10;
+            case "SAVE20" -> 0.20;
+            case "FREESHIP" -> 0.05;
+            default -> 0;
+        };
+    }
+
+    private double getSubscriptionRate(String subscriptionCode) {
+        if (subscriptionCode == null) return 0;
+        String code = subscriptionCode.trim().toUpperCase();
+        return switch (code) {
+            case "BASIC" -> 0.05;
+            case "PLUS" -> 0.08;
+            case "PREMIUM" -> 0.12;
+            default -> 0;
+        };
     }
 
     private String normalizeRedirect(String redirectTo) {

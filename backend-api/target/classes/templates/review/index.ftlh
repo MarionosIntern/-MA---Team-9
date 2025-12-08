@@ -1,5 +1,5 @@
 <#import "/layouts/base.ftlh" as layout>
-<@layout.base title="Your Reviews">
+<@layout.block pageTitle="Your Reviews">
 
 <h1>Your Reviews</h1>
 
@@ -29,4 +29,4 @@
 
 <a href="/reviews/create">Write New Review</a>
 
-</@layout.base>
+</@layout.block>
