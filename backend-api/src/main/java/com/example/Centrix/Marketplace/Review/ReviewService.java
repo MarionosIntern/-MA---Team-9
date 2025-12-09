@@ -76,7 +76,7 @@ public class ReviewService {
         if (review.getCustomer() == null || review.getCustomer().getId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Review must include a customer with an ID");
         }
-        if (review.getProduct() == null || review.getProduct().getProductId == null) {
+        if (review.getProduct() == null || review.getProduct().getProductId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Review must include a product with an ID");
         }
 
