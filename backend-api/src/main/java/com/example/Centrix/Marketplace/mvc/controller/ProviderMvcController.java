@@ -16,11 +16,12 @@ import com.example.Centrix.Marketplace.Provider.Provider;
 import com.example.Centrix.Marketplace.Provider.ProviderService;
 import com.example.Centrix.Marketplace.Review.Review;
 import com.example.Centrix.Marketplace.Review.ReviewService;
+import com.example.Centrix.Marketplace.SessionConstants;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/providers")
+@RequestMapping("/mvc/providers")
 public class ProviderMvcController{
     private final ProviderService providerService;
     private final ProductService productService;
@@ -32,10 +33,15 @@ public class ProviderMvcController{
         this.reviewService = reviewService;
     }
 
+    @GetMapping("/signin")
+    public String signinForm() {
+        return "provider/signin";
+    }
+
     @GetMapping("/signup")
     public String signupForm(Model model) {
         model.addAttribute("provider", new Provider());
-        return "/signup";
+        return "provider/signup";
     }
 
     @PostMapping("/signup")
@@ -51,44 +57,44 @@ public class ProviderMvcController{
         provider.setAddress(address);
         provider.setPhoneNumber(phoneNumber);
         providerService.createProvider(provider);
-        return "redirect:/signin";
+        return "redirect:/providers/signin";
     }
 
     @PostMapping("/signin")
     public String signin(@RequestParam String email, @RequestParam String password, HttpSession session){
         try {
             Provider provider = providerService.authenticate(email, password);
-            session.setAttribute("providerId", provider.getId());
+            session.setAttribute(SessionConstants.PROVIDER_ID, provider.getId());
             return "redirect:/providers/home";
         } catch (Exception e) {
-            return "redirect:/signin?error";
+            return "redirect:/providers/signin?error";
         }
     }
 
     @GetMapping("/home")
     public String home(HttpSession session, Model model){
-        Long providerId = (Long) session.getAttribute("providerId");
+        Long providerId = (Long) session.getAttribute(SessionConstants.PROVIDER_ID);
         if(providerId == null){
-            return "redirect:/signin";
+            return "redirect:/providers/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
         model.addAttribute("provider", provider);
-        List<Product> products = productService.findAllProducts(providerId, null);
+        List<Product> products = productService.findAllProducts(providerId, null, null);
         model.addAttribute("products", products);
         return "provider/home";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
-        session.removeAttribute("providerId");
-        return "redirect:/signin";
+        session.removeAttribute(SessionConstants.PROVIDER_ID);
+        return "redirect:/providers/signin";
     }
 
     @GetMapping("/products/upload")
     public String uploadProductForm(HttpSession session, Model model){
-        Long providerId = (Long) session.getAttribute("providerId");
+        Long providerId = (Long) session.getAttribute(SessionConstants.PROVIDER_ID);
         if(providerId == null){
-            return "redirect:/signin";
+            return "redirect:/providers/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
         
@@ -103,10 +109,10 @@ public class ProviderMvcController{
                                 @RequestParam String status,
                                 HttpSession session){
        
-        Long providerId = (Long) session.getAttribute("providerId");
+        Long providerId = (Long) session.getAttribute(SessionConstants.PROVIDER_ID);
         Provider provider = providerService.getProviderById(providerId);
         if(providerId == null){
-            return "redirect:/signin";
+            return "redirect:/providers/signin";
         }
         Product product = new Product();
         product.setProvider(provider);
@@ -124,9 +130,9 @@ public class ProviderMvcController{
 
     @GetMapping("profile/edit")
     public String editProfileForm(HttpSession session, Model model){
-        Long providerId = (Long) session.getAttribute("providerId");
+        Long providerId = (Long) session.getAttribute(SessionConstants.PROVIDER_ID);
         if(providerId == null){
-            return "redirect:/signin";
+            return "redirect:/providers/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
         model.addAttribute("provider", provider);
@@ -141,9 +147,9 @@ public class ProviderMvcController{
                               @RequestParam String currentPassword,
                               @RequestParam (required = false) String newPassword, HttpSession session,
                               Model model){
-        Long providerId = (Long) session.getAttribute("providerId");
+        Long providerId = (Long) session.getAttribute(SessionConstants.PROVIDER_ID);
         if(providerId == null){
-            return "redirect:/signin";
+            return "redirect:/providers/signin";
         }
 
         try {
@@ -167,13 +173,13 @@ public class ProviderMvcController{
      }
 
      @GetMapping("products/{id}/edit")
-     public String editProductForm(@PathVariable Long id, HttpSession session, Model model){
-        Long providerId = (Long) session.getAttribute("providerId");
+    public String editProductForm(@PathVariable Long id, HttpSession session, Model model){
+        Long providerId = (Long) session.getAttribute(SessionConstants.PROVIDER_ID);
         if(providerId == null){
-            return "redirect:/signin";
+            return "redirect:/providers/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
-        Product product = productService.findById(providerId);
+        Product product = productService.findById(id);
 
         if(!product.getProviderId().equals(provider.getId())){
             return "redirect:/providers/home";
@@ -191,9 +197,9 @@ public class ProviderMvcController{
                                @RequestParam String description,
                                @RequestParam String status,
                                HttpSession session){
-        Long providerId = (Long) session.getAttribute("providerId");
+        Long providerId = (Long) session.getAttribute(SessionConstants.PROVIDER_ID);
         if(providerId == null){
-            return "redirect:/signin";
+            return "redirect:/providers/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
         Product existingProduct = productService.findById(id);
@@ -215,9 +221,9 @@ public class ProviderMvcController{
 
      @GetMapping("/reviews")
      public String viewReviews(HttpSession session, Model model){
-        Long providerId = (Long) session.getAttribute("providerId");
+        Long providerId = (Long) session.getAttribute(SessionConstants.PROVIDER_ID);
         if(providerId == null){
-            return "redirect:/signin";
+            return "redirect:/providers/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
         if(provider.getProducts() == null){
@@ -230,19 +236,18 @@ public class ProviderMvcController{
 
      @PostMapping("/reviews/{id}/reply")
      public String respondToReview(@PathVariable Long id,
-                                   @RequestParam String repsonse,
+                                   @RequestParam String response,
                                    HttpSession session){
-        Long providerId = (Long) session.getAttribute("providerId");
+        Long providerId = (Long) session.getAttribute(SessionConstants.PROVIDER_ID);
         if(providerId == null){
-            return "redirect:/signin";
+            return "redirect:/providers/signin";
         }
         Provider provider = providerService.getProviderById(providerId);
-        Review review = reviewService.addProviderResponse(id, repsonse);
+        Review review = reviewService.addProviderResponse(id, response);
 
         if(review.getProduct().getProviderId().equals(provider.getId())){
             return "redirect:/providers/reviews";
         }
-        reviewService.addProviderResponse(id, repsonse);
         return "redirect:/providers/reviews";
     }
 

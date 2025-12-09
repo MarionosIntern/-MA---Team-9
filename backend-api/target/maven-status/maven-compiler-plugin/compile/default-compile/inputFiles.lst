@@ -15,6 +15,8 @@ C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\mai
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Customer\CustomerService.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Favorites\FavoritesController.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\HomeController.java
+C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\mvc\controller\HomeMvcController.java
+C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\mvc\controller\ProviderMvcController.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Product\Product.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Product\ProductController.java
 C:\Users\aliya\OneDrive - UNCG\csc340-workspace\-MA---Team-9\backend-api\src\main\java\com\example\Centrix\Marketplace\Product\ProductRepository.java

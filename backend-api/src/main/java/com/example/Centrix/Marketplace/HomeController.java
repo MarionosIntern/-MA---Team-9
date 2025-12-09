@@ -24,4 +24,10 @@ public class HomeController {
         model.addAttribute("products", products);
         return "customer/home";
     }
+
+    // Safety redirect for mis-typed route
+    @GetMapping("/customer/customer/home")
+    public String redirectCustomerHome() {
+        return "redirect:/customer/home";
+    }
 }
