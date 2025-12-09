@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Leave a review - Centrix Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <header class="site-header py-3 border-bottom">
+      <div class="container d-flex align-items-center justify-content-between">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none">
+          <img src="https://videos.openai.com/vg-assets/assets%2Ftask_01k45fkm6qf1n866wgcc5150rn%2F1756825911_img_1.webp?st=2025-09-22T13%3A36%3A07Z&se=2025-09-28T14%3A36%3A07Z&sks=b&skt=2025-09-22T13%3A36%3A07Z&ske=2025-09-28T14%3A36%3A07Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=cfbc986b-d2bc-4088-8b71-4f962129715b&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=HPzmo8S40QrAaVTHISr%2Brzb6xRpruHTeopVKPwLiZHM%3D&az=oaivgprodscus" alt="Centrix Marketplace logo" width="56" height="56" class="me-2">
+          <span class="h4 mb-0">Centrix Marketplace</span>
+        </a>
+        <div>
+          <a href="favorites.html" class="me-3">Favorites</a>
+          <a href="signin.html" class="btn btn-outline-primary btn-sm">Sign in</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container py-5">
+      <div id="review-area">
+        <h2 id="product-title">Loading…</h2>
+        <div id="reviews-summary" class="mb-3"></div>
+        <div id="reviews-list" class="mb-4">Loading…</div>
+        <hr>
+        <div id="leave-review">Checking eligibility…</div>
+      </div>
+    </main>
+
+    <script>
+      // PRODUCT MAP (same source as products.html) - keep minimal
+      const PRODUCTS = {
+        'product-1': {id:'product-1', title:'Graphic Tee', price:'$15', provider:'Acme Apparel'},
+        'product-2': {id:'product-2', title:"Womens Cargo Pants", price:'$19.99', provider:'Trail Outfitters'},
+        'product-3': {id:'product-3', title:'Panda Dunks', price:'$120', provider:'SneakerHouse'},
+        'product-4': {id:'product-4', title:'Sony Camera', price:'$499', provider:'PhotoPros'},
+        'product-5': {id:'product-5', title:'Beats Headphones', price:'$199', provider:'SoundLab'},
+        'product-6': {id:'product-6', title:'iPhone', price:'$500', provider:'PhoneCenter'}
+      };
+
+      function getParam(name){ try{ const url = new URL(window.location.href); return url.searchParams.get(name); }catch(e){ return null; } }
+
+      const REVIEWS_KEY = 'centrix_reviews';
+      function readReviews(){ try{ return JSON.parse(localStorage.getItem(REVIEWS_KEY) || '[]'); }catch(e){ return []; } }
+      function writeReviews(list){ localStorage.setItem(REVIEWS_KEY, JSON.stringify(list)); }
+
+      function readOrders(){ try{ return JSON.parse(localStorage.getItem('centrix_orders') || '[]'); }catch(e){ return []; } }
+
+      (function(){
+        const id = getParam('id');
+        const area = document.getElementById('review-area');
+        if(!id || !PRODUCTS[id]){ area.innerHTML = '<div class="alert alert-warning">Product not found. <a href="index.html">Return to shop</a></div>'; return; }
+        const prod = PRODUCTS[id];
+        document.getElementById('product-title').textContent = prod.title + ' — Reviews';
+
+        function escapeHtml(str){ return String(str).replace(/[&<>\"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]; }); }
+
+        function renderReviews(){
+          const all = readReviews();
+          const rows = all.filter(r => r.productId === id);
+          const list = document.getElementById('reviews-list');
+          const summary = document.getElementById('reviews-summary');
+          if(rows.length===0){ list.innerHTML = '<div class="text-muted">No reviews yet.</div>'; summary.textContent=''; return; }
+          const prodAvg = (rows.reduce((s,r)=>s+(r.productRating||0),0)/rows.length).toFixed(1);
+          const provAvg = (rows.reduce((s,r)=>s+(r.providerRating||0),0)/rows.length).toFixed(1);
+          summary.innerHTML = `Average product rating: <strong>${prodAvg}</strong> — Average provider rating: <strong>${provAvg}</strong> (${rows.length} review${rows.length>1?'s':''})`;
+          list.innerHTML = rows.map(r => `
+            <div class="card mb-2">
+              <div class="card-body">
+                <h5 class="card-title mb-1">${escapeHtml(r.title||'')}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">by ${escapeHtml(r.name||'Anonymous')} — ${new Date(r.date).toLocaleString()}</h6>
+                <p class="mb-1">Product rating: <strong>${r.productRating||0}</strong> — Provider rating: <strong>${r.providerRating||0}</strong></p>
+                <p class="card-text">${escapeHtml(r.body||'')}</p>
+              </div>
+            </div>
+          `).join('');
+        }
+
+        function userDelivered(){
+          const orders = readOrders();
+          return orders.some(o => o.id === id && o.status && o.status.toLowerCase() === 'delivered');
+        }
+
+        function renderForm(){
+          const container = document.getElementById('leave-review');
+          if(!userDelivered()){
+            container.innerHTML = '<div class="text-muted">You can leave a review after the order is delivered. Go to <a href="./orders.html">Orders</a>.</div>';
+            return;
+          }
+          container.innerHTML = `
+            <form id="review-form">
+              <div class="mb-2">
+                <label class="form-label">Your name (optional)</label>
+                <input class="form-control" id="r-name" placeholder="Your name">
+              </div>
+              <div class="row g-2">
+                <div class="col-6">
+                  <label class="form-label">Product rating</label>
+                  <div id="r-prod" class="star-rating" data-value="0">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Provider rating</label>
+                  <div id="r-prov" class="star-rating" data-value="0">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-2 mt-2">
+                <input id="r-title" class="form-control" placeholder="Short title">
+              </div>
+              <div class="mb-2">
+                <textarea id="r-body" class="form-control" rows="4" placeholder="Write your review"></textarea>
+              </div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-primary" type="submit">Submit review</button>
+                <button id="r-cancel" class="btn btn-secondary" type="button">Cancel</button>
+              </div>
+            </form>
+          `;
+
+          function wireStars(id){
+            const node = document.getElementById(id);
+            node.querySelectorAll('.star').forEach(s => s.addEventListener('click', function(){
+              const v = parseInt(this.getAttribute('data-value'),10);
+              node.setAttribute('data-value', v);
+              node.querySelectorAll('.star').forEach(st => st.classList.toggle('filled', parseInt(st.getAttribute('data-value')) <= v));
+            }));
+          }
+          wireStars('r-prod'); wireStars('r-prov');
+
+          document.getElementById('review-form').addEventListener('submit', function(ev){
+            ev.preventDefault();
+            const review = {
+              productId: id,
+              provider: prod.provider || '',
+              name: document.getElementById('r-name').value || 'Anonymous',
+              productRating: parseInt(document.getElementById('r-prod').getAttribute('data-value'),10) || 0,
+              providerRating: parseInt(document.getElementById('r-prov').getAttribute('data-value'),10) || 0,
+              title: document.getElementById('r-title').value || '',
+              body: document.getElementById('r-body').value || '',
+              date: (new Date()).toISOString()
+            };
+            const all = readReviews(); all.push(review); writeReviews(all); renderReviews(); container.innerHTML = '<div class="alert alert-success">Thank you — your review has been posted.</div>';
+          });
+
+          document.getElementById('r-cancel').addEventListener('click', function(){ renderForm(); });
+        }
+
+        renderReviews(); renderForm();
+      })();
+    </script>

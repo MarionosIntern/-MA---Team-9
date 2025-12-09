@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout - Centrix Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../css/styles.css">
+  </head>
+  <body>
+    <header class="site-header py-3 border-bottom">
+      <div class="container d-flex align-items-center justify-content-between">
+        <a href="index.html" class="d-flex align-items-center text-decoration-none">
+          <img src="https://videos.openai.com/vg-assets/assets%2Ftask_01k45fkm6qf1n866wgcc5150rn%2F1756825911_img_1.webp?st=2025-09-22T13%3A36%3A07Z&se=2025-09-28T14%3A36%3A07Z&sks=b&skt=2025-09-22T13%3A36%3A07Z&ske=2025-09-28T14%3A36%3A07Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=cfbc986b-d2bc-4088-8b71-4f962129715b&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=HPzmo8S40QrAaVTHISr%2Brzb6xRpruHTeopVKPwLiZHM%3D&az=oaivgprodscus" alt="Centrix Marketplace logo" width="56" height="56" class="me-2">
+          <span class="h4 mb-0">Centrix Marketplace</span>
+        </a>
+        <div>
+          <a href="favorites.html" class="me-3">Favorites</a>
+          <a href="signin.html" class="btn btn-outline-primary btn-sm">Sign in</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container py-5" id="main">
+      <div id="checkout-area">Loading…</div>
+    </main>
+
+    <script>
+      const PRODUCTS = {
+        'product-1': {id:'product-1', title:'Graphic Tee', price:15.00, provider:'Acme Apparel', img:'https://www.snipesusa.com/dw/image/v2/BFKF_PRD/on/demandware.static/-/Sites-snipes-master-catalog/default/dw96d9fa8a/images/hi-res/graphic-tees_scft23-01_01.jpg?sw=400&sh=502&strip=false', desc:'A comfortable graphic tee.'},
+        'product-2': {id:'product-2', title:"Womens Cargo Pants", price:19.99, provider:'Trail Outfitters', img:'https://img4.dhresource.com/webp/m/0x0/f3/albu/jc/j/14/c5526e84-cc7e-4aa0-aded-81a47f9f0495.jpg', desc:'Durable cargo pants with multiple pockets.'},
+        'product-3': {id:'product-3', title:'Panda Dunks', price:120.00, provider:'SneakerHouse', img:'assets/product-3.svg', desc:'Limited edition sneakers.'},
+        'product-4': {id:'product-4', title:'Sony Camera', price:499.00, provider:'PhotoPros', img:'assets/product-4.svg', desc:'High-resolution camera for pros.'},
+        'product-5': {id:'product-5', title:'Beats Headphones', price:199.00, provider:'SoundLab', img:'assets/product-5.svg', desc:'Noise-cancelling headphones.'},
+        'product-6': {id:'product-6', title:'iPhone', price:500.00, provider:'PhoneCenter', img:'assets/product-6.svg', desc:'Latest smartphone.'}
+      };
+
+      function getParam(name){ const url = new URL(window.location.href); return url.searchParams.get(name); }
+
+      (function(){
+        const id = getParam('id');
+        const qty = parseInt(getParam('qty')||'1',10) || 1;
+        const area = document.getElementById('checkout-area');
+        if(!id || !PRODUCTS[id]){ area.innerHTML = '<div class="alert alert-warning">Missing product. <a href="index.html">Return to shop</a></div>'; return; }
+        const p = PRODUCTS[id];
+        function render(q){
+          const total = (p.price * q).toFixed(2);
+          area.innerHTML = `
+            <div class="row g-4">
+              <div class="col-md-6"><img src="${p.img}" alt="${p.title}" class="img-fluid rounded"></div>
+              <div class="col-md-6">
+                <h2 class="h4">${p.title}</h2>
+                <p class="mb-1">Unit price: <strong>$${p.price.toFixed(2)}</strong></p>
+                <div class="mb-3 d-flex align-items-center gap-2">
+                  <label for="qty-ctrl" class="mb-0">Qty</label>
+                  <input id="qty-ctrl" type="number" min="1" value="${q}" class="form-control form-control-sm" style="width:100px">
+                </div>
+                <p>Total: <strong id="total-amt">$${total}</strong></p>
+                <div class="d-flex gap-2">
+                  <button id="place-order" class="btn btn-success">Place order</button>
+                  <a href="./products.html?id=${encodeURIComponent(id)}" class="btn btn-link">Back to product</a>
+                </div>
+                <div id="order-result" class="mt-3"></div>
+              </div>
+            </div>
+          `;
+
+          const qtyCtrl = document.getElementById('qty-ctrl');
+          const totalEl = document.getElementById('total-amt');
+          qtyCtrl.addEventListener('input', function(){
+            const qv = parseInt(qtyCtrl.value,10) || 1;
+            totalEl.textContent = `$${(p.price * qv).toFixed(2)}`;
+          });
+
+          document.getElementById('place-order').addEventListener('click', function(){
+            // Demo: persist order to localStorage
+            const qv = parseInt(document.getElementById('qty-ctrl').value,10) || 1;
+            const ordersKey = 'centrix_orders';
+            const existing = JSON.parse(localStorage.getItem(ordersKey) || '[]');
+            const order = {id: id, title: p.title, provider: p.provider || '', qty: qv, unitPrice: p.price, total: (p.price*qv), status: 'placed', date: (new Date()).toISOString()};
+            existing.push(order);
+            localStorage.setItem(ordersKey, JSON.stringify(existing));
+            document.getElementById('order-result').innerHTML = `<div class="alert alert-success">Order placed! Order total: $${(order.total).toFixed(2)}. <a href="index.html">Continue shopping</a> — <a href="./orders.html">View orders</a> to mark delivered and leave reviews.</div>`;
+          });
+        }
+
+        render(qty);
+      })();
+    </script>
+  </body>
+</html>

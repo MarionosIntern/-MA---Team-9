@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in • Centrix Marketplace</title>
+  <style>
+    :root{--bg:#fff;--text:#0b0d10;--muted:#6b7280;--border:#e5e7eb;--card:#fff;--blue:#2563eb;--blue-2:#1d4ed8}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:var(--bg);color:var(--text)}
+    /* Header */
+    header{background:#fff;border-bottom:1px solid var(--border)}
+
+    .hwrap{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+
+    .brand{display:flex;align-items:center;gap:10px;cursor:pointer}
+
+    .brand img{height:100px;}
+
+    .title{font-size:1.35rem;font-weight:800;color:#2563eb}
+
+    .grow{flex:1}
+
+    .iconbtn{background:#fff;border:1px solid var(--border);padding:8px 10px;border-radius:10px;cursor:pointer;font-weight:600}
+
+    .badge{display:inline-flex;min-width:20px;height:20px;align-items:center;justify-content:center;background:var(--blue);color:#fff;border-radius:999px;padding:0 6px;font-size:.8rem;margin-left:6px}
+
+    /* Auth cards */
+    main{max-width:880px;margin:0 auto;padding:28px 20px}
+
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px}
+
+    h1{margin:6px 0 8px}
+
+    p.lead{margin:0 0 12px;color:var(--muted)}
+
+    label{font-weight:700;margin-top:10px;display:block}
+
+    input, textarea{width:30%;padding:10px;border:1px solid var(--border);border-radius:10px}
+
+    textarea{min-height:90px;resize:vertical}
+
+    .row{display:flex;align-items:center;justify-content:space-between;margin-top:12px;gap:10px}
+
+    .btn{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+
+    .btn:hover{background:var(--blue-2)}
+
+    a.link{color:var(--blue);text-decoration:underline;font-weight:600}
+
+    .muted{color:var(--muted)}
+    
+    .agree{display:flex;gap:1px;align-items:flex-start;margin-top:12px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hwrap">
+      <div class="brand" onclick="location.href='index.html'">
+        <img src="https://videos.openai.com/vg-assets/assets%2Ftask_01k45fkm6qf1n866wgcc5150rn%2F1756825911_img_1.webp?st=2025-09-22T13%3A36%3A07Z&se=2025-09-28T14%3A36%3A07Z&sks=b&skt=2025-09-22T13%3A36%3A07Z&ske=2025-09-28T14%3A36%3A07Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=cfbc986b-d2bc-4088-8b71-4f962129715b&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=HPzmo8S40QrAaVTHISr%2Brzb6xRpruHTeopVKPwLiZHM%3D&az=oaivgprodscus" alt="Centrix logo"/>
+        <div class="title">Centrix Marketplace</div>
+      </div>
+      <div class="grow"></div>
+      <button id="toCart" class="iconbtn">MyCart <span id="cartCount" class="badge">0</span></button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Sign in card -->
+    <section id="signInCard" class="card" aria-live="polite">
+      <h1>Sign in</h1>
+      <p class="lead">Enter your email and password to sign in. If you don't have an account, <a class="link" href="#signup" id="linkToSignup">register here</a>.</p>
+      <form id="formLogin">
+        <label for="li_email">Email</label>
+        <input id="li_email" type="email" required autocomplete="email" />
+        <label for="li_pass">Password</label>
+        <input id="li_pass" type="password" minlength="4" required autocomplete="current-password" />
+        <div class="row">
+          <button class="btn" type="submit">Sign in</button>
+          <a href="#signup" id="linkCreate" class="link">Create account</a>
+        </div>
+      </form>
+    </section>
+
+    <!-- Sign up card -->
+    <section id="signUpCard" class="card" style="display:none">
+      <h1>Create an account</h1>
+      <p class="lead">Fill in your details to register. After registering you'll be redirected to sign in.</p>
+      <form id="formSignup">
+        <label for="su_name">Full name</label>
+        <input id="su_name" required autocomplete="name" />
+        <label for="su_email">Email</label>
+        <input id="su_email" type="email" required autocomplete="email" />
+        <label for="su_pass">Password</label>
+        <input id="su_pass" type="password" minlength="4" required autocomplete="new-password" />
+        <label for="su_pass2">Confirm Password</label>
+        <input id="su_pass2" type="password" minlength="4" required autocomplete="new-password" />
+        <label for="su_phone">Phone Number</label>
+        <input id="su_phone" type="tel" placeholder="Optional" />
+        <label for="su_addr">Shipping Address</label>
+        <textarea id="su_addr" placeholder="Optional"></textarea>
+        <label class="agree"><input id="su_tos" type="checkbox" required> <span>I agree to the <a class="link" href="#">Terms of Service</a> and <a class="link" href="#">Privacy Policy</a></span></label>
+        <div class="row">
+          <button class="btn" type="submit">Register</button>
+          <a href="#signin" class="link" id="backToSign">Back to sign in</a>
+        </div>
+      </form>
+      <p class="muted" style="margin-top:12px">By registering, you agree to our <a class="link" href="#">Terms of Service</a> and <a class="link" href="#">Privacy Policy</a>.</p>
+    </section>
+  </main>
+
+  <script>
+    // --- Shared helpers ---
+    const USER_KEY='cm_user';
+    function getUser(){try{return JSON.parse(localStorage.getItem(USER_KEY)||'null')}catch{return null}}
+    function setUser(u){localStorage.setItem(USER_KEY,JSON.stringify(u))}
+    function cartKey(){const u=getUser();return u&&u.email?`cm_cart_${encodeURIComponent(u.email.toLowerCase())}`:'cm_cart_guest'}
+    function getCart(){try{return JSON.parse(localStorage.getItem(cartKey())||'[]')}catch{return []}}
+
+    // Update cart badge
+    (function(){document.getElementById('cartCount').textContent=getCart().length})();
+    document.getElementById('toCart').onclick=()=>location.href='cart.html';
+
+    // Toggle between cards using hash (#signup or #signin)
+    const signInCard=document.getElementById('signInCard');
+    const signUpCard=document.getElementById('signUpCard');
+    function show(which){
+      const isUp = which==='signup';
+      signUpCard.style.display = isUp ? 'block' : 'none';
+      signInCard.style.display = isUp ? 'none'  : 'block';
+    }
+    function syncFromHash(){ const h=(location.hash||'#signin').replace('#',''); show(h==='signup'?'signup':'signin'); }
+    window.addEventListener('hashchange', syncFromHash); syncFromHash();
+
+    // Sign in flow
+    document.getElementById('formLogin').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const email=document.getElementById('li_email').value.trim().toLowerCase();
+      const pass=document.getElementById('li_pass').value;
+      const saved=getUser();
+      if(!saved){ alert('No account found on this browser. Please register.'); location.hash='#signup'; return }
+      if(saved.email===email && saved.pass===pass){ redirectNext(); }
+      else { alert('Invalid email or password.'); }
+    });
+
+    // Sign up flow
+    document.getElementById('formSignup').addEventListener('submit',(e)=>{
+      e.preventDefault();
+      const name=document.getElementById('su_name').value.trim();
+      const email=document.getElementById('su_email').value.trim().toLowerCase();
+      const pass=document.getElementById('su_pass').value;
+      const pass2=document.getElementById('su_pass2').value;
+      const phone=document.getElementById('su_phone').value.trim();
+      const addr=document.getElementById('su_addr').value.trim();
+      const tos=document.getElementById('su_tos').checked;
+      if(!name||!email||!pass){ alert('Please fill name, email and password.'); return }
+      if(pass!==pass2){ alert('Passwords do not match.'); return }
+      if(!tos){ alert('Please agree to the terms to continue.'); return }
+      setUser({name,email,pass,phone,addr});
+      // After registering, go to sign-in view (like the screenshot text suggests)
+      location.hash='#signin';
+      // Optionally prefill email
+      document.getElementById('li_email').value=email;
+    });
+
+    function redirectNext(){
+      const params=new URLSearchParams(location.search);
+      const next=params.get('next');
+      if(next){location.href=next;return}
+      try{const ref=new URL(document.referrer); if(ref.origin===location.origin){location.href=ref.href; return}}catch{}
+      location.href='shop.html';
+    }
+  </script>
+</body>
+</html>
