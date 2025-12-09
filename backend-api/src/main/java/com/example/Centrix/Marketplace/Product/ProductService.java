@@ -15,9 +15,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    // -----------------------------
-    // Find all products with filters
-    // -----------------------------
+   
     public List<Product> findAllProducts(Long providerId, String category, String searchTerm) {
         // Normalize inputs
         boolean hasSearch = searchTerm != null && !searchTerm.trim().isBlank();
@@ -46,25 +44,23 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    // -----------------------------
-    // Find product by ID
-    // -----------------------------
+    
     public Product findById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found: " + id));
     }
 
-    // -----------------------------
+    
     // Create product
-    // -----------------------------
+   
     public Product create(Product product) {
         sanitizeImageUrl(product);
         return productRepository.save(product);
     }
 
-    // -----------------------------
+    
     // Update product
-    // -----------------------------
+    
     public Product update(Long id, Product updated) {
         Product existing = findById(id);
 
@@ -78,9 +74,9 @@ public class ProductService {
         return productRepository.save(existing);
     }
 
-    // -----------------------------
+  
     // Delete product
-    // -----------------------------
+   
     public void delete(Long id) {
         productRepository.deleteById(id);
     }

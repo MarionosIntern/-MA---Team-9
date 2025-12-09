@@ -26,16 +26,12 @@ public class Product {
 
     private String status;
 
-    // -----------------------------
-    // Provider relationship
-    // -----------------------------
+    
     @ManyToOne
     @JoinColumn(name = "provider_id", nullable = false)
     private Provider provider;
 
-    // -----------------------------
-    // Getters & Setters
-    // -----------------------------
+    
 
     public Long getProductId() {
         return productId;

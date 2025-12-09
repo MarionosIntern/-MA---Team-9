@@ -30,9 +30,7 @@ public class ProviderMvcController {
         this.reviewService = reviewService;
     }
 
-    // -------------------------------
-    // AUTH
-    // -------------------------------
+    
 
     @GetMapping("/signin")
     public String signinForm() {
@@ -76,9 +74,7 @@ public class ProviderMvcController {
         }
     }
 
-    // -------------------------------
-    // HOME
-    // -------------------------------
+    
 
     @GetMapping("/home")
     public String home(HttpSession session, Model model) {
@@ -101,9 +97,7 @@ public class ProviderMvcController {
         return "redirect:/providers/signin";
     }
 
-    // -------------------------------
-    // PRODUCT UPLOAD
-    // -------------------------------
+   
 
     @GetMapping("/products/upload")
     public String uploadProductForm(HttpSession session, Model model) {
@@ -142,9 +136,6 @@ public class ProviderMvcController {
         return "redirect:/providers/home";
     }
 
-    // -------------------------------
-    // PROFILE EDIT
-    // -------------------------------
 
     @GetMapping("profile/edit")
     public String editProfileForm(HttpSession session, Model model) {
@@ -195,9 +186,7 @@ public class ProviderMvcController {
         }
     }
 
-    // -------------------------------
-    // PRODUCT EDIT
-    // -------------------------------
+    
 
     @GetMapping("products/{id}/edit")
     public String editProductForm(@PathVariable Long id, HttpSession session, Model model) {
@@ -249,9 +238,7 @@ public class ProviderMvcController {
         return "redirect:/providers/home";
     }
 
-    // -------------------------------
-    // REVIEWS
-    // -------------------------------
+   
 
     @GetMapping("/reviews")
     public String viewReviews(HttpSession session, Model model) {

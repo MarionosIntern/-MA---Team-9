@@ -36,42 +36,31 @@ public class ReviewService {
         this.productRepository = productRepository;
     }
 
-    // =======================================
-    // ✅ Get all reviews (for admin)
-    // =======================================
+    
     public List<Review> getAllReviews() {
         return reviewRepository.findAll();
     }
 
-    // =======================================
-    // ✅ Get review by ID
-    // =======================================
+    
     public Review getReviewById(Long id) {
         return reviewRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Review not found"));
     }
 
-    // =======================================
-    // ✅ Get all reviews for a customer
-    // =======================================
+    
     public List<Review> getAllForCustomer(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found"));
         return reviewRepository.findByCustomer(customer);
     }
 
-    // =======================================
-    // ✅ Get all reviews for a product
-    // =======================================
     public List<Review> getAllForProduct(Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
         return reviewRepository.findByProduct(product);
     }
 
-    // =======================================
-    // ✅ Create new review
-    // =======================================
+    
     public Review createReview(Review review) {
         if (review.getCustomer() == null || review.getCustomer().getId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Review must include a customer with an ID");
@@ -98,9 +87,7 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
-    // =======================================
-    // ✅ Add provider response
-    // =======================================
+    
     public Review addProviderResponse(Long id, String response) {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Review not found"));
@@ -110,9 +97,7 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
-    // =======================================
-    // ✅ Delete review
-    // =======================================
+   
     public void deleteReview(Long id) {
         if (!reviewRepository.existsById(id)) {
             throw new EntityNotFoundException("Review not found");
@@ -120,9 +105,7 @@ public class ReviewService {
         reviewRepository.deleteById(id);
     }
 
-    // =======================================
-    // ✅ Ratings + Aggregations
-    // =======================================
+   
     public double getAverageOverallRating(Product product) {
         List<Review> reviews = reviewRepository.findByProduct(product);
         return reviews.stream()
@@ -144,9 +127,7 @@ public class ReviewService {
                 .average().orElse(0.0);
     }
 
-    // =======================================
-    // ✅ Provider and Product-based filters
-    // =======================================
+    
     public List<Review> getReviewsByProduct(Product product) {
         return reviewRepository.findByProduct(product);
     }
@@ -159,9 +140,7 @@ public class ReviewService {
         return reviewRepository.findByProductProviderId(providerId);
     }
 
-    // =======================================
-    // ✅ Optional: Search by customer name
-    // =======================================
+   
     public List<Review> searchReviewsByCustomerName(String name) {
     List<Customer> customers = customerRepository.findByNameContainingIgnoreCase(name);
     return customers.stream()
