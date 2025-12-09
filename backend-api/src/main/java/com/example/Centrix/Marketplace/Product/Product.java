@@ -1,17 +1,7 @@
 package com.example.Centrix.Marketplace.Product;
 
 import com.example.Centrix.Marketplace.Provider.Provider;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.persistence.*;
-
 
 @Entity
 @Table(name = "products")
@@ -20,10 +10,8 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
-    
-    @Column( name = "name", nullable = false, length = 255)
 
-   
+    @Column(name = "name", nullable = false, length = 255)
     private String name;
 
     private String category;
@@ -42,11 +30,8 @@ public class Product {
     // Provider relationship
     // -----------------------------
     @ManyToOne
-    @JoinColumn(name = "provider_id")
+    @JoinColumn(name = "provider_id", nullable = false)
     private Provider provider;
-
-    @Column(name = "provider_id", insertable = false, updatable = false)
-    private Long providerId;
 
     // -----------------------------
     // Getters & Setters
@@ -98,15 +83,6 @@ public class Product {
 
     public void setProvider(Provider provider) {
         this.provider = provider;
-        this.providerId = provider != null ? provider.getId() : null;
-    }
-
-    public Long getProviderId() {
-        return providerId;
-    }
-
-    public void setProviderId(Long providerId) {
-        this.providerId = providerId;
     }
 
     public String getDescription() {
@@ -116,6 +92,7 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
+
     public String getStatus() {
         return status;
     }
@@ -128,14 +105,12 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "productId=" + productId +
-                ", providerId=" + providerId +
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
+                ", provider=" + (provider != null ? provider.getId() : null) +
                 '}';
     }
 }
-
-    
