@@ -16,6 +16,13 @@
         <div class="card-body">
             <form action="/signin" method="post" class="d-grid gap-3">
                 <div>
+                    <label class="form-label">Account type</label>
+                    <select class="form-select" name="role">
+                        <option value="CUSTOMER" selected>Customer</option>
+                        <option value="PROVIDER">Provider</option>
+                    </select>
+                </div>
+                <div>
                     <label class="form-label">Email</label>
                     <input type="email" class="form-control" name="email" required>
                 </div>
