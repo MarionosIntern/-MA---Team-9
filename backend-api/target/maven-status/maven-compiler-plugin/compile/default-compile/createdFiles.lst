@@ -1,12 +1,14 @@
 com\example\Centrix\Marketplace\ApiExceptionHandler.class
 com\example\Centrix\Marketplace\Review\ReviewRepository.class
 com\example\Centrix\Marketplace\support\SessionModelAttributes.class
+com\example\Centrix\Marketplace\mvc\controller\HomeMvcController.class
 com\example\Centrix\Marketplace\Subscription\SubscriptionService.class
 com\example\Centrix\Marketplace\Customer\CustomerRepository.class
 com\example\Centrix\Marketplace\Product\ProductService.class
 com\example\Centrix\Marketplace\Product\ProductRestController.class
 com\example\Centrix\Marketplace\Subscription\SubscriptionRepository.class
 com\example\Centrix\Marketplace\Subscription\Subscription.class
+com\example\Centrix\Marketplace\mvc\controller\ProviderMvcController.class
 com\example\Centrix\Marketplace\Cart\CartRequest.class
 com\example\Centrix\Marketplace\Provider\ProviderRepository.class
 com\example\Centrix\Marketplace\Cart\Cart.class

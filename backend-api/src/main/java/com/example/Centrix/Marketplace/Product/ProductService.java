@@ -89,15 +89,20 @@ public class ProductService {
         product.setImageUrl(normalizeImageUrl(product.getImageUrl()));
     }
 
-    public List<Product> getAllProducts(){
-        return repo.findAll();
-    }
-
     private String normalizeImageUrl(String raw) {
         if (raw == null) {
             return null;
         }
         String trimmed = raw.trim();
         return trimmed.isBlank() ? null : trimmed;
+    }
+
+    private List<Product> filterBySearch(List<Product> source, String searchTerm) {
+        String term = searchTerm.trim().toLowerCase();
+        return source.stream()
+                .filter(p ->
+                        (p.getName() != null && p.getName().toLowerCase().contains(term)) ||
+                        (p.getDescription() != null && p.getDescription().toLowerCase().contains(term)))
+                .toList();
     }
 }

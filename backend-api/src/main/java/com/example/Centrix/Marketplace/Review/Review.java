@@ -1,25 +1,21 @@
 package com.example.Centrix.Marketplace.Review;
 
-import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.time.LocalDateTime;
-import com.example.Centrix.Marketplace.Customer.Customer;
-import com.example.Centrix.Marketplace.Product.Product;
-
 import java.time.LocalDateTime;
 
 import com.example.Centrix.Marketplace.Customer.Customer;
 import com.example.Centrix.Marketplace.Product.Product;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.*;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
-
-@Entity
-@Table(name = "reviews")
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Entity
 @Table(name = "reviews")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -29,7 +25,6 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ----- Relationships -----
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
     @JsonIgnoreProperties({"reviews", "subscriptions"})
@@ -40,7 +35,6 @@ public class Review {
     @JsonIgnoreProperties("reviews")
     private Product product;
 
-    // ----- Ratings -----
     @Column
     private Double qualityRating;
 
@@ -50,39 +44,17 @@ public class Review {
     @Column
     private Double overallRating;
 
-    // ----- Comments and responses -----
     @Column(columnDefinition = "TEXT")
     private String comment;
 
     @Column(columnDefinition = "TEXT")
     private String providerResponse;
 
-    // ----- Dates -----
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime providerResponseDate;
 
-    // ----- Constructors -----
-    public Review() {}
-
-    public Long getId() {
-        return id;
+    public Review() {
     }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public Customer getCustomer() {
-        return customer;
-    }
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-    public Product getProduct() {
-        return product;
-    }
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-}
 
     public Review(Customer customer, Product product, Double qualityRating,
                   Double deliveryRating, String comment) {
@@ -91,40 +63,98 @@ public class Review {
         this.qualityRating = qualityRating;
         this.deliveryRating = deliveryRating;
         this.comment = comment;
-        this.overallRating = (qualityRating + deliveryRating) / 2;
+        this.overallRating = computeOverall(qualityRating, deliveryRating);
         this.createdAt = LocalDateTime.now();
     }
 
-    // ----- Getters and setters -----
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    private Double computeOverall(Double qualityRating, Double deliveryRating) {
+        if (qualityRating == null || deliveryRating == null) {
+            return null;
+        }
+        return (qualityRating + deliveryRating) / 2;
+    }
 
-    public Customer getCustomer() { return customer; }
-    public void setCustomer(Customer customer) { this.customer = customer; }
+    public Long getId() {
+        return id;
+    }
 
-    public Product getProduct() { return product; }
-    public void setProduct(Product product) { this.product = product; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Double getQualityRating() { return qualityRating; }
-    public void setQualityRating(Double qualityRating) { this.qualityRating = qualityRating; }
+    public Customer getCustomer() {
+        return customer;
+    }
 
-    public Double getDeliveryRating() { return deliveryRating; }
-    public void setDeliveryRating(Double deliveryRating) { this.deliveryRating = deliveryRating; }
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
-    public Double getOverallRating() { return overallRating; }
-    public void setOverallRating(Double overallRating) { this.overallRating = overallRating; }
+    public Product getProduct() {
+        return product;
+    }
 
-    public String getComment() { return comment; }
-    public void setComment(String comment) { this.comment = comment; }
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
-    public String getProviderResponse() { return providerResponse; }
-    public void setProviderResponse(String providerResponse) { this.providerResponse = providerResponse; }
+    public Double getQualityRating() {
+        return qualityRating;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public void setQualityRating(Double qualityRating) {
+        this.qualityRating = qualityRating;
+        this.overallRating = computeOverall(this.qualityRating, this.deliveryRating);
+    }
 
-    public LocalDateTime getProviderResponseDate() { return providerResponseDate; }
-    public void setProviderResponseDate(LocalDateTime providerResponseDate) { this.providerResponseDate = providerResponseDate; }
+    public Double getDeliveryRating() {
+        return deliveryRating;
+    }
+
+    public void setDeliveryRating(Double deliveryRating) {
+        this.deliveryRating = deliveryRating;
+        this.overallRating = computeOverall(this.qualityRating, this.deliveryRating);
+    }
+
+    public Double getOverallRating() {
+        return overallRating;
+    }
+
+    public void setOverallRating(Double overallRating) {
+        this.overallRating = overallRating;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getProviderResponse() {
+        return providerResponse;
+    }
+
+    public void setProviderResponse(String providerResponse) {
+        this.providerResponse = providerResponse;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getProviderResponseDate() {
+        return providerResponseDate;
+    }
+
+    public void setProviderResponseDate(LocalDateTime providerResponseDate) {
+        this.providerResponseDate = providerResponseDate;
+    }
 
     @Override
     public String toString() {
