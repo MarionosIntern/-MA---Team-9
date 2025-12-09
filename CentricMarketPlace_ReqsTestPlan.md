@@ -27,8 +27,8 @@
 1. C1 logs in and modifies thier profile.
 2. C1 exits.
 
-#### 7. Provider - Reply to reviews & MOdify Profile:
-1. Seller P1 logs in and reads their review on product S1 and replies with "I'm glad you enjoyed".
+#### 7. Provider - Reply to reviews & Modify Profile:
+1. Seller P1 logs in and reads their review on product S1 and replies with "Thanks".
 2. P1 modifies their profile. P1 exits.
 
 
