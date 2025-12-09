@@ -16,6 +16,7 @@ public final class SessionConstants {
 
     // Provider session keys
     public static final String PROVIDER_ID = "providerId";
+    public static final String PROVIDER_NAME = "providerName";
 
     // Cart extras
     public static final String COUPON_CODE = "SESSION_COUPON_CODE";

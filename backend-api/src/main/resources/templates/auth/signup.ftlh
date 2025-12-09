@@ -17,6 +17,13 @@
                     <input type="text" class="form-control" name="name" required>
                 </div>
                 <div class="col-md-6">
+                    <label class="form-label">Account type</label>
+                    <select class="form-select" name="role" required>
+                        <option value="CUSTOMER" selected>Customer</option>
+                        <option value="PROVIDER">Provider</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
                     <label class="form-label">Email</label>
                     <input type="email" class="form-control" name="email" required>
                 </div>
@@ -29,7 +36,7 @@
                     <input type="text" class="form-control" name="phoneNumber">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Shipping address</label>
+                    <label class="form-label">Shipping / Business address</label>
                     <input type="text" class="form-control" name="shippingAddress">
                 </div>
                 <div class="col-12 d-flex justify-content-end gap-2">
