@@ -99,6 +99,9 @@
                 <div class="d-flex flex-wrap gap-3">
                     <a class="btn btn-primary btn-lg px-4" href="/products">Browse catalog</a>
                     <a class="btn btn-outline-light btn-lg px-4" href="/reviews">See community reviews</a>
+                    <#if currentCustomerName??>
+                        <a class="btn btn-outline-light btn-lg px-4" href="/customers/profile/edit">Update profile</a>
+                    </#if>
                 </div>
                 <#if heroProduct??>
                     <div class="mt-4 d-flex align-items-center gap-3">

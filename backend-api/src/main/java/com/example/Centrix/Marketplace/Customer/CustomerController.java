@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.servlet.http.HttpSession;
 
-import com.example.Centrix.Marketplace.SessionConstants;
-
-import jakarta.servlet.http.HttpSession;
-
 import java.util.List;
 
+import com.example.Centrix.Marketplace.SessionConstants;
 
 @Controller
 @RequestMapping("/customers") // Simpler & cleaner base path
@@ -140,33 +137,84 @@ public class CustomerController {
 
 
     // View Profile
-   @GetMapping("/customers/profile/{id}")
-public String viewProfile(@PathVariable Long id,
-                          HttpSession session,
-                          RedirectAttributes redirectAttributes,
-                          Model model) {
-    // Optional: ensure the path id matches the logged-in user
-    Object sessionId = session.getAttribute(SessionConstants.CUSTOMER_ID);
-    if (sessionId == null || !id.equals(sessionId)) {
-        redirectAttributes.addFlashAttribute("loginError", "Please sign in to view your profile.");
-        return "redirect:/signin";
-    }
+   @GetMapping("/profile")
+   public String viewProfile(HttpSession session,
+                             RedirectAttributes redirectAttributes,
+                             Model model) {
+       Object sessionId = session.getAttribute(SessionConstants.CUSTOMER_ID);
+       if (sessionId == null) {
+           redirectAttributes.addFlashAttribute("loginError", "Please sign in to view your profile.");
+           return "redirect:/signin";
+       }
+       Long id = (Long) sessionId;
+       Customer customer = customerService.getCustomerById(id)
+               .orElseThrow(() -> new IllegalArgumentException("Invalid customer ID: " + id));
 
-    Customer customer = customerService.getCustomerById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid customer ID: " + id));
+       model.addAttribute("customer", customer);
+       model.addAttribute("title", "Customer Profile");
+       return "customer/details";
+   }
 
-    model.addAttribute("customer", customer);
-    model.addAttribute("title", "Customer Profile");
-    return "customer/details"; // reuse your existing template
-}
+   @GetMapping("/profile/edit")
+   public String editProfileForm(HttpSession session,
+                                 RedirectAttributes redirectAttributes,
+                                 Model model) {
+       Object sessionId = session.getAttribute(SessionConstants.CUSTOMER_ID);
+       if (sessionId == null) {
+           redirectAttributes.addFlashAttribute("loginError", "Please sign in to edit your profile.");
+           return "redirect:/signin";
+       }
+       Long id = (Long) sessionId;
+       Customer customer = customerService.getCustomerById(id)
+               .orElseThrow(() -> new IllegalArgumentException("Invalid customer ID: " + id));
+       model.addAttribute("customer", customer);
+       model.addAttribute("title", "Edit Profile");
+       return "customer/edit-profile";
+   }
 
+   @PostMapping("/profile/edit")
+   public String editProfile(@RequestParam String name,
+                             @RequestParam String email,
+                             @RequestParam(required = false) String phoneNumber,
+                             @RequestParam(required = false) String shippingAddress,
+                             @RequestParam String currentPassword,
+                             @RequestParam(required = false) String newPassword,
+                             HttpSession session,
+                             RedirectAttributes redirectAttributes,
+                             Model model) {
+       Object sessionId = session.getAttribute(SessionConstants.CUSTOMER_ID);
+       if (sessionId == null) {
+           redirectAttributes.addFlashAttribute("loginError", "Please sign in to edit your profile.");
+           return "redirect:/signin";
+       }
+       Long id = (Long) sessionId;
+       Customer existing = customerService.getCustomerById(id)
+               .orElseThrow(() -> new IllegalArgumentException("Invalid customer ID: " + id));
 
-// Default redirect
+       if (!existing.getPassword().equals(currentPassword)) {
+           model.addAttribute("customer", existing);
+           model.addAttribute("error", "Current password is incorrect.");
+           return "customer/edit-profile";
+       }
 
-@GetMapping("/")
-public String redirectToList() {
-    return "redirect:/customers";
-}
+       existing.setName(name);
+       existing.setEmail(email);
+       existing.setPhoneNumber(phoneNumber);
+       existing.setShippingAddress(shippingAddress);
+       if (newPassword != null && !newPassword.trim().isEmpty()) {
+           existing.setPassword(newPassword);
+       }
+
+       customerService.updateCustomer(id, existing);
+       redirectAttributes.addFlashAttribute("loginSuccess", "Profile updated.");
+       return "redirect:/customers/profile";
+   }
+
+   // Default redirect
+   @GetMapping("/")
+   public String redirectToList() {
+       return "redirect:/customers";
+   }
 }
 
 
